@@ -6,7 +6,7 @@
 
 ### Mostly automatic installation
 
-`$ react-native @klippa/link react-native-klippa-scanner-sdk`
+`$ react-native link @klippa/react-native-klippa-scanner-sdk`
 
 ## Usage
 ```javascript
