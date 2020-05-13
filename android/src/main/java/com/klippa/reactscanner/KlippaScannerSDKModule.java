@@ -87,7 +87,7 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void getCameraResult(final Promise promise) {
+    public void getCameraPermission(final Promise promise) {
         WritableMap map = new WritableNativeMap();
         map.putString("Status", "Authorized");
         promise.resolve(map);
