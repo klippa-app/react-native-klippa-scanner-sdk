@@ -31,6 +31,9 @@ Replace the `{your-username}` and `{your-password}` values with the ones provide
 
 Edit the file `ios/Podfile`, add the Klippa CocoaPod:
 ```
+// Edit the platform to a minimum of 10.0, our SDK doesn't support earlier iOS versions.
+platform :ios, '10.0'
+
 target 'YourApplicationName' do
   # Pods for YourApplicationName
   // ... other pods
@@ -40,6 +43,16 @@ end
 ```
 
 Replace the `{your-username}` and `{your-password}` values with the ones provided by Klippa.
+
+Edit the file `ios/{project-name}/Info.plist` and add the `NSCameraUsageDescription` value:
+```
+...
+<key>NSCameraUsageDescription</key>
+<string>Access to your camera is needed to photograph documents.</string>
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>Access to your photo library is used to save the images of documents.</string>
+...
+```
 
 ### React native
 
@@ -53,80 +66,90 @@ Replace the `{your-username}` and `{your-password}` values with the ones provide
 ```javascript
 import KlippaScannerSDK from '@klippa/react-native-klippa-scanner-sdk';
 
-// Start the scanner.
-KlippaScannerSDK.getCameraResult({
-    // Required
-    License: "{license-received-by-klippa}",
+// Ask for camera permission.
+KlippaScannerSDK.getCameraPermission().then((authStatus) => {
+    if (authStatus.Status !== "Authorized") {
+        // Do something here to tell the user how they should enable the camera.
+        Alert.alert("No access to camera");
+        return;
+    }
 
-    // Optional.
-    // Whether to show the icon to enable "multi-document-mode"
-    AllowMultipleDocuments: true,
-
-    // Whether the "multi-document-mode" should be enabled by default.
-    DefaultMultipleDocuments: true,
-
-    // What the default color conversion will be (grayscale, original).
-    DefaultColor: "original",
-
-    // Whether the crop mode (auto edge detection) should be enabled by default.
-    DefaultCrop: true,
-
-    // Where to put the image results.
-    StoragePath: "/sdcard/scanner",
-
-    // Define the max resolution of the output file. It’s possible to set only one of these values. We will make sure the picture fits in the given resolution. We will also keep the aspect ratio of the image. Default is max resolution of camera.
-    ImageMaxWidth: 1920,
-    ImageMaxHeight: 1080,
-
-    // Set the output quality (between 0-100) of the jpg encoder. Default is 100.
-    ImageMaxQuality: 95,
-
-    // The warning message when someone should move closer to a document, should be a string.
-    MoveCloserMessage: "Move closer to the document",
-
-    // Optional. Only affects Android.
-    // The filename to use for the output images, supports replacement tokens %dateTime% and %randomUUID%.
-    OutputFilename: "KlippaScannerExample-%dateTime%-%randomUUID%",
-
-    // To limit the amount of images that can be taken.
-    ImageLimit: 10,
+    // Start the scanner.
+    KlippaScannerSDK.getCameraResult({
+        // Required
+        License: "{license-received-by-klippa}",
     
-    // The message to display when the limit has been reached.
-    ImageLimitReachedMessage: "You have reached the image limit",
-
-    // Optional. Only affects iOS.
-    // The warning message when the camera result is too bright.
-    ImageTooBrightMessage: "The image is too bright",
-   
-    // The warning message when the camera result is too dark.
-    ImageTooDarkMessage: "The image is too dark",
+        // Optional.
+        // Whether to show the icon to enable "multi-document-mode"
+        AllowMultipleDocuments: true,
     
-    // The primary color of the interface, should be a UIColor.
-    PrimaryColor: null,
-   
-    // The accent color of the interface, should be a UIColor.
-    AccentColor: null,
-
-    // The overlay color (when using document detection), should be a UIColor.
-    OverlayColor: null,
-
-    // The color of the background of the warning message, should be a UIColor.
-    WarningBackgroundColor: null,
+        // Whether the "multi-document-mode" should be enabled by default.
+        DefaultMultipleDocuments: true,
     
-    // The color of the text of the warning message, should be a UIColor.
-    WarningTextColor: null,
+        // Whether the crop mode (auto edge detection) should be enabled by default.
+        DefaultCrop: true,
     
-    // The amount of opacity for the overlay, should be a float.
-    OverlayColorAlpha: 0.75,
-
-    // The amount of seconds the preview should be visible for, should be a float.
-    PreviewDuration: 1.0,
-
-    // Whether the scanner automatically cuts out documents, should be a Boolean.
-    IsCropEnabled: true,
- 
-    // Whether the camera has a view finder overlay (a helper grid so the user knows where the document should be), should be a Boolean.
-    IsViewFinderEnabled: true
+        // Define the max resolution of the output file. It’s possible to set only one of these values. We will make sure the picture fits in the given resolution. We will also keep the aspect ratio of the image. Default is max resolution of camera.
+        ImageMaxWidth: 1920,
+        ImageMaxHeight: 1080,
+    
+        // Set the output quality (between 0-100) of the jpg encoder. Default is 100.
+        ImageMaxQuality: 95,
+    
+        // The warning message when someone should move closer to a document, should be a string.
+        MoveCloserMessage: "Move closer to the document",
+    
+        // Optional. Only affects Android.
+    
+        // What the default color conversion will be (grayscale, original).
+        DefaultColor: "original",
+    
+        // Where to put the image results.
+        StoragePath: "/sdcard/scanner",
+    
+        // The filename to use for the output images, supports replacement tokens %dateTime% and %randomUUID%.
+        OutputFilename: "KlippaScannerExample-%dateTime%-%randomUUID%",
+    
+        // To limit the amount of images that can be taken.
+        ImageLimit: 10,
+        
+        // The message to display when the limit has been reached.
+        ImageLimitReachedMessage: "You have reached the image limit",
+    
+        // Optional. Only affects iOS.
+        // The warning message when the camera result is too bright.
+        ImageTooBrightMessage: "The image is too bright",
+       
+        // The warning message when the camera result is too dark.
+        ImageTooDarkMessage: "The image is too dark",
+        
+        // The primary color of the interface, should be a UIColor.
+        PrimaryColor: null,
+       
+        // The accent color of the interface, should be a UIColor.
+        AccentColor: null,
+    
+        // The overlay color (when using document detection), should be a UIColor.
+        OverlayColor: null,
+    
+        // The color of the background of the warning message, should be a UIColor.
+        WarningBackgroundColor: null,
+        
+        // The color of the text of the warning message, should be a UIColor.
+        WarningTextColor: null,
+        
+        // The amount of opacity for the overlay, should be a float.
+        OverlayColorAlpha: 0.75,
+    
+        // The amount of seconds the preview should be visible for, should be a float.
+        PreviewDuration: 1.0,
+    
+        // Whether the scanner automatically cuts out documents, should be a Boolean.
+        IsCropEnabled: true,
+     
+        // Whether the camera has a view finder overlay (a helper grid so the user knows where the document should be), should be a Boolean.
+        IsViewFinderEnabled: true
+    });
 });
 ```
 
@@ -145,10 +168,10 @@ The content of the result object is:
   // Whether the MultipleDocuments option was turned on, so you can save it as default.
   "MultipleDocuments": true,
 
-  // Whether the Crop option was turned on, so you can save it as default.
+  // Whether the Crop option was turned on, so you can save it as default (Android only).
   "Crop": true,
 
-  // What color option was used, so you can save it as default.
+  // What color option was used, so you can save it as default (Android only).
   "Color": "original",
  
   // An array of images.
@@ -161,9 +184,9 @@ The content of the result object is:
 ```
 
 The reject reason object has a code and a message, the used codes are:
- - E_ACTIVITY_DOES_NOT_EXIST
- - E_FAILED_TO_SHOW_CAMERA
- - E_LICENSE_ERROR
+ - E_ACTIVITY_DOES_NOT_EXIST (Android only)
+ - E_FAILED_TO_SHOW_CAMERA (Android only)
+ - E_LICENSE_ERROR (on iOS license errors result in E_UNKNOWN_ERROR)
  - E_CANCELED
  - E_UNKNOWN_ERROR
 
