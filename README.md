@@ -58,7 +58,9 @@ Edit the file `ios/{project-name}/Info.plist` and add the `NSCameraUsageDescript
 
 `$ npm install @klippa/react-native-klippa-scanner-sdk --save`
 
-### Mostly automatic installation
+Don't forget to run `pod install` in the ios folder when running the iOS app.
+
+### Mostly automatic installation (only for versions of React Native lower than 0.60, later versions have auto-linking)
 
 `$ react-native link @klippa/react-native-klippa-scanner-sdk`
 
