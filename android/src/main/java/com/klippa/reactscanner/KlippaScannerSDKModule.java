@@ -15,6 +15,7 @@ import com.facebook.react.bridge.WritableArray;
 
 import android.content.Intent;
 import android.app.Activity;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -23,6 +24,7 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
     private static final String E_ACTIVITY_DOES_NOT_EXIST = "E_ACTIVITY_DOES_NOT_EXIST";
     private static final String E_FAILED_TO_SHOW_CAMERA = "E_FAILED_TO_SHOW_CAMERA";
     private static final String E_LICENSE_ERROR = "E_LICENSE_ERROR";
+    private static final String E_CANCELED = "E_CANCELED";
     private static final String E_UNKNOWN_ERROR = "E_UNKNOWN_ERROR";
 
     private final ReactApplicationContext reactContext;
@@ -38,9 +40,9 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
                     if (resultCode == Activity.RESULT_CANCELED) {
                         if (intent != null && intent.hasExtra(com.klippa.scanner.KlippaScanner.ERROR) && intent.getStringExtra(com.klippa.scanner.KlippaScanner.ERROR) != null) {
                             mCameraPromise.reject(E_LICENSE_ERROR, intent.getStringExtra(com.klippa.scanner.KlippaScanner.ERROR));
-                            return;
+                        } else {
+                            mCameraPromise.reject(E_CANCELED, "The user canceled");
                         }
-                        mCameraPromise.resolve("1");
                     } else if (resultCode == Activity.RESULT_OK) {
                         WritableMap map = new WritableNativeMap();
                         WritableArray images = new WritableNativeArray();
@@ -64,7 +66,7 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
                         map.putArray("Images", images);
                         mCameraPromise.resolve(map);
                     } else {
-                        mCameraPromise.reject(E_UNKNOWN_ERROR);
+                        mCameraPromise.reject(E_UNKNOWN_ERROR, "Unknown error");
                     }
 
                     mCameraPromise = null;
@@ -119,6 +121,14 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
                 cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.OUTPUT_DIRECTORY, config.getString("StoragePath"));
             }
 
+            if (config.hasKey("OutputFilename")) {
+                cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.OUTPUT_FILENAME, config.getString("OutputFilename"));
+            }
+
+            if (config.hasKey("ImageLimit")) {
+                cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.IMAGE_LIMIT, config.getInt("ImageLimit"));
+            }
+
             if (config.hasKey("License")) {
                 cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.LICENSE, config.getString("License"));
             }
@@ -139,9 +149,13 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
                 cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.MOVE_CLOSER_MESSAGE, config.getString("MoveCloserMessage"));
             }
 
+            if (config.hasKey("ImageLimitReachedMessage")) {
+                cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.IMAGE_LIMIT_REACHED_MESSAGE, config.getString("ImageLimitReachedMessage"));
+            }
+
             currentActivity.startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
         } catch (Exception e) {
-            mCameraPromise.reject(E_FAILED_TO_SHOW_CAMERA, e.toString());
+            mCameraPromise.reject(E_FAILED_TO_SHOW_CAMERA, e);
             mCameraPromise = null;
         }
     }
