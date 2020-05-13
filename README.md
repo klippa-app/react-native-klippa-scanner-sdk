@@ -140,7 +140,7 @@ KlippaScannerSDK.getCameraResult(options).then((result) => {
 ```
 
 The content of the result object is:
-```json
+```
 {
   // Whether the MultipleDocuments option was turned on, so you can save it as default.
   "MultipleDocuments": true,
