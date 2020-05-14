@@ -38,7 +38,7 @@ target 'YourApplicationName' do
   # Pods for YourApplicationName
   // ... other pods
 
-  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/0.0.13.podspec'
+  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/0.1.1.podspec'
 end
 ```
 
@@ -211,7 +211,7 @@ Replace the `{version}` value with the version you want to use.
 
 ### iOS
 
-Edit the file `ios/Podfile`, change the pod line of `Klippa-Scanner` and replace `0.0.13.podspec` with `{version}.podspec`, replace the `{version}` value with the version you want to use.
+Edit the file `ios/Podfile`, change the pod line of `Klippa-Scanner` and replace `0.1.1.podspec` with `{version}.podspec`, replace the `{version}` value with the version you want to use.
 
 ## How to change the colors of the scanner?
 
@@ -232,6 +232,9 @@ Add or edit the file `android/app/src/main/res/values/colors.xml`, add the follo
 
 ### iOS
 Use the following properties in the config when running `getCameraResult`: `PrimaryColor`, `AccentColor`, `OverlayColor`, `WarningBackgroundColor`, `WarningTextColor`, `OverlayColorAlpha`.
+
+## Important iOS note
+Older iOS versions do not ship the Swift libraries. To make sure the SDK works on older iOS versions, you can configure the build to embed the Swift libraries using the build setting `EMBEDDED_CONTENT_CONTAINS_SWIFT = YES`. 
 
 ## About Klippa
 
