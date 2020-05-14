@@ -254,7 +254,7 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
 }
 
 - (void)imageScannerControllerDidCancel:(ImageScannerController * _Nonnull)scanner {
-    if (_resolvePromise != nil) {
+    if (_rejectPromise != nil) {
         _rejectPromise(@"E_CANCELED", @"The user canceled", nil);
     }
     _resolvePromise = nil;
