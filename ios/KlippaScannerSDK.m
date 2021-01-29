@@ -55,119 +55,156 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
     } else {
         KlippaScanner.setup.license = @"";
     }
-    
+
     if ([config objectForKey:@"AllowMultipleDocuments"]) {
-        KlippaScanner.setup.allowMultipleDocumentsMode = [config objectForKey:@"AllowMultipleDocuments"];
+        KlippaScanner.setup.allowMultipleDocumentsMode = [[config objectForKey:@"AllowMultipleDocuments"] boolValue];
     } else {
         KlippaScanner.setup.allowMultipleDocumentsMode = YES;
     }
-    
+
     if ([config objectForKey:@"DefaultMultipleDocuments"]) {
-        KlippaScanner.setup.isMultipleDocumentsModeEnabled = [config objectForKey:@"DefaultMultipleDocuments"];
+        KlippaScanner.setup.isMultipleDocumentsModeEnabled = [[config objectForKey:@"DefaultMultipleDocuments"] boolValue];
     } else {
         KlippaScanner.setup.isMultipleDocumentsModeEnabled = NO;
     }
-    
+
     if ([config objectForKey:@"DefaultCrop"]) {
-        KlippaScanner.setup.isCropEnabled = [config objectForKey:@"DefaultCrop"];
+        KlippaScanner.setup.isCropEnabled = [[config objectForKey:@"DefaultCrop"] boolValue];
     } else {
         KlippaScanner.setup.isCropEnabled = YES;
     }
-    
+
     if ([config objectForKey:@"ImageMaxWidth"]) {
         KlippaScanner.setup.imageMaxWidth = [[config objectForKey:@"ImageMaxWidth"] floatValue];
     } else {
         KlippaScanner.setup.imageMaxWidth = 0;
     }
-    
+
     if ([config objectForKey:@"ImageMaxHeight"]) {
         KlippaScanner.setup.imageMaxHeight = [[config objectForKey:@"ImageMaxHeight"] floatValue];
     } else {
         KlippaScanner.setup.imageMaxHeight = 0;
     }
-    
+
     if ([config objectForKey:@"ImageMaxQuality"]) {
         KlippaScanner.setup.imageMaxQuality = [[config objectForKey:@"ImageMaxQuality"] floatValue];
     } else {
         KlippaScanner.setup.imageMaxQuality = 100;
     }
-    
+
     if ([config objectForKey:@"MoveCloserMessage"]) {
         KlippaScanner.setup.moveCloserMessage = [config objectForKey:@"MoveCloserMessage"];
     } else {
         KlippaScanner.setup.moveCloserMessage = @"";
     }
-    
+
     if ([config objectForKey:@"ImageTooBrightMessage"]) {
         KlippaScanner.setup.imageTooBrightMessage = [config objectForKey:@"ImageTooBrightMessage"];
     } else {
         KlippaScanner.setup.imageTooBrightMessage = @"";
     }
-    
+
     if ([config objectForKey:@"ImageTooDarkMessage"]) {
         KlippaScanner.setup.imageTooDarkMessage = [config objectForKey:@"ImageTooDarkMessage"];
     } else {
         KlippaScanner.setup.imageTooDarkMessage = @"";
     }
-    
+
     if ([config objectForKey:@"PrimaryColor"]) {
         KlippaScanner.setup.primaryColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"PrimaryColor"]];
     } else {
         KlippaScanner.setup.primaryColor = [UIColor colorWithRed:0.153 green:0.733  blue:0.373 alpha:1.0];
     }
-    
+
     if ([config objectForKey:@"AccentColor"]) {
         KlippaScanner.setup.accentColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"AccentColor"]];
     } else {
         KlippaScanner.setup.accentColor = [UIColor colorWithRed:0.153 green:0.733 blue:0.373 alpha:1.0];
     }
-    
+
     if ([config objectForKey:@"OverlayColor"]) {
         KlippaScanner.setup.overlayColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"OverlayColor"]];
     } else {
         KlippaScanner.setup.overlayColor = [UIColor colorWithRed:0.153 green:0.733 blue:0.373 alpha:1.0];
     }
-    
+
     if ([config objectForKey:@"WarningBackgroundColor"]) {
         KlippaScanner.setup.warningBackgroundColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"WarningBackgroundColor"]];
     } else {
         KlippaScanner.setup.warningBackgroundColor = UIColor.systemRedColor;
     }
-    
+
     if ([config objectForKey:@"WarningTextColor"]) {
         KlippaScanner.setup.warningTextColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"WarningTextColor"]];
     } else {
         KlippaScanner.setup.warningTextColor = UIColor.whiteColor;
     }
-    
+
     if ([config objectForKey:@"OverlayColorAlpha"]) {
         KlippaScanner.setup.overlayColorAlpha = [[config objectForKey:@"OverlayColorAlpha"] floatValue];
     } else {
         KlippaScanner.setup.overlayColorAlpha = 0.7;
     }
-    
+
     if ([config objectForKey:@"PreviewDuration"]) {
         KlippaScanner.setup.previewDuration = [[config objectForKey:@"PreviewDuration"] doubleValue];
     } else {
         KlippaScanner.setup.previewDuration = 1;
     }
-    
+
     if ([config objectForKey:@"IsViewFinderEnabled"]) {
-        KlippaScanner.setup.isViewFinderEnabled = [config objectForKey:@"IsViewFinderEnabled"];
+        KlippaScanner.setup.isViewFinderEnabled = [[config objectForKey:@"IsViewFinderEnabled"] boolValue];
     } else {
         KlippaScanner.setup.isViewFinderEnabled = NO;
     }
-    
+
+    if ([config objectForKey:@"Timer"]) {
+        if ([[config objectForKey:@"Timer"] objectForKey:@"enabled"]) {
+            KlippaScanner.setup.isTimerEnabled = [[[config objectForKey:@"Timer"] objectForKey:@"enabled"] boolValue];
+        }
+
+        if ([[config objectForKey:@"Timer"] objectForKey:@"duration"]) {
+            KlippaScanner.setup.timerDuration = [[[config objectForKey:@"Timer"] objectForKey:@"duration"] doubleValue];
+        }
+    }
+
+    if ([config objectForKey:@"CropPadding"]) {
+        if ([[config objectForKey:@"CropPadding"] objectForKey:@"width"] && [[config objectForKey:@"CropPadding"] objectForKey:@"height"]) {
+            KlippaScanner.setup.cropPadding = CGSizeMake([[[config objectForKey:@"CropPadding"] objectForKey:@"width"] floatValue], [[[config objectForKey:@"CropPadding"] objectForKey:@"height"] floatValue]);
+        }
+    }
+
+    if ([config objectForKey:@"Success"]) {
+        if ([[config objectForKey:@"Success"] objectForKey:@"message"]) {
+            KlippaScanner.setup.successMessage = [[config objectForKey:@"Success"] objectForKey:@"message"];
+        }
+        if ([[config objectForKey:@"Success"] objectForKey:@"previewDuration"]) {
+            KlippaScanner.setup.successPreviewDuration = [[[config objectForKey:@"Success"] objectForKey:@"previewDuration"] doubleValue];
+            KlippaScanner.setup.previewDuration = 0;
+        }
+    }
+
+    UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+
+    if ([config objectForKey:@"Model"]) {
+        if ([[config objectForKey:@"Model"] objectForKey:@"name"]) {
+            KlippaScanner.setup.modelFile = [[config objectForKey:@"Model"] objectForKey:@"name"];
+        }
+        if ([[config objectForKey:@"Model"] objectForKey:@"labelsName"]) {
+            KlippaScanner.setup.modelLabels = [[config objectForKey:@"Model"] objectForKey:@"labelsName"];
+        }
+        KlippaScanner.setup.modelViewController = rootViewController;
+        KlippaScanner.setup.runWithModel = YES;
+    }
+
     _resolvePromise = resolve;
     _rejectPromise = reject;
-            
+
     ImageScannerController *imageScannerController  = [[ImageScannerController alloc] init];
-    
+
     imageScannerController.imageScannerDelegate = self;
     imageScannerController.modalPresentationStyle = UIModalPresentationFullScreen;
-    
-    UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
-    
+
     [rootViewController presentViewController:imageScannerController animated:true completion:NULL];
 }
 
@@ -205,7 +242,7 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
     }
     return [UIColor colorWithRed: red green: green blue: blue alpha: alpha];
 }
-                                                             
+
 + (CGFloat) colorComponentFrom: (NSString *) string start: (NSUInteger) start length: (NSUInteger) length {
     NSString *substring = [string substringWithRange: NSMakeRange(start, length)];
     NSString *fullHex = length == 2 ? substring : [NSString stringWithFormat: @"%@%@", substring, substring];
@@ -228,7 +265,7 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
     [scanner dismissViewControllerAnimated:true completion:nil];
 }
 
-- (void)imageScannerController:(ImageScannerController * _Nonnull)scanner didFinishScanningWithResult:(ImageScannerResult * _Nonnull)result {     
+- (void)imageScannerController:(ImageScannerController * _Nonnull)scanner didFinishScanningWithResult:(ImageScannerResult * _Nonnull)result {
     NSMutableArray *images = [NSMutableArray array];
     if (result.images != nil) {
         for(int i = 0; i < result.images.count; i++) {
@@ -237,15 +274,15 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
             [images addObject:imageDict];
         }
     }
-    
+
     NSNumber *multipleDocuments = [NSNumber numberWithBool:NO];
     if (result.multipleDocumentsModeEnabled) {
         multipleDocuments = [NSNumber numberWithBool:YES];
     }
-    
+
     NSDictionary *resultDict = [[NSDictionary alloc] initWithObjectsAndKeys:
                                 images, @"Images", multipleDocuments, @"MultipleDocuments", nil];
-    
+
     if (_resolvePromise != nil) {
         _resolvePromise(resultDict);
     }
