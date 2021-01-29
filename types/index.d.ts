@@ -1,3 +1,32 @@
+export interface ModelOptions {
+  // The name of the model file when using custom object detection.
+  name: string;
+  // The name of the label file when using custom object detection.
+  labelsName: string;
+}
+
+export interface TimerOptions {
+  // Whether automatically capturing of images is enabled. Only available when using a custom object detection model.
+  enabled: boolean;
+  // The duration of the interval (in seconds) in which images are automatically captured, should be a float.
+  duration: number;
+}
+
+export interface Dimensions {
+  // To add extra horizontal padding to the cropped image.
+  width: number;
+  // To add extra vertical padding to the cropped image.
+  height: number;
+}
+
+export interface SuccessOptions {
+  // After capture, show a checkmark preview with this success message, instead of a preview of the image.
+  message: string;
+  // The amount of seconds the success message should be visible for, should be a float.
+  previewDuration: number;
+}
+
+
 export class CameraConfig {
   // Global options.
 
@@ -77,6 +106,14 @@ export class CameraConfig {
 
   // Whether the camera has a view finder overlay (a helper grid so the user knows where the document should be), should be a Boolean.
   IsViewFinderEnabled?: boolean;
+
+  Model?: ModelOptions;
+
+  Timer?: TimerOptions;
+
+  CropPadding?: Dimensions;
+
+  Success?: SuccessOptions;
 }
 
 export class CameraResult {

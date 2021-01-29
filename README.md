@@ -38,7 +38,7 @@ target 'YourApplicationName' do
   # Pods for YourApplicationName
   // ... other pods
 
-  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/0.1.1.podspec'
+  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/0.3.2.podspec'
 end
 ```
 
@@ -150,7 +150,19 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         IsCropEnabled: true,
      
         // Whether the camera has a view finder overlay (a helper grid so the user knows where the document should be), should be a Boolean.
-        IsViewFinderEnabled: true
+        IsViewFinderEnabled: true,
+
+        // If you would like to use a custom model for object detection. Model + labels file should be packaged in your bundle. (iOS only)
+        Model: {name: "model", labelsName: "labels"},
+        
+        // If you would like to enable automatic capturing of images. Only available when using a custom object detection model. (iOS only)
+        Timer: {enabled: true, duration: 0.4},
+
+        // To add extra horizontal and / or vertical padding to the cropped image. (iOS only)
+        CropPadding: {width: 100, height: 100},
+
+        // After capture, show a checkmark preview with this success message, instead of a preview of the image. (iOS only)
+        Success: {message: "Success!", previewDuration: 0.3},
     });
 });
 ```
@@ -211,7 +223,7 @@ Replace the `{version}` value with the version you want to use.
 
 ### iOS
 
-Edit the file `ios/Podfile`, change the pod line of `Klippa-Scanner` and replace `0.1.1.podspec` with `{version}.podspec`, replace the `{version}` value with the version you want to use.
+Edit the file `ios/Podfile`, change the pod line of `Klippa-Scanner` and replace `0.3.2.podspec` with `{version}.podspec`, replace the `{version}` value with the version you want to use.
 
 ## How to change the colors of the scanner?
 
