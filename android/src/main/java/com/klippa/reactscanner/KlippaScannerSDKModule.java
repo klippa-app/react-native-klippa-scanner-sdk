@@ -180,18 +180,18 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
 
             if (config.hasKey("CropPadding")) {
                 if (config.getMap("CropPadding").hasKey("width") && config.getMap("CropPadding").hasKey("height")) {
-                    cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.CROP_PADDING_WIDTH, config.getMap("CropPadding").getInt("width");
-                    cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.CROP_PADDING_HEIGHT, config.getMap("CropPadding").getInt("height");
+                    cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.CROP_PADDING_WIDTH, config.getMap("CropPadding").getInt("width"));
+                    cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.CROP_PADDING_HEIGHT, config.getMap("CropPadding").getInt("height"));
                 }
             }
 
             if (config.hasKey("Success")) {
                 if (config.getMap("Success").hasKey("message")) {
-                    cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.SUCCESS_MESSAGE, config.getMap("Success").getString("message");
+                    cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.SUCCESS_MESSAGE, config.getMap("Success").getString("message"));
                 }
 
                 if (config.getMap("Success").hasKey("previewDuration")) {
-                    cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.SUCCESS_PREVIEW_DURATION, config.getMap("Success").getDouble("previewDuration");
+                    cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.SUCCESS_PREVIEW_DURATION, config.getMap("Success").getDouble("previewDuration"));
                 }
             }
 
