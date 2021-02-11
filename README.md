@@ -250,6 +250,17 @@ Older iOS versions do not ship the Swift libraries. To make sure the SDK works o
 
 We started using XCFrameworks from version 0.1.0, if you want to use that version or up, you need CocoaPod version 1.9.0 or higher.
 
+## Important Android notes
+When using a custom trained model for object detection, add the following to your app's build.gradle file to ensure Gradle doesn’t compress the models when building the app:
+
+```
+android {
+    aaptOptions {
+        noCompress "tflite"
+    }
+}
+```
+
 ## About Klippa
 
 [Klippa](https://www.klippa.com/en) is a scale-up from [Groningen, The Netherlands](https://goo.gl/maps/CcCGaPTBz3u8noSd6) and was founded in 2015 by six Dutch IT specialists with the goal to digitize paper processes with modern technologies.
