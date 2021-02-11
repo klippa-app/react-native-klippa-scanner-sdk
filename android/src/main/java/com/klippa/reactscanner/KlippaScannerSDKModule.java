@@ -173,7 +173,7 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
                 if (config.getMap("Timer").hasKey("enabled")) {
                     cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.TIMER_ENABLED, config.getMap("Timer").getBoolean("enabled"));
                 }
-                if (config.getMap("Model").hasKey("duration")) {
+                if (config.getMap("Timer").hasKey("duration")) {
                     cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.TIMER_DURATION, config.getMap("Timer").getDouble("duration"));
                 }
             }
