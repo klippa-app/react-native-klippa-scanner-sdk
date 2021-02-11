@@ -155,7 +155,7 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         // If you would like to use a custom model for object detection. Model + labels file should be packaged in your bundle.
         Model: {name: "model", labelsName: "labels"},
         
-        // If you would like to enable automatic capturing of images. Only available when using a custom object detection model.
+        // If you would like to enable automatic capturing of images.
         Timer: {enabled: true, duration: 0.4},
 
         // To add extra horizontal and / or vertical padding to the cropped image.
