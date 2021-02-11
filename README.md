@@ -152,16 +152,16 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         // Whether the camera has a view finder overlay (a helper grid so the user knows where the document should be), should be a Boolean.
         IsViewFinderEnabled: true,
 
-        // If you would like to use a custom model for object detection. Model + labels file should be packaged in your bundle. (iOS only)
+        // If you would like to use a custom model for object detection. Model + labels file should be packaged in your bundle.
         Model: {name: "model", labelsName: "labels"},
         
-        // If you would like to enable automatic capturing of images. Only available when using a custom object detection model. (iOS only)
+        // If you would like to enable automatic capturing of images.
         Timer: {enabled: true, duration: 0.4},
 
-        // To add extra horizontal and / or vertical padding to the cropped image. (iOS only)
+        // To add extra horizontal and / or vertical padding to the cropped image.
         CropPadding: {width: 100, height: 100},
 
-        // After capture, show a checkmark preview with this success message, instead of a preview of the image. (iOS only)
+        // After capture, show a checkmark preview with this success message, instead of a preview of the image.
         Success: {message: "Success!", previewDuration: 0.3},
     });
 });

@@ -160,6 +160,41 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
                 cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.IMAGE_LIMIT_REACHED_MESSAGE, config.getString("ImageLimitReachedMessage"));
             }
 
+            if (config.hasKey("Model")) {
+                if (config.getMap("Model").hasKey("name")) {
+                    cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.MODEL_NAME, config.getMap("Model").getString("name"));
+                }
+                if (config.getMap("Model").hasKey("labelsName")) {
+                    cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.MODEL_LABELS_NAME, config.getMap("Model").getString("labelsName"));
+                }
+            }
+
+            if (config.hasKey("Timer")) {
+                if (config.getMap("Timer").hasKey("enabled")) {
+                    cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.TIMER_ENABLED, config.getMap("Timer").getBoolean("enabled"));
+                }
+                if (config.getMap("Model").hasKey("duration")) {
+                    cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.TIMER_DURATION, config.getMap("Timer").getDouble("duration"));
+                }
+            }
+
+            if (config.hasKey("CropPadding")) {
+                if (config.getMap("CropPadding").hasKey("width") && config.getMap("CropPadding").hasKey("height")) {
+                    cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.CROP_PADDING_WIDTH, config.getMap("CropPadding").getInt("width"));
+                    cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.CROP_PADDING_HEIGHT, config.getMap("CropPadding").getInt("height"));
+                }
+            }
+
+            if (config.hasKey("Success")) {
+                if (config.getMap("Success").hasKey("message")) {
+                    cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.SUCCESS_MESSAGE, config.getMap("Success").getString("message"));
+                }
+
+                if (config.getMap("Success").hasKey("previewDuration")) {
+                    cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.SUCCESS_PREVIEW_DURATION, config.getMap("Success").getDouble("previewDuration"));
+                }
+            }
+
             currentActivity.startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
         } catch (Exception e) {
             mCameraPromise.reject(E_FAILED_TO_SHOW_CAMERA, e);
