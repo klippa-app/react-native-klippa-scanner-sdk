@@ -112,10 +112,10 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         // The filename to use for the output images, supports replacement tokens %dateTime% and %randomUUID%.
         OutputFilename: "KlippaScannerExample-%dateTime%-%randomUUID%",
     
-        // To limit the amount of images that can be taken.
+        // To limit the amount of images that can be taken. (Android only)
         ImageLimit: 10,
         
-        // The message to display when the limit has been reached.
+        // The message to display when the limit has been reached. (Android only)
         ImageLimitReachedMessage: "You have reached the image limit",
     
         // Optional. Only affects iOS.
