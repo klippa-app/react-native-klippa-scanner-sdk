@@ -38,7 +38,7 @@ target 'YourApplicationName' do
   # Pods for YourApplicationName
   // ... other pods
 
-  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/0.3.3.podspec'
+  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/0.3.4.podspec'
 end
 ```
 
@@ -223,7 +223,7 @@ Replace the `{version}` value with the version you want to use.
 
 ### iOS
 
-Edit the file `ios/Podfile`, change the pod line of `Klippa-Scanner` and replace `0.3.3.podspec` with `{version}.podspec`, replace the `{version}` value with the version you want to use.
+Edit the file `ios/Podfile`, change the pod line of `Klippa-Scanner` and replace `0.3.4.podspec` with `{version}.podspec`, replace the `{version}` value with the version you want to use.
 
 ## How to change the colors of the scanner?
 
