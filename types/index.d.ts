@@ -115,7 +115,7 @@ export class CameraConfig {
 
   Success?: SuccessOptions;
 
-  // Whether the camera automatically saves the images to the camera roll. Default true. (iOS only)
+  // Whether the camera automatically saves the images to the camera roll. Default true. (iOS version 0.4.2 and up only)
   StoreImagesToCameraRoll?: boolean;
 }
 

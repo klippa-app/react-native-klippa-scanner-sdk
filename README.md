@@ -163,6 +163,9 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
 
         // After capture, show a checkmark preview with this success message, instead of a preview of the image.
         Success: {message: "Success!", previewDuration: 0.3},
+
+        // Whether the camera automatically saves the images to the camera roll. Default true. (iOS version 0.4.2 and up only)
+        StoreImagesToCameraRoll: true,
     });
 });
 ```
