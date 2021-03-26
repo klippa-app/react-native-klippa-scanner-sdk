@@ -184,6 +184,12 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
         }
     }
 
+    if ([config objectForKey:@"StoreImagesToCameraRoll"]) {
+        KlippaScanner.setup.storeImagesToCameraRoll = [[config objectForKey:@"StoreImagesToCameraRoll"] boolValue];
+    } else {
+        KlippaScanner.setup.storeImagesToCameraRoll = YES;
+    }
+
     UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
 
     if ([config objectForKey:@"Model"]) {

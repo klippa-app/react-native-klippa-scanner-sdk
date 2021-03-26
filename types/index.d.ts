@@ -114,6 +114,9 @@ export class CameraConfig {
   CropPadding?: Dimensions;
 
   Success?: SuccessOptions;
+
+  // Whether the camera automatically saves the images to the camera roll. Default true. (iOS only)
+  StoreImagesToCameraRoll?: boolean;
 }
 
 export class CameraResult {
