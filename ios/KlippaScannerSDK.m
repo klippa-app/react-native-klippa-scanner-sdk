@@ -110,6 +110,12 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
         KlippaScanner.setup.imageTooDarkMessage = @"";
     }
 
+    if ([config objectForKey:@"ImageMovingMessage"]) {
+        KlippaScanner.setup.imageMovingMessage = [config objectForKey:@"ImageMovingMessage"];
+    } else {
+        KlippaScanner.setup.imageMovingMessage = @"";
+    }
+
     if ([config objectForKey:@"PrimaryColor"]) {
         KlippaScanner.setup.primaryColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"PrimaryColor"]];
     } else {
