@@ -38,7 +38,7 @@ target 'YourApplicationName' do
   # Pods for YourApplicationName
   // ... other pods
 
-  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/0.3.4.podspec'
+  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/0.4.3.podspec'
 end
 ```
 
@@ -117,6 +117,9 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         
         // The message to display when the limit has been reached. (Android only)
         ImageLimitReachedMessage: "You have reached the image limit",
+        
+        // The warning message when the camera preview has to much motion to be able to automatically take a photo.
+        ImageMovingMessage: "Too much movement", 
     
         // Optional. Only affects iOS.
         // The warning message when the camera result is too bright.
@@ -226,7 +229,7 @@ Replace the `{version}` value with the version you want to use.
 
 ### iOS
 
-Edit the file `ios/Podfile`, change the pod line of `Klippa-Scanner` and replace `0.3.4.podspec` with `{version}.podspec`, replace the `{version}` value with the version you want to use.
+Edit the file `ios/Podfile`, change the pod line of `Klippa-Scanner` and replace `0.4.3.podspec` with `{version}.podspec`, replace the `{version}` value with the version you want to use.
 
 ## How to change the colors of the scanner?
 
