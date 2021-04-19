@@ -45,6 +45,9 @@ export class CameraConfig {
   // The warning message when someone should move closer to a document, should be a string.
   MoveCloserMessage?: string;
 
+  // The warning message when the camera preview has to much motion to be able to automatically take a photo.
+  ImageMovingMessage?: string;
+
   // Define the max resolution of the output file. It’s possible to set only one of these values.
   // We will make sure the picture fits in the given resolution. We will also keep the aspect ratio of the image.
   // Default is max resolution of camera.

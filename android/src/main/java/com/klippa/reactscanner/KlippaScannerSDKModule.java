@@ -160,6 +160,10 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
                 cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.IMAGE_LIMIT_REACHED_MESSAGE, config.getString("ImageLimitReachedMessage"));
             }
 
+            if (config.hasKey("ImageMovingMessage")) {
+                cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.IMAGE_MOVING_MESSAGE, config.getString("ImageMovingMessage"));
+            }
+
             if (config.hasKey("Model")) {
                 if (config.getMap("Model").hasKey("name")) {
                     cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.MODEL_NAME, config.getMap("Model").getString("name"));
