@@ -61,6 +61,9 @@ export class CameraConfig {
   // Set the output quality (between 0-100) of the jpg encoder. Default is 100.
   ImageMaxQuality?: number;
 
+  // The amount of seconds the preview should be visible for, should be a float.
+  PreviewDuration?: number;
+
   // Android options.
 
   // Where to put the image results.
