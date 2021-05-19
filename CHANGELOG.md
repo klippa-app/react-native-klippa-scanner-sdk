@@ -1,3 +1,8 @@
+## 0.1.8
+
+* Bump Android to 2.0.1
+* Bump iOS to 0.4.5
+
 ## 0.1.7
 
 * Bump Android to 1.3.7
