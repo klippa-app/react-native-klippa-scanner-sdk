@@ -107,8 +107,14 @@ export class CameraConfig {
   // The amount of opacity for the overlay, should be a float.
   OverlayColorAlpha?: number;
 
-  // The amount of seconds the preview should be visible for, should be a float.
-  PreviewDuration?: number;
+  // The color of the menu icons when they are enabled, should be a hex RGB color string.
+  IconEnabledColor?: string;
+
+  // The color of the menu icons when they are enabled, should be a hex RGB color string.
+  IconDisabledColor?: string;
+
+  // The color of the menu icons of the screen where you can review/edit the images, should be a hex RGB color string.
+  ReviewIconColor?: string;
 
   // Whether the camera has a view finder overlay (a helper grid so the user knows where the document should be), should be a Boolean.
   IsViewFinderEnabled?: boolean;

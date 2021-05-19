@@ -38,7 +38,7 @@ target 'YourApplicationName' do
   # Pods for YourApplicationName
   // ... other pods
 
-  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/0.4.3.podspec'
+  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/0.4.5.podspec'
 end
 ```
 
@@ -142,6 +142,15 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         
         // The color of the text of the warning message, should be a UIColor.
         WarningTextColor: null,
+
+        // The color of the menu icons when they are enabled, should be a UIColor.
+        IconEnabledColor: null,
+
+        // The color of the menu icons when they are disabled, should be a UIColor.
+        IconDisabledColor: null,
+
+        // The color of the menu icons of the screen where you can review/edit the images, should be a UIColor.
+        ReviewIconColor: null,
         
         // The amount of opacity for the overlay, should be a float.
         OverlayColorAlpha: 0.75,
@@ -245,11 +254,14 @@ Add or edit the file `android/app/src/main/res/values/colors.xml`, add the follo
     <color name="klippa_scanner_sdk_color_Accent">#2dc36a</color>
     <color name="klippa_scanner_sdk_color_Overlay">#2dc36a</color>
     <color name="klippa_scanner_sdk_color_Warning">#BFFF0000</color>
+    <color name="klippa_scanner_sdk_color_IconDisabledColor">#80FFFFFF</color>
+    <color name="klippa_scanner_sdk_color_IconEnabledColor">#FFFFFFFF</color>
+    <color name="klippa_scanner_sdk_color_ReviewIconColor">#FFFFFFFF</color>
 </resources>
 ```
 
 ### iOS
-Use the following properties in the config when running `getCameraResult`: `PrimaryColor`, `AccentColor`, `OverlayColor`, `WarningBackgroundColor`, `WarningTextColor`, `OverlayColorAlpha`.
+Use the following properties in the config when running `getCameraResult`: `PrimaryColor`, `AccentColor`, `OverlayColor`, `WarningBackgroundColor`, `WarningTextColor`, `OverlayColorAlpha`, 'IconDisabledColor', `IconEnabledColor`,  `ReviewIconColor`.
 
 ## Important iOS notes
 Older iOS versions do not ship the Swift libraries. To make sure the SDK works on older iOS versions, you can configure the build to embed the Swift libraries using the build setting `EMBEDDED_CONTENT_CONTAINS_SWIFT = YES`.
