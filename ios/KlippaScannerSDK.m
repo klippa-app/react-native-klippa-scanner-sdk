@@ -164,7 +164,7 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
         KlippaScanner.setup.iconDisabledColor = [UIColor colorWithRed: 1.0 green: 1.0 blue: 1.0 alpha: 0.5];
     }
 
-        if ([config objectForKey:@"ReviewIconColor"]) {
+    if ([config objectForKey:@"ReviewIconColor"]) {
         KlippaScanner.setup.reviewIconColor = [KlippaScannerSDK colorWithHexString: [config objectForKey:@"ReviewIconColor"]];
     } else {
         KlippaScanner.setup.reviewIconColor = [UIColor colorWithRed: 1.0 green: 1.0 blue: 1.0 alpha: 1.0];
