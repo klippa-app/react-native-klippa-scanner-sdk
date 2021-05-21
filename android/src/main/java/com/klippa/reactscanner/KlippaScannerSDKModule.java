@@ -48,9 +48,9 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
                         WritableArray images = new WritableNativeArray();
 
                         ArrayList<com.klippa.scanner.object.Image> imageList = intent.getParcelableArrayListExtra(com.klippa.scanner.KlippaScanner.IMAGES);
-                        boolean multipleDocuments = intent.getBooleanExtra(com.klippa.scanner.KlippaScanner.CREATE_MULTIPLE_RECEIPTS, false);
-                        boolean crop = intent.getBooleanExtra(com.klippa.scanner.KlippaScanner.CROP, false);
-                        String color = intent.getStringExtra(com.klippa.scanner.KlippaScanner.COLOR);
+                        boolean multipleDocuments = intent.getBooleanExtra("createMultipleReceipts", false);
+                        boolean crop = intent.getBooleanExtra("crop", false);
+                        String color = intent.getStringExtra("color");
 
                         map.putBoolean("MultipleDocuments", multipleDocuments);
                         map.putBoolean("Crop", crop);
