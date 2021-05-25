@@ -199,6 +199,10 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
                 }
             }
 
+            if (config.hasKey("PreviewDuration")) {
+                cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.PREVIEW_DURATION, config.getDouble("PreviewDuration"));
+            }
+
             currentActivity.startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
         } catch (Exception e) {
             mCameraPromise.reject(E_FAILED_TO_SHOW_CAMERA, e);
