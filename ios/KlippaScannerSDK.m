@@ -214,6 +214,19 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
         KlippaScanner.setup.storeImagesToCameraRoll = YES;
     }
 
+    if ([config objectForKey:@"ShutterButton"]) {
+        if ([[config objectForKey:@"ShutterButton"] objectForKey:@"allowShutterButton"]) {
+            KlippaScanner.setup.allowShutterButton = [[[config objectForKey:@"ShutterButton"] objectForKey:@"allowShutterButton"] boolValue];
+        }
+        if ([[config objectForKey:@"ShutterButton"] objectForKey:@"hideShutterButton"]) {
+            KlippaScanner.setup.hideShutterButton = [[[config objectForKey:@"ShutterButton"] objectForKey:@"hideShutterButton"] boolValue];
+        }
+    }
+
+    if ([config objectForKey:@"ImageMovingSensitivityiOS"]) {
+        KlippaScanner.setup.ImageMovingSensitivity = [[config objectForKey:@"ImageMovingSensitivityiOS"] floatValue];
+    }
+
     UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
 
     if ([config objectForKey:@"Model"]) {

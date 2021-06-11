@@ -26,6 +26,13 @@ export interface SuccessOptions {
   previewDuration: number;
 }
 
+export interface ShutterButton {
+  // Whether to allow or disallow the shutter button to work (can only be disabled if a model is supplied)
+  allowShutterButton: boolean;
+  // Whether the shutter button should be hidden (only works if allowShutterButton is false)
+  hideShutterbutton: boolean;
+}
+
 
 export class CameraConfig {
   // Global options.
@@ -64,6 +71,21 @@ export class CameraConfig {
   // The amount of seconds the preview should be visible for, should be a float.
   PreviewDuration?: number;
 
+  // If you would like to use a custom model for object detection. Model + labels file should be packaged in your bundle.
+  Model?: ModelOptions;
+
+  // If you would like to enable automatic capturing of images.
+  Timer?: TimerOptions;
+
+  // To add extra horizontal and / or vertical padding to the cropped image.
+  CropPadding?: Dimensions;
+
+  // After capture, show a checkmark preview with this success message, instead of a preview of the image.
+  Success?: SuccessOptions;
+
+  // Whether to disable/hide the shutterbutton (only works if a model is supplied).
+  ShutterButton?: ShutterButton;
+
   // Android options.
 
   // Where to put the image results.
@@ -78,6 +100,9 @@ export class CameraConfig {
   // The message to display when the limit has been reached.
   ImageLimitReachedMessage?: string;
   OutputFilename?: string;
+
+  // The threshold sensitive the motion detection is. (lower value is higher sensitivity).
+  ImageMovingSensitivityAndroid?: number;
 
   // iOS options.
 
@@ -119,13 +144,8 @@ export class CameraConfig {
   // Whether the camera has a view finder overlay (a helper grid so the user knows where the document should be), should be a Boolean.
   IsViewFinderEnabled?: boolean;
 
-  Model?: ModelOptions;
-
-  Timer?: TimerOptions;
-
-  CropPadding?: Dimensions;
-
-  Success?: SuccessOptions;
+  // The threshold sensitive the motion detection is. (lower value is higher sensitivity).
+  ImageMovingSensitivityiOS?: number;
 
   // Whether the camera automatically saves the images to the camera roll. Default true. (iOS version 0.4.2 and up only)
   StoreImagesToCameraRoll?: boolean;
