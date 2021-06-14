@@ -124,7 +124,7 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         // The message to display when the limit has been reached. (Android only)
         ImageLimitReachedMessage: "You have reached the image limit",
 
-        // The threshold sensitive the motion detection is. (lower value is higher sensitivity).
+        // The threshold sensitive the motion detection is. (lower value is higher sensitivity, default 50).
         ImageMovingSensitivityAndroid: 50,
         
         // Optional. Only affects iOS.
@@ -185,7 +185,7 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         // Whether the camera automatically saves the images to the camera roll. Default true. (iOS version 0.4.2 and up only)
         StoreImagesToCameraRoll: true,
 
-        // The threshold sensitive the motion detection is. (lower value is higher sensitivity).
+        // The threshold sensitive the motion detection is. (lower value is higher sensitivity, default 200).
         ImageMovingSensitivityiOS: 200,
     });
 });

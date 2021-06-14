@@ -101,7 +101,7 @@ export class CameraConfig {
   ImageLimitReachedMessage?: string;
   OutputFilename?: string;
 
-  // The threshold sensitive the motion detection is. (lower value is higher sensitivity).
+  // The threshold sensitive the motion detection is. (lower value is higher sensitivity, default 50).
   ImageMovingSensitivityAndroid?: number;
 
   // iOS options.
@@ -144,7 +144,7 @@ export class CameraConfig {
   // Whether the camera has a view finder overlay (a helper grid so the user knows where the document should be), should be a Boolean.
   IsViewFinderEnabled?: boolean;
 
-  // The threshold sensitive the motion detection is. (lower value is higher sensitivity).
+  // The threshold sensitive the motion detection is. (lower value is higher sensitivity, default 200).
   ImageMovingSensitivityiOS?: number;
 
   // Whether the camera automatically saves the images to the camera roll. Default true. (iOS version 0.4.2 and up only)
