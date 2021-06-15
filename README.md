@@ -38,7 +38,7 @@ target 'YourApplicationName' do
   # Pods for YourApplicationName
   // ... other pods
 
-  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/0.4.5.podspec'
+  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/0.4.6.podspec'
 end
 ```
 
@@ -87,6 +87,9 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
     
         // Whether the "multi-document-mode" should be enabled by default.
         DefaultMultipleDocuments: true,
+
+        // Ability to disable/hide the shutter button (only works when a model is supplied as well).
+        ShutterButton: {allowShutterButton: true, hideShutterButton: false},
     
         // Whether the crop mode (auto edge detection) should be enabled by default.
         DefaultCrop: true,
@@ -100,6 +103,9 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
     
         // The warning message when someone should move closer to a document, should be a string.
         MoveCloserMessage: "Move closer to the document",
+
+        // The warning message when the camera preview has to much motion to be able to automatically take a photo.
+        ImageMovingMessage: "Too much movement", 
     
         // Optional. Only affects Android.
     
@@ -117,10 +123,10 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         
         // The message to display when the limit has been reached. (Android only)
         ImageLimitReachedMessage: "You have reached the image limit",
+
+        // The threshold sensitive the motion detection is. (lower value is higher sensitivity, default 50).
+        ImageMovingSensitivityAndroid: 50,
         
-        // The warning message when the camera preview has to much motion to be able to automatically take a photo.
-        ImageMovingMessage: "Too much movement", 
-    
         // Optional. Only affects iOS.
         // The warning message when the camera result is too bright.
         ImageTooBrightMessage: "The image is too bright",
@@ -178,6 +184,9 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
 
         // Whether the camera automatically saves the images to the camera roll. Default true. (iOS version 0.4.2 and up only)
         StoreImagesToCameraRoll: true,
+
+        // The threshold sensitive the motion detection is. (lower value is higher sensitivity, default 200).
+        ImageMovingSensitivityiOS: 200,
     });
 });
 ```
@@ -238,7 +247,7 @@ Replace the `{version}` value with the version you want to use.
 
 ### iOS
 
-Edit the file `ios/Podfile`, change the pod line of `Klippa-Scanner` and replace `0.4.3.podspec` with `{version}.podspec`, replace the `{version}` value with the version you want to use.
+Edit the file `ios/Podfile`, change the pod line of `Klippa-Scanner` and replace `0.4.6.podspec` with `{version}.podspec`, replace the `{version}` value with the version you want to use.
 
 ## How to change the colors of the scanner?
 
