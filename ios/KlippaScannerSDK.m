@@ -338,13 +338,21 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
         multipleDocuments = [NSNumber numberWithBool:YES];
     }
 
+    NSNumber *cropEnabled = [NSNumber numberWithBool:NO];
+    if (result.cropEnabled) {
+        cropEnabled = [NSNumber numberWithBool:YES];
+    }
+
     NSNumber *timerEnabled = [NSNumber numberWithBool:NO];
     if (result.timerEnabled) {
         timerEnabled = [NSNumber numberWithBool:YES];
     }
 
     NSDictionary *resultDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                images, @"Images", multipleDocuments, @"MultipleDocuments", timerEnabled, @"TimerEnabled", nil];
+                                images, @"Images", 
+                                multipleDocuments, @"MultipleDocuments", 
+                                cropEnabled, @"Crop", 
+                                timerEnabled, @"TimerEnabled", nil];
 
     if (_resolvePromise != nil) {
         _resolvePromise(resultDict);

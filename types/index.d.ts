@@ -164,10 +164,10 @@ export class CameraResult {
   // Whether the AllowTimer option was turned on, so you can save it as default.
   TimerEnabled?: boolean;
 
-  // Android only.
-
   // Whether the Crop option was turned on, so you can save it as default.
   Crop?: boolean;
+
+  // Android only.
 
   // What color option was used, so you can save it as default.
   Color?: 'original' | 'grayscale';
