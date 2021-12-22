@@ -38,7 +38,7 @@ target 'YourApplicationName' do
   # Pods for YourApplicationName
   // ... other pods
 
-  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/0.4.6.podspec'
+  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/0.4.10.podspec'
 end
 ```
 
@@ -106,6 +106,12 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
 
         // The warning message when the camera preview has to much motion to be able to automatically take a photo.
         ImageMovingMessage: "Too much movement", 
+
+        // To limit the amount of images that can be taken.
+        ImageLimit: 10,
+        
+        // The message to display when the limit has been reached.
+        ImageLimitReachedMessage: "You have reached the image limit",
     
         // Optional. Only affects Android.
     
@@ -118,12 +124,6 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         // The filename to use for the output images, supports replacement tokens %dateTime% and %randomUUID%.
         OutputFilename: "KlippaScannerExample-%dateTime%-%randomUUID%",
     
-        // To limit the amount of images that can be taken. (Android only)
-        ImageLimit: 10,
-        
-        // The message to display when the limit has been reached. (Android only)
-        ImageLimitReachedMessage: "You have reached the image limit",
-
         // The threshold sensitive the motion detection is. (lower value is higher sensitivity, default 50).
         ImageMovingSensitivityAndroid: 50,
         
@@ -179,7 +179,7 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         // To add extra horizontal and / or vertical padding to the cropped image.
         CropPadding: {width: 100, height: 100},
 
-        // After capture, show a checkmark preview with this success message, instead of a preview of the image.
+        // After capture, show a check mark preview with this success message, instead of a preview of the image.
         Success: {message: "Success!", previewDuration: 0.3},
 
         // Whether the camera automatically saves the images to the camera roll. Default true. (iOS version 0.4.2 and up only)
@@ -247,7 +247,7 @@ Replace the `{version}` value with the version you want to use.
 
 ### iOS
 
-Edit the file `ios/Podfile`, change the pod line of `Klippa-Scanner` and replace `0.4.6.podspec` with `{version}.podspec`, replace the `{version}` value with the version you want to use.
+Edit the file `ios/Podfile`, change the pod line of `Klippa-Scanner` and replace `0.4.10.podspec` with `{version}.podspec`, replace the `{version}` value with the version you want to use.
 
 ## How to change the colors of the scanner?
 
@@ -270,7 +270,7 @@ Add or edit the file `android/app/src/main/res/values/colors.xml`, add the follo
 ```
 
 ### iOS
-Use the following properties in the config when running `getCameraResult`: `PrimaryColor`, `AccentColor`, `OverlayColor`, `WarningBackgroundColor`, `WarningTextColor`, `OverlayColorAlpha`, 'IconDisabledColor', `IconEnabledColor`,  `ReviewIconColor`.
+Use the following properties in the config when running `getCameraResult`: `PrimaryColor`, `AccentColor`, `OverlayColor`, `WarningBackgroundColor`, `WarningTextColor`, `OverlayColorAlpha`, `IconDisabledColor`, `IconEnabledColor`,  `ReviewIconColor`.
 
 ## Important iOS notes
 Older iOS versions do not ship the Swift libraries. To make sure the SDK works on older iOS versions, you can configure the build to embed the Swift libraries using the build setting `EMBEDDED_CONTENT_CONTAINS_SWIFT = YES`.

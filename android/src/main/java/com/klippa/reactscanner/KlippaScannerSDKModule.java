@@ -50,10 +50,12 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
                         ArrayList<com.klippa.scanner.object.Image> imageList = intent.getParcelableArrayListExtra(com.klippa.scanner.KlippaScanner.IMAGES);
                         boolean multipleDocuments = intent.getBooleanExtra(com.klippa.scanner.KlippaScanner.CREATE_MULTIPLE_RECEIPTS, false);
                         boolean crop = intent.getBooleanExtra(com.klippa.scanner.KlippaScanner.CROP, false);
+                        boolean timerEnabled = intent.getBooleanExtra(com.klippa.scanner.KlippaScanner.TIMER_ENABLED, false);
                         String color = intent.getStringExtra(com.klippa.scanner.KlippaScanner.COLOR);
 
                         map.putBoolean("MultipleDocuments", multipleDocuments);
                         map.putBoolean("Crop", crop);
+                        map.putBoolean("TimerEnabled", timerEnabled);
                         map.putString("Color", color);
 
                         for (int i = 0; i < imageList.size(); i++) {
@@ -174,6 +176,9 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
             }
 
             if (config.hasKey("Timer")) {
+                if (config.getMap("Timer").hasKey("allowed")) {
+                    cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.ALLOW_TIMER, config.getMap("Timer").getBoolean("allowed"));
+                }
                 if (config.getMap("Timer").hasKey("enabled")) {
                     cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.TIMER_ENABLED, config.getMap("Timer").getBoolean("enabled"));
                 }
