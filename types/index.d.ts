@@ -6,7 +6,9 @@ export interface ModelOptions {
 }
 
 export interface TimerOptions {
-  // Whether automatically capturing of images is enabled. Only available when using a custom object detection model.
+  // Whether the timerButton is shown or hidden.
+  allowed: boolean;
+  // Whether automatically capturing of images is enabled.
   enabled: boolean;
   // The duration of the interval (in seconds) in which images are automatically captured, should be a float.
   duration: number;
@@ -20,7 +22,7 @@ export interface Dimensions {
 }
 
 export interface SuccessOptions {
-  // After capture, show a checkmark preview with this success message, instead of a preview of the image.
+  // After capture, show a check mark preview with this success message, instead of a preview of the image.
   message: string;
   // The amount of seconds the success message should be visible for, should be a float.
   previewDuration: number;
@@ -30,7 +32,7 @@ export interface ShutterButton {
   // Whether to allow or disallow the shutter button to work (can only be disabled if a model is supplied)
   allowShutterButton: boolean;
   // Whether the shutter button should be hidden (only works if allowShutterButton is false)
-  hideShutterbutton: boolean;
+  hideShutterButton: boolean;
 }
 
 
@@ -80,11 +82,17 @@ export class CameraConfig {
   // To add extra horizontal and / or vertical padding to the cropped image.
   CropPadding?: Dimensions;
 
-  // After capture, show a checkmark preview with this success message, instead of a preview of the image.
+  // After capture, show a check mark preview with this success message, instead of a preview of the image.
   Success?: SuccessOptions;
 
-  // Whether to disable/hide the shutterbutton (only works if a model is supplied).
+  // Whether to disable/hide the shutter button (only works if a model is supplied).
   ShutterButton?: ShutterButton;
+
+  // To limit the amount of images that can be taken.
+  ImageLimit?: number;
+
+  // The message to display when the limit has been reached.
+  ImageLimitReachedMessage?: string;
 
   // Android options.
 
@@ -94,11 +102,6 @@ export class CameraConfig {
   // What the default color conversion will be (grayscale, original).
   DefaultColor?: 'original' | 'grayscale';
 
-  // To limit the amount of images that can be taken.
-  ImageLimit?: number;
-
-  // The message to display when the limit has been reached.
-  ImageLimitReachedMessage?: string;
   OutputFilename?: string;
 
   // The threshold sensitive the motion detection is. (lower value is higher sensitivity, default 50).
@@ -112,7 +115,7 @@ export class CameraConfig {
   // The warning message when the camera result is too dark.
   ImageTooDarkMessage?: string;
 
-  // The iOS colors to be conigured as RGB Hex. For Android see the readme.
+  // The iOS colors to be configured as RGB Hex. For Android see the readme.
 
   // The primary color of the interface, should be a hex RGB color string.
   PrimaryColor?: string;
@@ -147,7 +150,7 @@ export class CameraConfig {
   // The threshold sensitive the motion detection is. (lower value is higher sensitivity, default 200).
   ImageMovingSensitivityiOS?: number;
 
-  // Whether the camera automatically saves the images to the camera roll. Default true. (iOS version 0.4.2 and up only)
+  // Whether the camera automatically saves the images to the camera roll. Default true. (iOS SDK version 0.4.2 and up only)
   StoreImagesToCameraRoll?: boolean;
 }
 
@@ -158,10 +161,13 @@ export class CameraResult {
   // Whether the MultipleDocuments option was turned on, so you can save it as default.
   MultipleDocuments?: boolean;
 
-  // Android only.
+  // Whether the AllowTimer option was turned on, so you can save it as default.
+  TimerEnabled?: boolean;
 
   // Whether the Crop option was turned on, so you can save it as default.
   Crop?: boolean;
+
+  // Android only.
 
   // What color option was used, so you can save it as default.
   Color?: 'original' | 'grayscale';

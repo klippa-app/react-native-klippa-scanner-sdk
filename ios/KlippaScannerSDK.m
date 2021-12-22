@@ -110,6 +110,19 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
         KlippaScanner.setup.imageTooDarkMessage = @"";
     }
 
+    if ([config objectForKey:@"ImageLimitReachedMessage"]) {
+        KlippaScanner.setup.imageLimitReachedMessage = [config objectForKey:@"ImageLimitReachedMessage"];
+        
+    } else {
+        KlippaScanner.setup.imageLimitReachedMessage = @"";
+    }
+
+    if ([config objectForKey:@"ImageLimit"]) {
+        KlippaScanner.setup.imageLimit = [[config objectForKey:@"ImageLimit"] intValue];
+    } else {
+        KlippaScanner.setup.imageLimit = 0;
+    }
+
     if ([config objectForKey:@"ImageMovingMessage"]) {
         KlippaScanner.setup.imageMovingMessage = [config objectForKey:@"ImageMovingMessage"];
     } else {
@@ -183,6 +196,9 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
     }
 
     if ([config objectForKey:@"Timer"]) {
+        if ([[config objectForKey:@"Timer"] objectForKey:@"allowed"]) {
+            KlippaScanner.setup.allowTimer = [[[config objectForKey:@"Timer"] objectForKey:@"allowed"] boolValue];
+        }
         if ([[config objectForKey:@"Timer"] objectForKey:@"enabled"]) {
             KlippaScanner.setup.isTimerEnabled = [[[config objectForKey:@"Timer"] objectForKey:@"enabled"] boolValue];
         }
@@ -236,7 +252,6 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
         if ([[config objectForKey:@"Model"] objectForKey:@"labelsName"]) {
             KlippaScanner.setup.modelLabels = [[config objectForKey:@"Model"] objectForKey:@"labelsName"];
         }
-        KlippaScanner.setup.modelViewController = rootViewController;
         KlippaScanner.setup.runWithModel = YES;
     }
 
@@ -323,8 +338,21 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
         multipleDocuments = [NSNumber numberWithBool:YES];
     }
 
+    NSNumber *cropEnabled = [NSNumber numberWithBool:NO];
+    if (result.cropEnabled) {
+        cropEnabled = [NSNumber numberWithBool:YES];
+    }
+
+    NSNumber *timerEnabled = [NSNumber numberWithBool:NO];
+    if (result.timerEnabled) {
+        timerEnabled = [NSNumber numberWithBool:YES];
+    }
+
     NSDictionary *resultDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                images, @"Images", multipleDocuments, @"MultipleDocuments", nil];
+                                images, @"Images", 
+                                multipleDocuments, @"MultipleDocuments", 
+                                cropEnabled, @"Crop", 
+                                timerEnabled, @"TimerEnabled", nil];
 
     if (_resolvePromise != nil) {
         _resolvePromise(resultDict);
