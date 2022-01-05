@@ -107,7 +107,7 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
     }
 
     private Boolean hasRequiredPermissions() {
-        return hasPermission(Manifest.permission.CAMERA) && hasPermission(Manifest.permission.INTERNET);
+        return hasPermission(Manifest.permission.CAMERA);
     }
 
     private Boolean hasPermission(String permission) {
