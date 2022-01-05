@@ -13,8 +13,12 @@ import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableArray;
 
+import android.Manifest;
 import android.content.Intent;
 import android.app.Activity;
+
+import androidx.core.content.PermissionChecker;
+
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -91,9 +95,25 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void getCameraPermission(final Promise promise) {
         WritableMap map = new WritableNativeMap();
-        map.putString("Status", "Authorized");
+        Boolean permission = hasRequiredPermissions();
+
+        if (permission) {
+            map.putString("Status", "Authorized");
+        } else {
+            map.putString("Status", "Denied");
+        }
+
         promise.resolve(map);
     }
+
+    private Boolean hasRequiredPermissions() {
+        return hasPermission(Manifest.permission.CAMERA) && hasPermission(Manifest.permission.INTERNET);
+    }
+
+    private Boolean hasPermission(String permission) {
+        return PermissionChecker.checkSelfPermission(this.reactContext, permission) == PermissionChecker.PERMISSION_GRANTED;
+    }
+
 
     @ReactMethod
     public void getCameraResult(final ReadableMap config, final Promise promise) {
