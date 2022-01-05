@@ -1,3 +1,7 @@
+## 0.1.11
+
+* Fixed issue with permission checking on Android
+
 ## 0.1.10
 
 * Bump Android to 2.0.6
