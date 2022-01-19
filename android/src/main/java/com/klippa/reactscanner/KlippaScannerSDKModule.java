@@ -239,6 +239,10 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
                 cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.IMAGE_MOVING_SENSITIVITY, config.getInt("ImageMovingSensitivityAndroid"));
             }
 
+            if (config.hasKey("StoreImagesToCameraRoll")) {
+                cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.STORE_IMAGES_TO_GALLERY, config.getBoolean("StoreImagesToCameraRoll"));
+            }
+
             currentActivity.startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
         } catch (Exception e) {
             mCameraPromise.reject(E_FAILED_TO_SHOW_CAMERA, e);

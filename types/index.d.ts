@@ -94,6 +94,9 @@ export class CameraConfig {
   // The message to display when the limit has been reached.
   ImageLimitReachedMessage?: string;
 
+  // Whether the camera automatically saves the images to the camera roll (iOS) / gallery (Android). Default true.
+  StoreImagesToCameraRoll?: boolean;
+
   // Android options.
 
   // Where to put the image results.
@@ -149,9 +152,6 @@ export class CameraConfig {
 
   // The threshold sensitive the motion detection is. (lower value is higher sensitivity, default 200).
   ImageMovingSensitivityiOS?: number;
-
-  // Whether the camera automatically saves the images to the camera roll. Default true. (iOS SDK version 0.4.2 and up only)
-  StoreImagesToCameraRoll?: boolean;
 }
 
 export class CameraResult {
