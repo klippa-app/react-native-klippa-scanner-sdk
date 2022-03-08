@@ -27,6 +27,17 @@ allprojects {
 
 Replace the `{your-username}` and `{your-password}` values with the ones provided by Klippa.
 
+If you're using gradle 7+ you will need to change `copyDownloadableDepsToLibs` in the `app/build.gradle`.
+It should now look like:
+
+```maven
+task copyDownloadableDepsToLibs(type: Copy) {
+    from configurations.implementation
+    into 'libs'
+}
+
+```
+
 ### iOS
 
 Edit the file `ios/Podfile`, add the Klippa CocoaPod:
@@ -195,7 +206,7 @@ The result of `KlippaScannerSDK.getCameraResult()` is a Promise, so you can get 
 ```javascript
 KlippaScannerSDK.getCameraResult(options).then((result) => {
     console.log(result);
-}).reject((reason) => {
+}).catch((reason) => {
     console.log(reason);
 });
 ```
