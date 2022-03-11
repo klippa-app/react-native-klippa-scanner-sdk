@@ -1,3 +1,7 @@
+## 0.2.0
+
+* Added support for gradle 7+
+
 ## 0.1.13
 
 * Bump iOS to 0.4.11
