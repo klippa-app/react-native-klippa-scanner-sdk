@@ -69,7 +69,7 @@ repositories {
 }
 
 dependencies {
-    def klippaScannerVersion = project.hasProperty('klippaScannerVersion') ? project.klippaScannerVersion : "2.0.7"
+    def klippaScannerVersion = project.hasProperty('klippaScannerVersion') ? project.klippaScannerVersion : "2.0.8"
 
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'  // From node_modules
