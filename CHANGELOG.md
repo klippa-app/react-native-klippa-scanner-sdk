@@ -1,3 +1,8 @@
+## 0.2.1
+
+* Bump Android to 2.0.8
+* Bump iOS to 0.4.12
+
 ## 0.2.0
 
 * Added support for gradle 7+
