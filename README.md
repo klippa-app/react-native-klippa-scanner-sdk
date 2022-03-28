@@ -27,6 +27,17 @@ allprojects {
 
 Replace the `{your-username}` and `{your-password}` values with the ones provided by Klippa.
 
+If you're using gradle 7+ you will need to change `copyDownloadableDepsToLibs` in the `app/build.gradle`.
+It should now look like:
+
+```maven
+task copyDownloadableDepsToLibs(type: Copy) {
+    from configurations.implementation
+    into 'libs'
+}
+
+```
+
 ### iOS
 
 Edit the file `ios/Podfile`, add the Klippa CocoaPod:
@@ -38,7 +49,7 @@ target 'YourApplicationName' do
   # Pods for YourApplicationName
   // ... other pods
 
-  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/0.4.11.podspec'
+  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/latest.podspec'
 end
 ```
 
@@ -195,7 +206,7 @@ The result of `KlippaScannerSDK.getCameraResult()` is a Promise, so you can get 
 ```javascript
 KlippaScannerSDK.getCameraResult(options).then((result) => {
     console.log(result);
-}).reject((reason) => {
+}).catch((reason) => {
     console.log(reason);
 });
 ```
@@ -247,7 +258,7 @@ Replace the `{version}` value with the version you want to use.
 
 ### iOS
 
-Edit the file `ios/Podfile`, change the pod line of `Klippa-Scanner` and replace `0.4.11.podspec` with `{version}.podspec`, replace the `{version}` value with the version you want to use.
+Edit the file `ios/Podfile`, change the pod line of `Klippa-Scanner` and replace `latest.podspec` with `{version}.podspec`, replace the `{version}` value with the version you want to use.
 
 ## How to change the colors of the scanner?
 
