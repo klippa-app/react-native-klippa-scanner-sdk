@@ -129,6 +129,60 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
         KlippaScanner.setup.imageMovingMessage = @"";
     }
 
+    if ([config objectForKey:@"DeleteButtonText"]) {
+        KlippaScanner.setup.deleteButtonText = [config objectForKey:@"DeleteButtonText"];
+    } else {
+        KlippaScanner.setup.deleteButtonText = @"";
+    }
+
+    if ([config objectForKey:@"RetakeButtonText"]) {
+        KlippaScanner.setup.retakeButtonText = [config objectForKey:@"RetakeButtonText"];
+    } else {
+        KlippaScanner.setup.retakeButtonText = @"";
+    }
+
+    if ([config objectForKey:@"CancelButtonText"]) {
+        KlippaScanner.setup.cancelButtonText = [config objectForKey:@"CancelButtonText"];
+    } else {
+        KlippaScanner.setup.cancelButtonText = @"";
+    }
+
+    if ([config objectForKey:@"CancelAndDeleteImagesButtonText"]) {
+        KlippaScanner.setup.cancelAndDeleteImagesButtonText = [config objectForKey:@"CancelAndDeleteImagesButtonText"];
+    } else {
+        KlippaScanner.setup.cancelAndDeleteImagesButtonText = @"";
+    }
+
+    if ([config objectForKey:@"CancelConfirmationMessage"]) {
+        KlippaScanner.setup.cancelConfirmationMessage = [config objectForKey:@"CancelConfirmationMessage"];
+    } else {
+        KlippaScanner.setup.cancelConfirmationMessage = @"";
+    }
+
+    if ([config objectForKey:@"ShouldGoToReviewScreenWhenImageLimitReached"]) {
+        KlippaScanner.setup.shouldGoToReviewScreenWhenImageLimitReached = [[config objectForKey:@"ShouldGoToReviewScreenWhenImageLimitReached"] boolValue];
+    } else {
+        KlippaScanner.setup.shouldGoToReviewScreenWhenImageLimitReached = NO;
+    }
+
+    if ([config objectForKey:@"UserCanRotateImage"]) {
+        KlippaScanner.setup.userCanRotateImage = [[config objectForKey:@"UserCanRotateImage"] boolValue];
+    } else {
+        KlippaScanner.setup.userCanRotateImage = YES;
+    }
+
+    if ([config objectForKey:@"UserCanCropManually"]) {
+        KlippaScanner.setup.userCanCropManually = [[config objectForKey:@"UserCanCropManually"] boolValue];
+    } else {
+        KlippaScanner.setup.userCanCropManually = YES;
+    }
+
+    if ([config objectForKey:@"UserCanChangeColorSetting"]) {
+        KlippaScanner.setup.userCanChangeColorSetting = [[config objectForKey:@"UserCanChangeColorSetting"] boolValue];
+    } else {
+        KlippaScanner.setup.userCanChangeColorSetting = YES;
+    }
+
     if ([config objectForKey:@"PrimaryColor"]) {
         KlippaScanner.setup.primaryColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"PrimaryColor"]];
     } else {
