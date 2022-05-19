@@ -123,6 +123,18 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         
         // The message to display when the limit has been reached.
         ImageLimitReachedMessage: "You have reached the image limit",
+
+        // Whether to go to the Review Screen once the image limit has been reached. (default false)
+        ShouldGoToReviewScreenWhenImageLimitReached: false,
+
+        // Whether to hide or show the rotate button in the Review Screen. (default shown/true)
+        UserCanRotateImage: true,
+
+        // Whether to hide or show the cropping button in the Review Screen. (default shown/true)
+        UserCanCropManually: true,
+
+        // Whether to hide or show the color changing button in the Review Screen. (default shown/true)
+        UserCanChangeColorSetting: true,
     
         // Optional. Only affects Android.
     
@@ -159,18 +171,6 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
 
         // The text inside of the alert to confirm exiting the scanner.
         CancelConfirmationMessage: "Delete photos and exit scanner?",
-
-        // Whether to go to the Review Screen once the image limit has been reached. (default false)
-        ShouldGoToReviewScreenWhenImageLimitReached: false,
-
-        // Whether to hide or show the rotate button in the Review Screen. (default shown/true)
-        UserCanRotateImage: true,
-
-        // Whether to hide or show the cropping button in the Review Screen. (default shown/true)
-        UserCanCropManually: true,
-
-        // Whether to hide or show the color changing button in the Review Screen. (default shown/true)
-        UserCanChangeColorSetting: true,
         
         // The primary color of the interface, should be a UIColor.
         PrimaryColor: null,
@@ -308,7 +308,33 @@ Add or edit the file `android/app/src/main/res/values/colors.xml`, add the follo
 ```
 
 ### iOS
+
 Use the following properties in the config when running `getCameraResult`: `PrimaryColor`, `AccentColor`, `OverlayColor`, `WarningBackgroundColor`, `WarningTextColor`, `OverlayColorAlpha`, `IconDisabledColor`, `IconEnabledColor`,  `ReviewIconColor`.
+
+## How to change the texts in the scanner?
+
+### Android
+
+Add or edit the file `android/app/src/main/res/values/strings.xml`, add the following:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zoom_tip">Move closer to the document</string>
+    <string name="image_limit_reached">You have reached the image limit</string>
+    <string name="success_message">Success</string>
+    <string name="klippa_delete_button_text">Delete Photo</string>
+    <string name="klippa_retake_button_text">Retake Photo</string>
+    <string name="klippa_cancel_button_text">Cancel</string>
+    <string name="klippa_cancel_delete_images">Delete photos and exit</string>
+    <string name="klippa_cancel_confirmation">Delete photos and exit scanner?</string>
+</resources>
+```
+
+### iOS
+
+Use the following properties in the config when running `getCameraResult`: `ImageTooBrightMessage`, `ImageTooDarkMessage`, `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`.
+
 
 ## Important iOS notes
 Older iOS versions do not ship the Swift libraries. To make sure the SDK works on older iOS versions, you can configure the build to embed the Swift libraries using the build setting `EMBEDDED_CONTENT_CONTAINS_SWIFT = YES`.
