@@ -1,3 +1,21 @@
+## 0.2.5
+
+* Bump Android to 2.1.3
+
+## 0.2.4
+
+* Bump Android to 2.1.2
+* Bump iOS to 0.5.1
+
+## 0.2.3
+
+* Bump Android to 2.1.1
+
+## 0.2.2
+
+* Bump Android to 2.1.0
+* Bump iOS to 0.5.0
+
 ## 0.2.1
 
 * Bump Android to 2.0.8

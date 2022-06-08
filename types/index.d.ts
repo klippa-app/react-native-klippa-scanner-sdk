@@ -73,6 +73,18 @@ export class CameraConfig {
   // The amount of seconds the preview should be visible for, should be a float.
   PreviewDuration?: number;
 
+  // Whether to go to the Review Screen once the image limit has been reached. (default false)
+  ShouldGoToReviewScreenWhenImageLimitReached?: boolean;
+
+  // Whether to hide or show the rotate button in the Review Screen. (default shown/true)
+  UserCanRotateImage?: boolean;
+
+  // Whether to hide or show the cropping button in the Review Screen. (default shown/true)
+  UserCanCropManually?: boolean;
+
+  // Whether to hide or show the color changing button in the Review Screen. (default shown/true)
+  UserCanChangeColorSetting?: boolean;
+
   // If you would like to use a custom model for object detection. Model + labels file should be packaged in your bundle.
   Model?: ModelOptions;
 
@@ -112,6 +124,21 @@ export class CameraConfig {
 
   // iOS options.
 
+  // The text inside of the delete button.
+  DeleteButtonText?: string;
+
+  // The text inside of the retake button.
+  RetakeButtonText?: string;
+
+  // The text inside of the cancel button.
+  CancelButtonText?: string;
+
+  // The text inside of the cancel alert button.
+  CancelAndDeleteImagesButtonText?: string;
+
+  // The text inside of the alert to confirm exiting the scanner.
+  CancelConfirmationMessage?: string;
+  
   // The warning message when the camera result is too bright.
   ImageTooBrightMessage?: string;
 

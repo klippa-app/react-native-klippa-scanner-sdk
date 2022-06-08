@@ -186,6 +186,22 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
                 cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.IMAGE_MOVING_MESSAGE, config.getString("ImageMovingMessage"));
             }
 
+            if (config.hasKey("ShouldGoToReviewScreenWhenImageLimitReached")) {
+                cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.SHOULD_GO_TO_REVIEW_SCREEN_WHEN_IMAGE_LIMIT_REACHED, config.getBoolean("ShouldGoToReviewScreenWhenImageLimitReached"));
+            }
+
+            if (config.hasKey("UserCanRotateImage")) {
+                cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.USER_CAN_ROTATE_IMAGE, config.getBoolean("UserCanRotateImage"));
+            }
+
+            if (config.hasKey("UserCanCropManually")) {
+                cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.USER_CAN_CROP_MANUALLY, config.getBoolean("UserCanCropManually"));
+            }
+
+            if (config.hasKey("UserCanChangeColorSetting")) {
+                cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.USER_CAN_CHANGE_COLOR_SETTING, config.getBoolean("UserCanChangeColorSetting"));
+            }
+
             if (config.hasKey("Model")) {
                 if (config.getMap("Model").hasKey("name")) {
                     cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.MODEL_NAME, config.getMap("Model").getString("name"));
