@@ -1,3 +1,7 @@
+## 0.2.5
+
+* Bump Android to 2.1.3
+
 ## 0.2.4
 
 * Bump Android to 2.1.2
