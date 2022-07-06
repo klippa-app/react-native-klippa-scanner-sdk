@@ -182,6 +182,26 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
                 cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.IMAGE_LIMIT_REACHED_MESSAGE, config.getString("ImageLimitReachedMessage"));
             }
 
+            if (config.hasKey("CancelConfirmationMessage")) {
+                cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.CANCEL_CONFIRMATION_MESSAGE, config.getString("CancelConfirmationMessage"));
+            }
+
+            if (config.hasKey("DeleteButtonText")) {
+                cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.DELETE_BUTTON_TEXT, config.getString("DeleteButtonText"));
+            }
+
+            if (config.hasKey("RetakeButtonText")) {
+                cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.RETAKE_BUTTON_TEXT, config.getString("RetakeButtonText"));
+            }
+
+            if (config.hasKey("CancelButtonText")) {
+                cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.CANCEL_BUTTON_TEXT, config.getString("CancelButtonText"));
+            }
+
+            if (config.hasKey("CancelAndDeleteImagesButtonText")) {
+                cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.CANCEL_AND_DELETE_IMAGES_BUTTON_TEXT, config.getString("CancelAndDeleteImagesButtonText"));
+            }
+
             if (config.hasKey("ImageMovingMessage")) {
                 cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.IMAGE_MOVING_MESSAGE, config.getString("ImageMovingMessage"));
             }
