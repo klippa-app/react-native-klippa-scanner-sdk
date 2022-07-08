@@ -320,9 +320,10 @@ Add or edit the file `android/app/src/main/res/values/strings.xml`, add the foll
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="zoom_tip">Move closer to the document</string>
-    <string name="image_limit_reached">You have reached the image limit</string>
-    <string name="success_message">Success</string>
+    <string name="klippa_zoom_message">Move closer to the document</string>
+    <string name="klippa_image_limit_reached">You have reached the image limit</string>
+    <string name="klippa_success_message">Success</string>
+    <string name="klippa_image_moving_message">Moving too much</string>
     <string name="klippa_delete_button_text">Delete Photo</string>
     <string name="klippa_retake_button_text">Retake Photo</string>
     <string name="klippa_cancel_button_text">Cancel</string>
