@@ -116,7 +116,22 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         MoveCloserMessage: "Move closer to the document",
 
         // The warning message when the camera preview has to much motion to be able to automatically take a photo.
-        ImageMovingMessage: "Too much movement", 
+        ImageMovingMessage: "Too much movement",
+        
+        // The text inside of the delete button.
+        DeleteButtonText: "Delete Photo",
+
+        // The text inside of the retake button.
+        RetakeButtonText: "Retake Photo",
+
+        // The text inside of the cancel button.
+        CancelButtonText: "Cancel",
+
+        // The text inside of the cancel alert button.
+        CancelAndDeleteImagesButtonText: "Delete photos & exit",
+
+        // The text inside of the alert to confirm exiting the scanner.
+        CancelConfirmationMessage: "Delete photos and exit scanner?",
 
         // To limit the amount of images that can be taken.
         ImageLimit: 10,
@@ -156,21 +171,6 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
        
         // The warning message when the camera result is too dark.
         ImageTooDarkMessage: "The image is too dark",
-
-        // The text inside of the delete button.
-        DeleteButtonText: "Delete Photo",
-
-        // The text inside of the retake button.
-        RetakeButtonText: "Retake Photo",
-
-        // The text inside of the cancel button.
-        CancelButtonText: "Cancel",
-
-        // The text inside of the cancel alert button.
-        CancelAndDeleteImagesButtonText: "Delete photos & exit",
-
-        // The text inside of the alert to confirm exiting the scanner.
-        CancelConfirmationMessage: "Delete photos and exit scanner?",
         
         // The primary color of the interface, should be a UIColor.
         PrimaryColor: null,
@@ -314,6 +314,10 @@ Use the following properties in the config when running `getCameraResult`: `Prim
 ## How to change the texts in the scanner?
 
 ### Android
+
+Use the following properties in the config when running `getCameraResult`: `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`.
+
+or
 
 Add or edit the file `android/app/src/main/res/values/strings.xml`, add the following:
 
