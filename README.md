@@ -116,7 +116,22 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         MoveCloserMessage: "Move closer to the document",
 
         // The warning message when the camera preview has to much motion to be able to automatically take a photo.
-        ImageMovingMessage: "Too much movement", 
+        ImageMovingMessage: "Too much movement",
+        
+        // The text inside of the delete button.
+        DeleteButtonText: "Delete Photo",
+
+        // The text inside of the retake button.
+        RetakeButtonText: "Retake Photo",
+
+        // The text inside of the cancel button.
+        CancelButtonText: "Cancel",
+
+        // The text inside of the cancel alert button.
+        CancelAndDeleteImagesButtonText: "Delete photos & exit",
+
+        // The text inside of the alert to confirm exiting the scanner.
+        CancelConfirmationMessage: "Delete photos and exit scanner?",
 
         // To limit the amount of images that can be taken.
         ImageLimit: 10,
@@ -156,21 +171,6 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
        
         // The warning message when the camera result is too dark.
         ImageTooDarkMessage: "The image is too dark",
-
-        // The text inside of the delete button.
-        DeleteButtonText: "Delete Photo",
-
-        // The text inside of the retake button.
-        RetakeButtonText: "Retake Photo",
-
-        // The text inside of the cancel button.
-        CancelButtonText: "Cancel",
-
-        // The text inside of the cancel alert button.
-        CancelAndDeleteImagesButtonText: "Delete photos & exit",
-
-        // The text inside of the alert to confirm exiting the scanner.
-        CancelConfirmationMessage: "Delete photos and exit scanner?",
         
         // The primary color of the interface, should be a UIColor.
         PrimaryColor: null,
@@ -315,14 +315,19 @@ Use the following properties in the config when running `getCameraResult`: `Prim
 
 ### Android
 
+Use the following properties in the config when running `getCameraResult`: `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`.
+
+or
+
 Add or edit the file `android/app/src/main/res/values/strings.xml`, add the following:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="zoom_tip">Move closer to the document</string>
-    <string name="image_limit_reached">You have reached the image limit</string>
-    <string name="success_message">Success</string>
+    <string name="klippa_zoom_message">Move closer to the document</string>
+    <string name="klippa_image_limit_reached">You have reached the image limit</string>
+    <string name="klippa_success_message">Success</string>
+    <string name="klippa_image_moving_message">Moving too much</string>
     <string name="klippa_delete_button_text">Delete Photo</string>
     <string name="klippa_retake_button_text">Retake Photo</string>
     <string name="klippa_cancel_button_text">Cancel</string>
