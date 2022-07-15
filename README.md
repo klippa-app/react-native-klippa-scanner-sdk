@@ -133,6 +133,9 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         // The text inside of the alert to confirm exiting the scanner.
         CancelConfirmationMessage: "Delete photos and exit scanner?",
 
+        // The warning message when the camera turned out of portrait mode.
+        OrientationWarningMessage: "Hold your phone in portrait mode",
+
         // To limit the amount of images that can be taken.
         ImageLimit: 10,
         
@@ -315,7 +318,7 @@ Use the following properties in the config when running `getCameraResult`: `Prim
 
 ### Android
 
-Use the following properties in the config when running `getCameraResult`: `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`.
+Use the following properties in the config when running `getCameraResult`: `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`, `OrientationWarningMessage`.
 
 or
 
@@ -328,6 +331,7 @@ Add or edit the file `android/app/src/main/res/values/strings.xml`, add the foll
     <string name="klippa_image_limit_reached">You have reached the image limit</string>
     <string name="klippa_success_message">Success</string>
     <string name="klippa_image_moving_message">Moving too much</string>
+    <string name="klippa_orientation_warning_message">Hold your phone in portrait mode</string>
     <string name="klippa_delete_button_text">Delete Photo</string>
     <string name="klippa_retake_button_text">Retake Photo</string>
     <string name="klippa_cancel_button_text">Cancel</string>
@@ -338,7 +342,7 @@ Add or edit the file `android/app/src/main/res/values/strings.xml`, add the foll
 
 ### iOS
 
-Use the following properties in the config when running `getCameraResult`: `ImageTooBrightMessage`, `ImageTooDarkMessage`, `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`.
+Use the following properties in the config when running `getCameraResult`: `ImageTooBrightMessage`, `ImageTooDarkMessage`, `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`, `orientationWarningMessage`.
 
 
 ## Important iOS notes

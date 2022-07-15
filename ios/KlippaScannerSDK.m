@@ -159,6 +159,12 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
         KlippaScanner.setup.cancelConfirmationMessage = @"";
     }
 
+    if ([config objectForKey:@"OrientationWarningMessage"]) {
+        KlippaScanner.setup.orientationWarningMessage = [config objectForKey:@"OrientationWarningMessage"];
+    } else {
+        KlippaScanner.setup.orientationWarningMessage = @"";
+    }
+
     if ([config objectForKey:@"ShouldGoToReviewScreenWhenImageLimitReached"]) {
         KlippaScanner.setup.shouldGoToReviewScreenWhenImageLimitReached = [[config objectForKey:@"ShouldGoToReviewScreenWhenImageLimitReached"] boolValue];
     } else {
