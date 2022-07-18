@@ -1,3 +1,9 @@
+## 0.2.7
+
+* Bump Android to 2.1.5
+* Bump iOS to 0.5.2
+* Added support for RN 0.69+
+
 ## 0.2.6
 
 * Bump Android to 2.1.4

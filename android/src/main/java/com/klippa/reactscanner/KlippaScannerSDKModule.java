@@ -186,6 +186,10 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
                 cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.CANCEL_CONFIRMATION_MESSAGE, config.getString("CancelConfirmationMessage"));
             }
 
+            if (config.hasKey("OrientationWarningMessage")) {
+                cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.ORIENTATION_WARNING_MESSAGE, config.getString("OrientationWarningMessage"));
+            }
+
             if (config.hasKey("DeleteButtonText")) {
                 cameraIntent.putExtra(com.klippa.scanner.KlippaScanner.DELETE_BUTTON_TEXT, config.getString("DeleteButtonText"));
             }
