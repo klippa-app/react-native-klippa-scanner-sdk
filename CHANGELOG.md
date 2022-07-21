@@ -1,6 +1,7 @@
 ## 0.2.8
 
 * Added support from React 16 until React 19.
+* Bump Android to 2.1.6
 
 ## 0.2.7
 
