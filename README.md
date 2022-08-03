@@ -156,7 +156,7 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
     
         // Optional. Only affects Android.
     
-        // What the default color conversion will be (grayscale, original).
+        // What the default color conversion will be (grayscale, original, enhanced).
         DefaultColor: "original",
     
         // Where to put the image results.
