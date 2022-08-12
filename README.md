@@ -182,7 +182,7 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         ImageColorOriginalText: "original",
 
         // The text inside of the color selection alert dialog button named grayscale.
-        ImageColorGrayscaleText: "grayscaled",
+        ImageColorGrayscaleText: "grayscale",
   
         // The text inside of the color selection alert dialog button named enhanced.
         ImageColorEnhancedText: "enhanced",
