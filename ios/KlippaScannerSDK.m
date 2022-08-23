@@ -52,207 +52,154 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
 {
     if ([config objectForKey:@"License"]) {
         KlippaScanner.setup.license = [config objectForKey:@"License"];
-    } else {
-        KlippaScanner.setup.license = @"";
     }
 
     if ([config objectForKey:@"AllowMultipleDocuments"]) {
         KlippaScanner.setup.allowMultipleDocumentsMode = [[config objectForKey:@"AllowMultipleDocuments"] boolValue];
-    } else {
-        KlippaScanner.setup.allowMultipleDocumentsMode = YES;
     }
 
     if ([config objectForKey:@"DefaultMultipleDocuments"]) {
         KlippaScanner.setup.isMultipleDocumentsModeEnabled = [[config objectForKey:@"DefaultMultipleDocuments"] boolValue];
-    } else {
-        KlippaScanner.setup.isMultipleDocumentsModeEnabled = NO;
+    }
+
+    if ([config objectForKey:@"DefaultImageColor"]) {
+        KlippaScanner.setup.defaultImageColor = [config objectForKey:@"DefaultImageColor"];
     }
 
     if ([config objectForKey:@"DefaultCrop"]) {
         KlippaScanner.setup.isCropEnabled = [[config objectForKey:@"DefaultCrop"] boolValue];
-    } else {
-        KlippaScanner.setup.isCropEnabled = YES;
     }
 
     if ([config objectForKey:@"ImageMaxWidth"]) {
         KlippaScanner.setup.imageMaxWidth = [[config objectForKey:@"ImageMaxWidth"] floatValue];
-    } else {
-        KlippaScanner.setup.imageMaxWidth = 0;
     }
 
     if ([config objectForKey:@"ImageMaxHeight"]) {
         KlippaScanner.setup.imageMaxHeight = [[config objectForKey:@"ImageMaxHeight"] floatValue];
-    } else {
-        KlippaScanner.setup.imageMaxHeight = 0;
     }
 
     if ([config objectForKey:@"ImageMaxQuality"]) {
         KlippaScanner.setup.imageMaxQuality = [[config objectForKey:@"ImageMaxQuality"] floatValue];
-    } else {
-        KlippaScanner.setup.imageMaxQuality = 100;
     }
 
     if ([config objectForKey:@"MoveCloserMessage"]) {
         KlippaScanner.setup.moveCloserMessage = [config objectForKey:@"MoveCloserMessage"];
-    } else {
-        KlippaScanner.setup.moveCloserMessage = @"";
     }
 
     if ([config objectForKey:@"ImageTooBrightMessage"]) {
         KlippaScanner.setup.imageTooBrightMessage = [config objectForKey:@"ImageTooBrightMessage"];
-    } else {
-        KlippaScanner.setup.imageTooBrightMessage = @"";
     }
 
     if ([config objectForKey:@"ImageTooDarkMessage"]) {
         KlippaScanner.setup.imageTooDarkMessage = [config objectForKey:@"ImageTooDarkMessage"];
-    } else {
-        KlippaScanner.setup.imageTooDarkMessage = @"";
     }
 
     if ([config objectForKey:@"ImageLimitReachedMessage"]) {
         KlippaScanner.setup.imageLimitReachedMessage = [config objectForKey:@"ImageLimitReachedMessage"];
-        
-    } else {
-        KlippaScanner.setup.imageLimitReachedMessage = @"";
-    }
+    } 
 
     if ([config objectForKey:@"ImageLimit"]) {
         KlippaScanner.setup.imageLimit = [[config objectForKey:@"ImageLimit"] intValue];
-    } else {
-        KlippaScanner.setup.imageLimit = 0;
     }
 
     if ([config objectForKey:@"ImageMovingMessage"]) {
         KlippaScanner.setup.imageMovingMessage = [config objectForKey:@"ImageMovingMessage"];
-    } else {
-        KlippaScanner.setup.imageMovingMessage = @"";
     }
 
     if ([config objectForKey:@"DeleteButtonText"]) {
         KlippaScanner.setup.deleteButtonText = [config objectForKey:@"DeleteButtonText"];
-    } else {
-        KlippaScanner.setup.deleteButtonText = @"";
     }
 
     if ([config objectForKey:@"RetakeButtonText"]) {
         KlippaScanner.setup.retakeButtonText = [config objectForKey:@"RetakeButtonText"];
-    } else {
-        KlippaScanner.setup.retakeButtonText = @"";
     }
 
     if ([config objectForKey:@"CancelButtonText"]) {
         KlippaScanner.setup.cancelButtonText = [config objectForKey:@"CancelButtonText"];
-    } else {
-        KlippaScanner.setup.cancelButtonText = @"";
+    }
+
+    if ([config objectForKey:@"ImageColorOriginalText"]) {
+        KlippaScanner.setup.imageColorOriginalText = [config objectForKey:@"ImageColorOriginalText"];
+    }
+
+    if ([config objectForKey:@"ImageColorGrayscaleText"]) {
+        KlippaScanner.setup.imageColorGrayscaleText = [config objectForKey:@"ImageColorGrayscaleText"];
+    }
+
+    if ([config objectForKey:@"ImageColorEnhancedText"]) {
+        KlippaScanner.setup.imageColorEnhancedText = [config objectForKey:@"ImageColorEnhancedText"];
     }
 
     if ([config objectForKey:@"CancelAndDeleteImagesButtonText"]) {
         KlippaScanner.setup.cancelAndDeleteImagesButtonText = [config objectForKey:@"CancelAndDeleteImagesButtonText"];
-    } else {
-        KlippaScanner.setup.cancelAndDeleteImagesButtonText = @"";
     }
 
     if ([config objectForKey:@"CancelConfirmationMessage"]) {
         KlippaScanner.setup.cancelConfirmationMessage = [config objectForKey:@"CancelConfirmationMessage"];
-    } else {
-        KlippaScanner.setup.cancelConfirmationMessage = @"";
     }
 
     if ([config objectForKey:@"OrientationWarningMessage"]) {
         KlippaScanner.setup.orientationWarningMessage = [config objectForKey:@"OrientationWarningMessage"];
-    } else {
-        KlippaScanner.setup.orientationWarningMessage = @"";
     }
 
     if ([config objectForKey:@"ShouldGoToReviewScreenWhenImageLimitReached"]) {
         KlippaScanner.setup.shouldGoToReviewScreenWhenImageLimitReached = [[config objectForKey:@"ShouldGoToReviewScreenWhenImageLimitReached"] boolValue];
-    } else {
-        KlippaScanner.setup.shouldGoToReviewScreenWhenImageLimitReached = NO;
     }
 
     if ([config objectForKey:@"UserCanRotateImage"]) {
         KlippaScanner.setup.userCanRotateImage = [[config objectForKey:@"UserCanRotateImage"] boolValue];
-    } else {
-        KlippaScanner.setup.userCanRotateImage = YES;
     }
 
     if ([config objectForKey:@"UserCanCropManually"]) {
         KlippaScanner.setup.userCanCropManually = [[config objectForKey:@"UserCanCropManually"] boolValue];
-    } else {
-        KlippaScanner.setup.userCanCropManually = YES;
     }
 
     if ([config objectForKey:@"UserCanChangeColorSetting"]) {
         KlippaScanner.setup.userCanChangeColorSetting = [[config objectForKey:@"UserCanChangeColorSetting"] boolValue];
-    } else {
-        KlippaScanner.setup.userCanChangeColorSetting = YES;
     }
 
     if ([config objectForKey:@"PrimaryColor"]) {
         KlippaScanner.setup.primaryColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"PrimaryColor"]];
-    } else {
-        KlippaScanner.setup.primaryColor = [UIColor colorWithRed:0.153 green:0.733  blue:0.373 alpha:1.0];
     }
 
     if ([config objectForKey:@"AccentColor"]) {
         KlippaScanner.setup.accentColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"AccentColor"]];
-    } else {
-        KlippaScanner.setup.accentColor = [UIColor colorWithRed:0.153 green:0.733 blue:0.373 alpha:1.0];
     }
 
     if ([config objectForKey:@"OverlayColor"]) {
         KlippaScanner.setup.overlayColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"OverlayColor"]];
-    } else {
-        KlippaScanner.setup.overlayColor = [UIColor colorWithRed:0.153 green:0.733 blue:0.373 alpha:1.0];
     }
 
     if ([config objectForKey:@"WarningBackgroundColor"]) {
         KlippaScanner.setup.warningBackgroundColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"WarningBackgroundColor"]];
-    } else {
-        KlippaScanner.setup.warningBackgroundColor = UIColor.systemRedColor;
     }
 
     if ([config objectForKey:@"WarningTextColor"]) {
         KlippaScanner.setup.warningTextColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"WarningTextColor"]];
-    } else {
-        KlippaScanner.setup.warningTextColor = UIColor.whiteColor;
     }
 
     if ([config objectForKey:@"OverlayColorAlpha"]) {
         KlippaScanner.setup.overlayColorAlpha = [[config objectForKey:@"OverlayColorAlpha"] floatValue];
-    } else {
-        KlippaScanner.setup.overlayColorAlpha = 0.7;
     }
 
     if ([config objectForKey:@"IconEnabledColor"]) {
         KlippaScanner.setup.iconEnabledColor = [KlippaScannerSDK colorWithHexString: [config objectForKey:@"IconEnabledColor"]];
-    } else {
-        KlippaScanner.setup.iconEnabledColor = [UIColor colorWithRed: 1.0 green: 1.0 blue: 1.0 alpha: 1.0];
     }
 
     if ([config objectForKey:@"IconDisabledColor"]) {
         KlippaScanner.setup.iconDisabledColor = [KlippaScannerSDK colorWithHexString: [config objectForKey:@"IconDisabledColor"]];
-    } else {
-        KlippaScanner.setup.iconDisabledColor = [UIColor colorWithRed: 1.0 green: 1.0 blue: 1.0 alpha: 0.5];
     }
 
     if ([config objectForKey:@"ReviewIconColor"]) {
         KlippaScanner.setup.reviewIconColor = [KlippaScannerSDK colorWithHexString: [config objectForKey:@"ReviewIconColor"]];
-    } else {
-        KlippaScanner.setup.reviewIconColor = [UIColor colorWithRed: 1.0 green: 1.0 blue: 1.0 alpha: 1.0];
     }
 
     if ([config objectForKey:@"PreviewDuration"]) {
         KlippaScanner.setup.previewDuration = [[config objectForKey:@"PreviewDuration"] doubleValue];
-    } else {
-        KlippaScanner.setup.previewDuration = 1;
     }
 
     if ([config objectForKey:@"IsViewFinderEnabled"]) {
         KlippaScanner.setup.isViewFinderEnabled = [[config objectForKey:@"IsViewFinderEnabled"] boolValue];
-    } else {
-        KlippaScanner.setup.isViewFinderEnabled = NO;
     }
 
     if ([config objectForKey:@"Timer"]) {
@@ -286,8 +233,6 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
 
     if ([config objectForKey:@"StoreImagesToCameraRoll"]) {
         KlippaScanner.setup.storeImagesToCameraRoll = [[config objectForKey:@"StoreImagesToCameraRoll"] boolValue];
-    } else {
-        KlippaScanner.setup.storeImagesToCameraRoll = YES;
     }
 
     if ([config objectForKey:@"ShutterButton"]) {

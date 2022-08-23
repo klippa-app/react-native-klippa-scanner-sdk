@@ -156,7 +156,7 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
     
         // Optional. Only affects Android.
     
-        // What the default color conversion will be (grayscale, original).
+        // What the default color conversion will be (grayscale, original, enhanced).
         DefaultColor: "original",
     
         // Where to put the image results.
@@ -174,6 +174,18 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
        
         // The warning message when the camera result is too dark.
         ImageTooDarkMessage: "The image is too dark",
+
+        // What the default color conversion will be (grayscale, original, enhanced).
+        DefaultImageColor: "original",
+
+        // The text inside of the color selection alert dialog button named original.
+        ImageColorOriginalText: "original",
+
+        // The text inside of the color selection alert dialog button named grayscale.
+        ImageColorGrayscaleText: "grayscale",
+  
+        // The text inside of the color selection alert dialog button named enhanced.
+        ImageColorEnhancedText: "enhanced",
         
         // The primary color of the interface, should be a UIColor.
         PrimaryColor: null,
@@ -342,7 +354,7 @@ Add or edit the file `android/app/src/main/res/values/strings.xml`, add the foll
 
 ### iOS
 
-Use the following properties in the config when running `getCameraResult`: `ImageTooBrightMessage`, `ImageTooDarkMessage`, `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`, `OrientationWarningMessage`.
+Use the following properties in the config when running `getCameraResult`: `ImageTooBrightMessage`, `ImageTooDarkMessage`, `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`, `OrientationWarningMessage`, `ImageColorOriginalText`, `ImageColorGrayscaleText`, `ImageColorEnhancedText`.
 
 
 ## Important iOS notes

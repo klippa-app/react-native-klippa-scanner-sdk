@@ -1,6 +1,16 @@
+## 0.2.10
+
+* Bump iOS to 0.5.3
+
+## 0.2.9
+
+* Bump Android to 2.1.7
+* Now use default values supplied by native scanner if no value is provided.
+
 ## 0.2.8
 
 * Added support from React 16 until React 19.
+* Bump Android to 2.1.6
 
 ## 0.2.7
 
