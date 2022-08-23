@@ -117,8 +117,8 @@ export class CameraConfig {
   // Where to put the image results.
   StoragePath?: string;
 
-  // What the default color conversion will be (grayscale, original).
-  DefaultColor?: 'original' | 'grayscale';
+  // What the default color conversion will be (original, grayscale, enhanced).
+  DefaultColor?: 'original' | 'grayscale' | 'enhanced';
 
   OutputFilename?: string;
 
@@ -136,6 +136,15 @@ export class CameraConfig {
   // The text inside of the cancel button.
   CancelButtonText?: string;
 
+  // The text inside of the color selection alert dialog button named original.
+  ImageColorOriginalText?: string;
+
+  // The text inside of the color selection alert dialog button named grayscale.
+  ImageColorGrayscaleText?: string;
+  
+  // The text inside of the color selection alert dialog button named enhanced.
+  ImageColorEnhancedText?: string;
+
   // The text inside of the cancel alert button.
   CancelAndDeleteImagesButtonText?: string;
 
@@ -147,6 +156,9 @@ export class CameraConfig {
 
   // The warning message when the camera result is too dark.
   ImageTooDarkMessage?: string;
+
+  // What the default color conversion will be (original, grayscale, enhanced).
+  DefaultImageColor?: 'original' | 'grayscale' | 'enhanced';
 
   // The iOS colors to be configured as RGB Hex. For Android see the readme.
 
@@ -200,7 +212,7 @@ export class CameraResult {
   // Android only.
 
   // What color option was used, so you can save it as default.
-  Color?: 'original' | 'grayscale';
+  Color?:  'original' | 'grayscale' | 'enhanced';
 }
 
 export class CameraResultImage {

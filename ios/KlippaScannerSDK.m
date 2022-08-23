@@ -62,6 +62,10 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
         KlippaScanner.setup.isMultipleDocumentsModeEnabled = [[config objectForKey:@"DefaultMultipleDocuments"] boolValue];
     }
 
+    if ([config objectForKey:@"DefaultImageColor"]) {
+        KlippaScanner.setup.defaultImageColor = [config objectForKey:@"DefaultImageColor"];
+    }
+
     if ([config objectForKey:@"DefaultCrop"]) {
         KlippaScanner.setup.isCropEnabled = [[config objectForKey:@"DefaultCrop"] boolValue];
     }
@@ -112,6 +116,18 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
 
     if ([config objectForKey:@"CancelButtonText"]) {
         KlippaScanner.setup.cancelButtonText = [config objectForKey:@"CancelButtonText"];
+    }
+
+    if ([config objectForKey:@"ImageColorOriginalText"]) {
+        KlippaScanner.setup.imageColorOriginalText = [config objectForKey:@"ImageColorOriginalText"];
+    }
+
+    if ([config objectForKey:@"ImageColorGrayscaleText"]) {
+        KlippaScanner.setup.imageColorGrayscaleText = [config objectForKey:@"ImageColorGrayscaleText"];
+    }
+
+    if ([config objectForKey:@"ImageColorEnhancedText"]) {
+        KlippaScanner.setup.imageColorEnhancedText = [config objectForKey:@"ImageColorEnhancedText"];
     }
 
     if ([config objectForKey:@"CancelAndDeleteImagesButtonText"]) {
