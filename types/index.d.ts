@@ -157,9 +157,6 @@ export class CameraConfig {
   // The warning message when the camera result is too dark.
   ImageTooDarkMessage?: string;
 
-  // What the default color conversion will be (original, grayscale, enhanced).
-  DefaultImageColor?: 'original' | 'grayscale' | 'enhanced';
-
   // The iOS colors to be configured as RGB Hex. For Android see the readme.
 
   // The primary color of the interface, should be a hex RGB color string.
