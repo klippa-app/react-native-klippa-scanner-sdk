@@ -62,8 +62,8 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
         KlippaScanner.setup.isMultipleDocumentsModeEnabled = [[config objectForKey:@"DefaultMultipleDocuments"] boolValue];
     }
 
-    if ([config objectForKey:@"DefaultImageColor"]) {
-        KlippaScanner.setup.defaultImageColor = [config objectForKey:@"DefaultImageColor"];
+    if ([config objectForKey:@"DefaultColor"]) {
+        KlippaScanner.setup.defaultImageColor = [config objectForKey:@"DefaultColor"];
     }
 
     if ([config objectForKey:@"DefaultCrop"]) {

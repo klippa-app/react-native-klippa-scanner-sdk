@@ -153,11 +153,11 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
 
         // Whether to hide or show the color changing button in the Review Screen. (default shown/true)
         UserCanChangeColorSetting: true,
-    
-        // Optional. Only affects Android.
-    
+
         // What the default color conversion will be (grayscale, original, enhanced).
         DefaultColor: "original",
+    
+        // Optional. Only affects Android.
     
         // Where to put the image results.
         StoragePath: "/sdcard/scanner",
@@ -174,9 +174,6 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
        
         // The warning message when the camera result is too dark.
         ImageTooDarkMessage: "The image is too dark",
-
-        // What the default color conversion will be (grayscale, original, enhanced).
-        DefaultImageColor: "original",
 
         // The text inside of the color selection alert dialog button named original.
         ImageColorOriginalText: "original",
