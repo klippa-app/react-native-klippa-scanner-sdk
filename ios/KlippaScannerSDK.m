@@ -50,225 +50,230 @@ RCT_EXPORT_METHOD(getCameraPermission:(RCTPromiseResolveBlock)resolve rejecter:(
 
 RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithResolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
-    if ([config objectForKey:@"License"]) {
-        KlippaScanner.setup.license = [config objectForKey:@"License"];
+    if ([config objectForKey:@"License"] == nil) {
+        return;
     }
 
+    KlippaScannerBuilder *builder = [[KlippaScannerBuilder alloc]initWithBuilderDelegate:self license:[config objectForKey:@"License"]];
+
     if ([config objectForKey:@"AllowMultipleDocuments"]) {
-        KlippaScanner.setup.allowMultipleDocumentsMode = [[config objectForKey:@"AllowMultipleDocuments"] boolValue];
+        builder.klippaMenu.allowMultipleDocumentsMode = [[config objectForKey:@"AllowMultipleDocuments"] boolValue];
     }
 
     if ([config objectForKey:@"DefaultMultipleDocuments"]) {
-        KlippaScanner.setup.isMultipleDocumentsModeEnabled = [[config objectForKey:@"DefaultMultipleDocuments"] boolValue];
+        builder.klippaMenu.isMultipleDocumentsModeEnabled = [[config objectForKey:@"DefaultMultipleDocuments"] boolValue];
     }
 
     if ([config objectForKey:@"DefaultColor"]) {
-        KlippaScanner.setup.defaultImageColor = [config objectForKey:@"DefaultColor"];
-    }
+        NSString *imageColor = [config objectForKey:@"DefaultColor"];
+
+        if([imageColor isEqualToString:@"grayscale"]) {
+            builder.klippaColors.imageColor = KlippaImageColorGrayscale;
+        } else if([imageColor isEqualToString:@"enhanced"]) {
+            builder.klippaColors.imageColor = KlippaImageColorEnhanced;
+        } else {
+            builder.klippaColors.imageColor = KlippaImageColorOriginal;
+        }
+    }    
 
     if ([config objectForKey:@"DefaultCrop"]) {
-        KlippaScanner.setup.isCropEnabled = [[config objectForKey:@"DefaultCrop"] boolValue];
+        builder.klippaMenu.isCropEnabled = [[config objectForKey:@"DefaultCrop"] boolValue];
     }
 
     if ([config objectForKey:@"ImageMaxWidth"]) {
-        KlippaScanner.setup.imageMaxWidth = [[config objectForKey:@"ImageMaxWidth"] floatValue];
+        builder.klippaImageAttributes.imageMaxWidth = [[config objectForKey:@"ImageMaxWidth"] floatValue];
     }
 
     if ([config objectForKey:@"ImageMaxHeight"]) {
-        KlippaScanner.setup.imageMaxHeight = [[config objectForKey:@"ImageMaxHeight"] floatValue];
+        builder.klippaImageAttributes.imageMaxHeight = [[config objectForKey:@"ImageMaxHeight"] floatValue];
     }
 
     if ([config objectForKey:@"ImageMaxQuality"]) {
-        KlippaScanner.setup.imageMaxQuality = [[config objectForKey:@"ImageMaxQuality"] floatValue];
+        builder.klippaImageAttributes.imageMaxQuality = [[config objectForKey:@"ImageMaxQuality"] floatValue];
     }
 
     if ([config objectForKey:@"MoveCloserMessage"]) {
-        KlippaScanner.setup.moveCloserMessage = [config objectForKey:@"MoveCloserMessage"];
+        builder.klippaMessages.moveCloserMessage = [config objectForKey:@"MoveCloserMessage"];
     }
 
     if ([config objectForKey:@"ImageTooBrightMessage"]) {
-        KlippaScanner.setup.imageTooBrightMessage = [config objectForKey:@"ImageTooBrightMessage"];
+        builder.klippaMessages.imageTooBrightMessage = [config objectForKey:@"ImageTooBrightMessage"];
     }
 
     if ([config objectForKey:@"ImageTooDarkMessage"]) {
-        KlippaScanner.setup.imageTooDarkMessage = [config objectForKey:@"ImageTooDarkMessage"];
+        builder.klippaMessages.imageTooDarkMessage = [config objectForKey:@"ImageTooDarkMessage"];
     }
 
     if ([config objectForKey:@"ImageLimitReachedMessage"]) {
-        KlippaScanner.setup.imageLimitReachedMessage = [config objectForKey:@"ImageLimitReachedMessage"];
+        builder.klippaMessages.imageLimitReachedMessage = [config objectForKey:@"ImageLimitReachedMessage"];
     } 
 
     if ([config objectForKey:@"ImageLimit"]) {
-        KlippaScanner.setup.imageLimit = [[config objectForKey:@"ImageLimit"] intValue];
+        builder.klippaImageAttributes.imageLimit = [[config objectForKey:@"ImageLimit"] intValue];
     }
 
     if ([config objectForKey:@"ImageMovingMessage"]) {
-        KlippaScanner.setup.imageMovingMessage = [config objectForKey:@"ImageMovingMessage"];
+        builder.klippaMessages.imageMovingMessage = [config objectForKey:@"ImageMovingMessage"];
     }
 
     if ([config objectForKey:@"DeleteButtonText"]) {
-        KlippaScanner.setup.deleteButtonText = [config objectForKey:@"DeleteButtonText"];
+        builder.klippaButtonTexts.deleteButtonText = [config objectForKey:@"DeleteButtonText"];
     }
 
     if ([config objectForKey:@"RetakeButtonText"]) {
-        KlippaScanner.setup.retakeButtonText = [config objectForKey:@"RetakeButtonText"];
+        builder.klippaButtonTexts.retakeButtonText = [config objectForKey:@"RetakeButtonText"];
     }
 
     if ([config objectForKey:@"CancelButtonText"]) {
-        KlippaScanner.setup.cancelButtonText = [config objectForKey:@"CancelButtonText"];
+        builder.klippaButtonTexts.cancelButtonText = [config objectForKey:@"CancelButtonText"];
     }
 
     if ([config objectForKey:@"ImageColorOriginalText"]) {
-        KlippaScanner.setup.imageColorOriginalText = [config objectForKey:@"ImageColorOriginalText"];
+        builder.klippaButtonTexts.imageColorOriginalText = [config objectForKey:@"ImageColorOriginalText"];
     }
 
     if ([config objectForKey:@"ImageColorGrayscaleText"]) {
-        KlippaScanner.setup.imageColorGrayscaleText = [config objectForKey:@"ImageColorGrayscaleText"];
+        builder.klippaButtonTexts.imageColorGrayscaleText = [config objectForKey:@"ImageColorGrayscaleText"];
     }
 
     if ([config objectForKey:@"ImageColorEnhancedText"]) {
-        KlippaScanner.setup.imageColorEnhancedText = [config objectForKey:@"ImageColorEnhancedText"];
+        builder.klippaButtonTexts.imageColorEnhancedText = [config objectForKey:@"ImageColorEnhancedText"];
     }
 
     if ([config objectForKey:@"CancelAndDeleteImagesButtonText"]) {
-        KlippaScanner.setup.cancelAndDeleteImagesButtonText = [config objectForKey:@"CancelAndDeleteImagesButtonText"];
+        builder.klippaButtonTexts.cancelAndDeleteImagesButtonText = [config objectForKey:@"CancelAndDeleteImagesButtonText"];
     }
 
     if ([config objectForKey:@"CancelConfirmationMessage"]) {
-        KlippaScanner.setup.cancelConfirmationMessage = [config objectForKey:@"CancelConfirmationMessage"];
+        builder.klippaMessages.cancelConfirmationMessage = [config objectForKey:@"CancelConfirmationMessage"];
     }
 
     if ([config objectForKey:@"OrientationWarningMessage"]) {
-        KlippaScanner.setup.orientationWarningMessage = [config objectForKey:@"OrientationWarningMessage"];
+        builder.klippaMessages.orientationWarningMessage = [config objectForKey:@"OrientationWarningMessage"];
     }
 
     if ([config objectForKey:@"ShouldGoToReviewScreenWhenImageLimitReached"]) {
-        KlippaScanner.setup.shouldGoToReviewScreenWhenImageLimitReached = [[config objectForKey:@"ShouldGoToReviewScreenWhenImageLimitReached"] boolValue];
+        builder.klippaMenu.shouldGoToReviewScreenWhenImageLimitReached = [[config objectForKey:@"ShouldGoToReviewScreenWhenImageLimitReached"] boolValue];
     }
 
     if ([config objectForKey:@"UserCanRotateImage"]) {
-        KlippaScanner.setup.userCanRotateImage = [[config objectForKey:@"UserCanRotateImage"] boolValue];
+        builder.klippaMenu.userCanRotateImage = [[config objectForKey:@"UserCanRotateImage"] boolValue];
     }
 
     if ([config objectForKey:@"UserCanCropManually"]) {
-        KlippaScanner.setup.userCanCropManually = [[config objectForKey:@"UserCanCropManually"] boolValue];
+        builder.klippaMenu.userCanCropManually = [[config objectForKey:@"UserCanCropManually"] boolValue];
     }
 
     if ([config objectForKey:@"UserCanChangeColorSetting"]) {
-        KlippaScanner.setup.userCanChangeColorSetting = [[config objectForKey:@"UserCanChangeColorSetting"] boolValue];
+        builder.klippaMenu.userCanChangeColorSetting = [[config objectForKey:@"UserCanChangeColorSetting"] boolValue];
     }
 
     if ([config objectForKey:@"PrimaryColor"]) {
-        KlippaScanner.setup.primaryColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"PrimaryColor"]];
+        builder.klippaColors.primaryColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"PrimaryColor"]];
     }
 
     if ([config objectForKey:@"AccentColor"]) {
-        KlippaScanner.setup.accentColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"AccentColor"]];
+        builder.klippaColors.accentColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"AccentColor"]];
     }
 
     if ([config objectForKey:@"OverlayColor"]) {
-        KlippaScanner.setup.overlayColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"OverlayColor"]];
+        builder.klippaColors.overlayColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"OverlayColor"]];
     }
 
     if ([config objectForKey:@"WarningBackgroundColor"]) {
-        KlippaScanner.setup.warningBackgroundColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"WarningBackgroundColor"]];
+        builder.klippaColors.warningBackgroundColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"WarningBackgroundColor"]];
     }
 
     if ([config objectForKey:@"WarningTextColor"]) {
-        KlippaScanner.setup.warningTextColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"WarningTextColor"]];
+        builder.klippaColors.warningTextColor = [KlippaScannerSDK colorWithHexString:[config objectForKey:@"WarningTextColor"]];
     }
 
     if ([config objectForKey:@"OverlayColorAlpha"]) {
-        KlippaScanner.setup.overlayColorAlpha = [[config objectForKey:@"OverlayColorAlpha"] floatValue];
+        builder.klippaColors.overlayColorAlpha = [[config objectForKey:@"OverlayColorAlpha"] floatValue];
     }
 
     if ([config objectForKey:@"IconEnabledColor"]) {
-        KlippaScanner.setup.iconEnabledColor = [KlippaScannerSDK colorWithHexString: [config objectForKey:@"IconEnabledColor"]];
+        builder.klippaColors.iconEnabledColor = [KlippaScannerSDK colorWithHexString: [config objectForKey:@"IconEnabledColor"]];
     }
 
     if ([config objectForKey:@"IconDisabledColor"]) {
-        KlippaScanner.setup.iconDisabledColor = [KlippaScannerSDK colorWithHexString: [config objectForKey:@"IconDisabledColor"]];
+        builder.klippaColors.iconDisabledColor = [KlippaScannerSDK colorWithHexString: [config objectForKey:@"IconDisabledColor"]];
     }
 
     if ([config objectForKey:@"ReviewIconColor"]) {
-        KlippaScanner.setup.reviewIconColor = [KlippaScannerSDK colorWithHexString: [config objectForKey:@"ReviewIconColor"]];
+        builder.klippaColors.reviewIconColor = [KlippaScannerSDK colorWithHexString: [config objectForKey:@"ReviewIconColor"]];
     }
 
     if ([config objectForKey:@"PreviewDuration"]) {
-        KlippaScanner.setup.previewDuration = [[config objectForKey:@"PreviewDuration"] doubleValue];
+        builder.klippaDurations.previewDuration = [[config objectForKey:@"PreviewDuration"] doubleValue];
     }
 
     if ([config objectForKey:@"IsViewFinderEnabled"]) {
-        KlippaScanner.setup.isViewFinderEnabled = [[config objectForKey:@"IsViewFinderEnabled"] boolValue];
+        builder.klippaMenu.isViewFinderEnabled = [[config objectForKey:@"IsViewFinderEnabled"] boolValue];
     }
 
     if ([config objectForKey:@"Timer"]) {
         if ([[config objectForKey:@"Timer"] objectForKey:@"allowed"]) {
-            KlippaScanner.setup.allowTimer = [[[config objectForKey:@"Timer"] objectForKey:@"allowed"] boolValue];
+            builder.klippaMenu.allowTimer = [[[config objectForKey:@"Timer"] objectForKey:@"allowed"] boolValue];
         }
         if ([[config objectForKey:@"Timer"] objectForKey:@"enabled"]) {
-            KlippaScanner.setup.isTimerEnabled = [[[config objectForKey:@"Timer"] objectForKey:@"enabled"] boolValue];
+            builder.klippaMenu.isTimerEnabled = [[[config objectForKey:@"Timer"] objectForKey:@"enabled"] boolValue];
         }
 
         if ([[config objectForKey:@"Timer"] objectForKey:@"duration"]) {
-            KlippaScanner.setup.timerDuration = [[[config objectForKey:@"Timer"] objectForKey:@"duration"] doubleValue];
+            builder.klippaDurations.timerDuration = [[[config objectForKey:@"Timer"] objectForKey:@"duration"] doubleValue];
         }
     }
 
     if ([config objectForKey:@"CropPadding"]) {
         if ([[config objectForKey:@"CropPadding"] objectForKey:@"width"] && [[config objectForKey:@"CropPadding"] objectForKey:@"height"]) {
-            KlippaScanner.setup.cropPadding = CGSizeMake([[[config objectForKey:@"CropPadding"] objectForKey:@"width"] floatValue], [[[config objectForKey:@"CropPadding"] objectForKey:@"height"] floatValue]);
+            builder.klippaImageAttributes.cropPadding = CGSizeMake([[[config objectForKey:@"CropPadding"] objectForKey:@"width"] floatValue], [[[config objectForKey:@"CropPadding"] objectForKey:@"height"] floatValue]);
         }
     }
 
     if ([config objectForKey:@"Success"]) {
         if ([[config objectForKey:@"Success"] objectForKey:@"message"]) {
-            KlippaScanner.setup.successMessage = [[config objectForKey:@"Success"] objectForKey:@"message"];
+            builder.klippaMessages.successMessage = [[config objectForKey:@"Success"] objectForKey:@"message"];
         }
         if ([[config objectForKey:@"Success"] objectForKey:@"previewDuration"]) {
-            KlippaScanner.setup.successPreviewDuration = [[[config objectForKey:@"Success"] objectForKey:@"previewDuration"] doubleValue];
-            KlippaScanner.setup.previewDuration = 0;
+            builder.klippaDurations.successPreviewDuration = [[[config objectForKey:@"Success"] objectForKey:@"previewDuration"] doubleValue];
+            builder.klippaDurations.previewDuration = 0;
         }
     }
 
     if ([config objectForKey:@"StoreImagesToCameraRoll"]) {
-        KlippaScanner.setup.storeImagesToCameraRoll = [[config objectForKey:@"StoreImagesToCameraRoll"] boolValue];
+        builder.klippaImageAttributes.storeImagesToCameraRoll = [[config objectForKey:@"StoreImagesToCameraRoll"] boolValue];
     }
 
     if ([config objectForKey:@"ShutterButton"]) {
         if ([[config objectForKey:@"ShutterButton"] objectForKey:@"allowShutterButton"]) {
-            KlippaScanner.setup.allowShutterButton = [[[config objectForKey:@"ShutterButton"] objectForKey:@"allowShutterButton"] boolValue];
+            builder.klippaShutterbutton.allowShutterButton = [[[config objectForKey:@"ShutterButton"] objectForKey:@"allowShutterButton"] boolValue];
         }
         if ([[config objectForKey:@"ShutterButton"] objectForKey:@"hideShutterButton"]) {
-            KlippaScanner.setup.hideShutterButton = [[[config objectForKey:@"ShutterButton"] objectForKey:@"hideShutterButton"] boolValue];
+            builder.klippaShutterbutton.hideShutterButton = [[[config objectForKey:@"ShutterButton"] objectForKey:@"hideShutterButton"] boolValue];
         }
     }
 
     if ([config objectForKey:@"ImageMovingSensitivityiOS"]) {
-        KlippaScanner.setup.ImageMovingSensitivity = [[config objectForKey:@"ImageMovingSensitivityiOS"] floatValue];
+        builder.klippaImageAttributes.imageMovingSensitivity = [[config objectForKey:@"ImageMovingSensitivityiOS"] floatValue];
     }
-
-    UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
 
     if ([config objectForKey:@"Model"]) {
         if ([[config objectForKey:@"Model"] objectForKey:@"name"]) {
-            KlippaScanner.setup.modelFile = [[config objectForKey:@"Model"] objectForKey:@"name"];
+            builder.klippaObjectDetectionModel.modelFile = [[config objectForKey:@"Model"] objectForKey:@"name"];
         }
         if ([[config objectForKey:@"Model"] objectForKey:@"labelsName"]) {
-            KlippaScanner.setup.modelLabels = [[config objectForKey:@"Model"] objectForKey:@"labelsName"];
+            builder.klippaObjectDetectionModel.modelLabels = [[config objectForKey:@"Model"] objectForKey:@"labelsName"];
         }
-        KlippaScanner.setup.runWithModel = YES;
+        builder.klippaObjectDetectionModel.runWithModel= YES;
     }
 
     _resolvePromise = resolve;
     _rejectPromise = reject;
 
-    ImageScannerController *imageScannerController  = [[ImageScannerController alloc] init];
-
-    imageScannerController.imageScannerDelegate = self;
-    imageScannerController.modalPresentationStyle = UIModalPresentationFullScreen;
-
-    [rootViewController presentViewController:imageScannerController animated:true completion:NULL];
+    UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+    UIViewController *viewController  = [builder build];
+    [rootViewController presentViewController:viewController animated:true completion:NULL]; 
 }
 
 + (UIColor *) colorWithHexString: (NSString *) hexString {
@@ -319,16 +324,15 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
   return dispatch_get_main_queue();
 }
 
-- (void)imageScannerController:(ImageScannerController * _Nonnull)scanner didFailWithError:(NSError * _Nonnull)error {
+- (void)imageScannerControllerWithDidFailWithError:(NSError * _Nonnull)error {
     if (_resolvePromise != nil) {
         _rejectPromise(@"E_UNKNOWN_ERROR", @"Unknown error", error);
     }
     _resolvePromise = nil;
     _rejectPromise = nil;
-    [scanner dismissViewControllerAnimated:true completion:nil];
 }
 
-- (void)imageScannerController:(ImageScannerController * _Nonnull)scanner didFinishScanningWithResult:(ImageScannerResult * _Nonnull)result {
+- (void)imageScannerControllerWithDidFinishScanningWithResult:(ImageScannerResult * _Nonnull)result {
     NSMutableArray *images = [NSMutableArray array];
     if (result.images != nil) {
         for(int i = 0; i < result.images.count; i++) {
@@ -366,7 +370,7 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
     _rejectPromise = nil;
 }
 
-- (void)imageScannerControllerDidCancel:(ImageScannerController * _Nonnull)scanner {
+- (void)imageScannerControllerDidCancel {
     if (_rejectPromise != nil) {
         _rejectPromise(@"E_CANCELED", @"The user canceled", nil);
     }
