@@ -36,13 +36,11 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
-    private static final int CAMERA_REQUEST_CODE = 9193;
     private static final String E_ACTIVITY_DOES_NOT_EXIST = "E_ACTIVITY_DOES_NOT_EXIST";
     private static final String E_FAILED_TO_SHOW_CAMERA = "E_FAILED_TO_SHOW_CAMERA";
     private static final String E_LICENSE_ERROR = "E_LICENSE_ERROR";
     private static final String E_MISSING_LICENSE= "E_MISSING_LICENSE";
     private static final String E_CANCELED = "E_CANCELED";
-    private static final String E_UNKNOWN_ERROR = "E_UNKNOWN_ERROR";
 
     private final ReactApplicationContext reactContext;
 
@@ -126,8 +124,8 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
         Activity currentActivity = getCurrentActivity();
 
         if (currentActivity == null) {
-//            promise.reject(E_ACTIVITY_DOES_NOT_EXIST, "Activity doesn't exist");
-//            mCameraPromise = null;
+            promise.reject(E_ACTIVITY_DOES_NOT_EXIST, "Activity doesn't exist");
+            mCameraPromise = null;
             return;
         }
 
@@ -161,7 +159,18 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
             }
 
             if (config.hasKey("DefaultColor")) {
-                colors.setImageColorMode(KlippaImageColor.ENHANCED);
+                String imageColor = config.getString("DefaultColor");
+
+                switch (imageColor) {
+                    case "grayscale":
+                        colors.setImageColorMode(KlippaImageColor.GRAYSCALE);
+                        break;
+                    case "enhanced":
+                        colors.setImageColorMode(KlippaImageColor.ENHANCED);
+                        break;
+                    default:
+                        colors.setImageColorMode(KlippaImageColor.ORIGINAL);
+                }
             }
 
             if (config.hasKey("DefaultCrop")) {
@@ -314,9 +323,7 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
             builder.setShutterButton(shutterButton);
             builder.setObjectDetectionModel(objectDetectionModel);
 
-
             currentActivity.startActivity(builder.build(reactContext));
-
         } catch (Exception e) {
             mCameraPromise.reject(E_FAILED_TO_SHOW_CAMERA, e);
             mCameraPromise = null;
