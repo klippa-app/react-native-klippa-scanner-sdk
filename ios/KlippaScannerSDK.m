@@ -259,13 +259,11 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
     }
 
     if ([config objectForKey:@"Model"]) {
-        if ([[config objectForKey:@"Model"] objectForKey:@"name"]) {
+        if ([[config objectForKey:@"Model"] objectForKey:@"name"] &&  [[config objectForKey:@"Model"] objectForKey:@"labelsName"]) {
             builder.klippaObjectDetectionModel.modelFile = [[config objectForKey:@"Model"] objectForKey:@"name"];
-        }
-        if ([[config objectForKey:@"Model"] objectForKey:@"labelsName"]) {
             builder.klippaObjectDetectionModel.modelLabels = [[config objectForKey:@"Model"] objectForKey:@"labelsName"];
+            builder.klippaObjectDetectionModel.runWithModel= YES;
         }
-        builder.klippaObjectDetectionModel.runWithModel= YES;
     }
 
     _resolvePromise = resolve;

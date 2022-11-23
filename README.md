@@ -213,9 +213,6 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
     
         // The amount of seconds the preview should be visible for, should be a float.
         PreviewDuration: 1.0,
-    
-        // Whether the scanner automatically cuts out documents, should be a Boolean.
-        IsCropEnabled: true,
      
         // Whether the camera has a view finder overlay (a helper grid so the user knows where the document should be), should be a Boolean.
         IsViewFinderEnabled: true,

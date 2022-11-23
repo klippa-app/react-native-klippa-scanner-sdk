@@ -148,7 +148,7 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
             final KlippaButtonTexts buttonTexts = new KlippaButtonTexts();
             final KlippaShutterButton shutterButton = new KlippaShutterButton();
             final KlippaDurations durations = new KlippaDurations();
-            final KlippaObjectDetectionModel objectDetectionModel = builder.getObjectDetectionModel();
+            final KlippaObjectDetectionModel objectDetectionModel = new KlippaObjectDetectionModel();
 
             if (config.hasKey("AllowMultipleDocuments")) {
                 menu.setAllowMultiDocumentsMode(config.getBoolean("AllowMultipleDocuments"));
@@ -246,21 +246,18 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
             }
 
             if (config.hasKey("UserCanCropManually")) {
-                menu.setCropEnabled(config.getBoolean("UserCanCropManually"));
+                menu.setUserCanCropManually(config.getBoolean("UserCanCropManually"));
             }
 
             if (config.hasKey("UserCanChangeColorSetting")) {
-                menu.setUserCanRotateImage(config.getBoolean("UserCanChangeColorSetting"));
+                menu.setUserCanChangeColorSetting(config.getBoolean("UserCanChangeColorSetting"));
             }
 
             if (config.hasKey("Model")) {
-                if (config.getMap("Model").hasKey("name")) {
-                    assert objectDetectionModel != null;
+                if (config.getMap("Model").hasKey("name") && config.getMap("Model").hasKey("labelsName")) {
                     objectDetectionModel.setModelName(config.getMap("Model").getString("name"));
-                }
-                if (config.getMap("Model").hasKey("labelsName")) {
-                    assert objectDetectionModel != null;
                     objectDetectionModel.setModelLabels(config.getMap("Model").getString("labelsName"));
+                    objectDetectionModel.setRunWithModel(true);
                 }
             }
 
@@ -324,6 +321,7 @@ public class KlippaScannerSDKModule extends ReactContextBaseJavaModule {
             builder.setObjectDetectionModel(objectDetectionModel);
 
             currentActivity.startActivity(builder.build(reactContext));
+
         } catch (Exception e) {
             mCameraPromise.reject(E_FAILED_TO_SHOW_CAMERA, e);
             mCameraPromise = null;
