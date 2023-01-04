@@ -10,7 +10,7 @@ A script to update the fallback versions of the Klippa Scanner SDK for both Andr
 
 1. Install Homebrew by running the following command in a terminal:
 ```
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
 2. Install jq by running the following command:
