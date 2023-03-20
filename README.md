@@ -1,3 +1,8 @@
+[![Npm version][npm-version]][npm-url]
+
+[npm-version]:https://img.shields.io/npm/v/@klippa/react-native-klippa-scanner-sdk.svg
+[npm-url]:https://www.npmjs.com/package/@klippa/react-native-klippa-identity-verification-sdk
+
 # react-native-klippa-scanner-sdk
 
 ## SDK License
