@@ -322,7 +322,7 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
   return dispatch_get_main_queue();
 }
 
-- (void)imageScannerControllerWithDidFailWithError:(NSError * _Nonnull)error {
+- (void)klippaScannerDidFailWithErrorWithError:(NSError * _Nonnull)error {
     if (_resolvePromise != nil) {
         _rejectPromise(@"E_UNKNOWN_ERROR", @"Unknown error", error);
     }
@@ -330,7 +330,7 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
     _rejectPromise = nil;
 }
 
-- (void)imageScannerControllerWithDidFinishScanningWithResult:(ImageScannerResult * _Nonnull)result {
+- (void)klippaScannerDidFinishScanningWithResultWithResult:(KlippaScannerResult * _Nonnull)result {
     NSMutableArray *images = [NSMutableArray array];
     if (result.images != nil) {
         for(int i = 0; i < result.images.count; i++) {
@@ -368,7 +368,7 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
     _rejectPromise = nil;
 }
 
-- (void)imageScannerControllerDidCancel {
+- (void)klippaScannerDidCancel {
     if (_rejectPromise != nil) {
         _rejectPromise(@"E_CANCELED", @"The user canceled", nil);
     }
