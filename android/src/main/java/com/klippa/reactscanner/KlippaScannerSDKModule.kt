@@ -15,6 +15,7 @@ import com.facebook.react.bridge.WritableNativeMap
 import com.klippa.scanner.KlippaScannerBuilder
 import com.klippa.scanner.KlippaScannerListener
 import com.klippa.scanner.model.KlippaImageColor
+import com.klippa.scanner.model.KlippaObjectDetectionModel
 import com.klippa.scanner.model.KlippaScannerResult
 
 class KlippaScannerSDKModule(
@@ -226,11 +227,11 @@ class KlippaScannerSDKModule(
                     val modelName = modelConfig.getString("name")
                     val labelsName = modelConfig.getString("labelsName")
                     if (!modelName.isNullOrEmpty() && !labelsName.isNullOrEmpty()) {
-                        builder.objectDetectionModel?.run {
-                            this.modelName = modelName
-                            modelLabels = labelsName
-                            runWithModel = true
-                        }
+                        builder.objectDetectionModel =
+                            KlippaObjectDetectionModel(
+                                modelName = modelName,
+                                modelLabels = labelsName
+                            )
                     }
                 }
             }
