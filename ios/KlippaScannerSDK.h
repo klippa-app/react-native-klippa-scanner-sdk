@@ -2,7 +2,7 @@
 #import <KlippaScanner/KlippaScanner.h>
 #import <KlippaScanner/KlippaScanner-Swift.h>
 
-@interface KlippaScannerSDK : NSObject <RCTBridgeModule, ImageScannerControllerDelegate>
+@interface KlippaScannerSDK : NSObject <RCTBridgeModule, KlippaScannerDelegate>
 @property(nullable) RCTPromiseResolveBlock resolvePromise;
 @property(nullable) RCTPromiseRejectBlock rejectPromise;
 
