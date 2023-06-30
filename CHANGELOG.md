@@ -1,3 +1,7 @@
+## 0.3.2
+
+* Bump Android to 3.0.3
+
 ## 0.3.1
 
 * Bump Android to 3.0.2
