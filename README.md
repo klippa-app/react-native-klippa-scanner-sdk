@@ -48,9 +48,9 @@ task copyDownloadableDepsToLibs(type: Copy) {
 Edit the file `ios/Podfile`, add the Klippa CocoaPod:
 ```
 // Add this to the top of your file:
-// Edit the platform to a minimum of 11.0, our SDK doesn't support earlier versions.
+// Edit the platform to a minimum of 13.0, our SDK doesn't support earlier versions.
 
-platform :ios, '11.0'
+platform :ios, '13.0'
 
 if "#{ENV['KLIPPA_SCANNER_SDK_USERNAME']}" == ""
   ENV['KLIPPA_SCANNER_SDK_USERNAME'] = '{your-username}'
