@@ -47,14 +47,38 @@ task copyDownloadableDepsToLibs(type: Copy) {
 
 Edit the file `ios/Podfile`, add the Klippa CocoaPod:
 ```
-// Edit the platform to a minimum of 10.0, our SDK doesn't support earlier iOS versions.
-platform :ios, '10.0'
+// Add this to the top of your file:
+// Edit the platform to a minimum of 11.0, our SDK doesn't support earlier versions.
 
-target 'YourApplicationName' do
-  # Pods for YourApplicationName
-  // ... other pods
+platform :ios, '11.0'
 
-  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/latest.podspec'
+if "#{ENV['KLIPPA_SCANNER_SDK_USERNAME']}" == ""
+  ENV['KLIPPA_SCANNER_SDK_USERNAME'] = '{your-username}'
+end
+
+if "#{ENV['KLIPPA_SCANNER_SDK_PASSWORD']}" == ""
+  ENV['KLIPPA_SCANNER_SDK_PASSWORD'] = '{your-password}'
+end
+
+# // Edit the Runner config to add the pod:
+
+target ‘KlippaScannerExample’ do
+  // ... other instructions
+
+  // Add this below `use_react_native`
+
+  if "#{ENV['KLIPPA_SCANNER_SDK_URL']}" == ""
+    file_path = File.expand_path('../node_modules/@klippa/react-native-klippa-scanner-sdk/ios/.sdk_repo', __dir__)
+    ENV['KLIPPA_SCANNER_SDK_URL'] = File.read(file_path).strip
+  end
+
+  if "#{ENV['KLIPPA_SCANNER_SDK_VERSION']}" == ""
+    file_path = File.expand_path('../node_modules/@klippa/react-native-klippa-scanner-sdk/ios/.sdk_version', __dir__)
+    ENV['KLIPPA_SCANNER_SDK_VERSION'] = File.read(file_path).strip
+  end
+
+  pod 'Klippa-Scanner', podspec: "#{ENV['KLIPPA_SCANNER_SDK_URL']}/#{ENV['KLIPPA_SCANNER_SDK_USERNAME']}/#{ENV['KLIPPA_SCANNER_SDK_PASSWORD']}/KlippaScanner/#{ENV['KLIPPA_SCANNER_SDK_VERSION']}.podspec"
+  
 end
 ```
 
