@@ -62,7 +62,7 @@ end
 
 # // Edit the Runner config to add the pod:
 
-target ‘KlippaScannerExample’ do
+target ‘YourApplicationName’ do
   // ... other instructions
 
   // Add this below `use_react_native`
