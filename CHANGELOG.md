@@ -1,3 +1,13 @@
+## 0.3.3
+
+* Bump iOS to 1.1.0
+* Added the ability to now reference the iOS SDK pod. See the [README](https://github.com/klippa-app/react-native-klippa-scanner-sdk#ios) for more information.
+
+
+## 0.3.2
+
+* Bump Android to 3.0.3
+
 ## 0.3.1
 
 * Bump Android to 3.0.2
