@@ -105,14 +105,6 @@ class KlippaScannerSDKModule(
 
             val builder = KlippaScannerBuilder(klippaScannerListener, license)
 
-            if (config.hasKey("AllowMultipleDocuments")) {
-                builder.menu.allowMultiDocumentsMode = config.getBoolean("AllowMultipleDocuments")
-            }
-
-            if (config.hasKey("DefaultMultipleDocuments")) {
-                builder.menu.isMultiDocumentsModeEnabled = config.getBoolean("DefaultMultipleDocuments")
-            }
-
             if (config.hasKey("DefaultColor")) {
                 when (config.getString("DefaultColor")) {
                     "grayscale" -> builder.colors.imageColorMode = KlippaImageColor.GRAYSCALE

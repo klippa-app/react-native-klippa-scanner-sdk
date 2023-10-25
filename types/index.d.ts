@@ -42,12 +42,6 @@ export class CameraConfig {
   // The license as given by Klippa.
   License: string;
 
-  // Whether to show the icon to enable "multi-document-mode"
-  AllowMultipleDocuments?: boolean;
-
-  // Whether the "multi-document-mode" should be enabled by default.
-  DefaultMultipleDocuments?: boolean;
-
   // Whether the crop mode (auto edge detection) should be enabled by default.
   DefaultCrop?: boolean;
 

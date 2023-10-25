@@ -122,11 +122,6 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         License: "{license-received-by-klippa}",
     
         // Optional.
-        // Whether to show the icon to enable "multi-document-mode"
-        AllowMultipleDocuments: true,
-    
-        // Whether the "multi-document-mode" should be enabled by default.
-        DefaultMultipleDocuments: true,
 
         // Ability to disable/hide the shutter button (only works when a model is supplied as well).
         ShutterButton: {allowShutterButton: true, hideShutterButton: false},

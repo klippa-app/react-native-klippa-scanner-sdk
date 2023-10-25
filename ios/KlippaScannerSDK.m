@@ -56,14 +56,6 @@ RCT_EXPORT_METHOD(getCameraResult:(NSDictionary *)config getCameraResultWithReso
 
     KlippaScannerBuilder *builder = [[KlippaScannerBuilder alloc]initWithBuilderDelegate:self license:[config objectForKey:@"License"]];
 
-    if ([config objectForKey:@"AllowMultipleDocuments"]) {
-        builder.klippaMenu.allowMultipleDocumentsMode = [[config objectForKey:@"AllowMultipleDocuments"] boolValue];
-    }
-
-    if ([config objectForKey:@"DefaultMultipleDocuments"]) {
-        builder.klippaMenu.isMultipleDocumentsModeEnabled = [[config objectForKey:@"DefaultMultipleDocuments"] boolValue];
-    }
-
     if ([config objectForKey:@"DefaultColor"]) {
         NSString *imageColor = [config objectForKey:@"DefaultColor"];
 
