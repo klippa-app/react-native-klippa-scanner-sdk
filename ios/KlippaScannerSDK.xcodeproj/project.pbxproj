@@ -6,6 +6,11 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		9FFCDA242AEA4F8A007DDBA1 /* KlippaScannerSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFCDA232AEA4F8A007DDBA1 /* KlippaScannerSDK.m */; };
+		9FFCDA292AEA508B007DDBA1 /* KlippaScannerSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFCDA282AEA508B007DDBA1 /* KlippaScannerSDK.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		58B511D91A9E6C8500147676 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -20,6 +25,9 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libKlippaScannerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKlippaScannerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FFCDA232AEA4F8A007DDBA1 /* KlippaScannerSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KlippaScannerSDK.m; sourceTree = "<group>"; };
+		9FFCDA272AEA508A007DDBA1 /* KlippaScannerSDK-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KlippaScannerSDK-Bridging-Header.h"; sourceTree = "<group>"; };
+		9FFCDA282AEA508B007DDBA1 /* KlippaScannerSDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KlippaScannerSDK.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +52,9 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				9FFCDA282AEA508B007DDBA1 /* KlippaScannerSDK.swift */,
+				9FFCDA232AEA4F8A007DDBA1 /* KlippaScannerSDK.m */,
+				9FFCDA272AEA508A007DDBA1 /* KlippaScannerSDK-Bridging-Header.h */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -79,6 +90,7 @@
 				TargetAttributes = {
 					58B511DA1A9E6C8500147676 = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 1500;
 					};
 				};
 			};
@@ -105,6 +117,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FFCDA292AEA508B007DDBA1 /* KlippaScannerSDK.swift in Sources */,
+				9FFCDA242AEA4F8A007DDBA1 /* KlippaScannerSDK.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +239,7 @@
 		58B511F01A9E6C8500147676 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -235,12 +250,16 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = KlippaScannerSDK;
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "KlippaScannerSDK-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		58B511F11A9E6C8500147676 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -251,6 +270,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = KlippaScannerSDK;
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "KlippaScannerSDK-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
