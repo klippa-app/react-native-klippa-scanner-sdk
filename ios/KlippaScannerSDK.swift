@@ -14,8 +14,8 @@ class KlippaScannerSDK: NSObject {
     private var _resolve: RCTPromiseResolveBlock? = nil
     private var _reject: RCTPromiseRejectBlock? = nil
 
-    @objc(startScanner:withResolver:withRejecter:)
-    func startScanner(
+    @objc(getCameraResult:withResolver:withRejecter:)
+    func getCameraResult(
         config: [String: Any],
         _ resolve: @escaping RCTPromiseResolveBlock,
         _ reject: @escaping RCTPromiseRejectBlock
@@ -23,7 +23,21 @@ class KlippaScannerSDK: NSObject {
         _resolve = resolve
         _reject = reject
 
+        print("- - - test - - -")
 
+
+
+    }
+
+    @objc(withResolver:withRejecter:)
+    func getCameraPermission(
+        _ resolve: @escaping RCTPromiseResolveBlock,
+        _ reject: @escaping RCTPromiseRejectBlock
+    ) {
+        _resolve = resolve
+        _reject = reject
+
+    print("- - - test --- ")
 
     }
 

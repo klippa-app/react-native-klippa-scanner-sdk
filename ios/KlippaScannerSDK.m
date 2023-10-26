@@ -2,9 +2,15 @@
 
 @interface RCT_EXTERN_MODULE(KlippaScannerSDK, NSObject)
 
-RCT_EXTERN_METHOD(startScanner:(NSDictionary *)config 
+RCT_EXTERN_METHOD(getCameraResult:(NSDictionary *)config 
                 withResolver:(RCTPromiseResolveBlock)resolve 
                 withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(getCameraPermission:
+                withResolver:(RCTPromiseResolveBlock)resolve 
+                withRejecter:(RCTPromiseRejectBlock)reject)         
+
+
 
 + (BOOL)requiresMainQueueSetup
 {
