@@ -10,6 +10,8 @@ import KlippaScanner
 
 @objc(KlippaScannerSDK)
 class KlippaScannerSDK: NSObject {
+    private let E_UNKNOWN = "E_UNKNOWN_ERROR"
+    private let E_CANCELED = "E_CANCELED"
 
     private var _resolve: RCTPromiseResolveBlock? = nil
     private var _reject: RCTPromiseRejectBlock? = nil
@@ -278,15 +280,43 @@ class KlippaScannerSDK: NSObject {
 //    MARK: - KlippaScannerDelegate
 extension KlippaScannerSDK: KlippaScannerDelegate {
     func klippaScannerDidFinishScanningWithResult(result: KlippaScanner.KlippaScannerResult) {
-        print("success")
+
+        var images = [Dictionary<String, String>]()
+        for image in result.images {
+
+            let path = image.path
+            let imageDict = ["Filepath": path]
+            images.append(imageDict)
+        }
+
+        let cropEnabled = result.cropEnabled
+        let timerEnabled = result.timerEnabled
+
+        let resultDict: [String: Any] = ["Images": images,
+                          "Crop": cropEnabled,
+                          "TimerEnabled": timerEnabled]
+
+        if (_resolve != nil) {
+            _resolve?(resultDict)
+        }
+        _resolve = nil
+        _reject = nil
     }
 
     func klippaScannerDidCancel() {
-        print("cancel")
+        if (_reject != nil) {
+            _reject?(E_CANCELED, "The user canceled", nil)
+        }
+        _resolve = nil
+        _reject = nil
     }
 
     func klippaScannerDidFailWithError(error: Error) {
-        print(error)
+        if (_resolve != nil) {
+            _reject?(E_UNKNOWN, "Unknown error", error)
+        }
+        _resolve = nil
+        _reject = nil
     }
 }
 
