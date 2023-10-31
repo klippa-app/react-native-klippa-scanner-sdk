@@ -7,9 +7,11 @@
 //
 
 import KlippaScanner
+import AVFoundation
 
 @objc(KlippaScannerSDK)
 class KlippaScannerSDK: NSObject {
+
     private let E_UNKNOWN = "E_UNKNOWN_ERROR"
     private let E_CANCELED = "E_CANCELED"
 
@@ -25,6 +27,33 @@ class KlippaScannerSDK: NSObject {
         _resolve = resolve
         _reject = reject
 
+        let authorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
+
+        switch authorizationStatus {
+        case .authorized:
+            let dict = ["Status": "Authorized"]
+            _resolve?(dict)
+        case .restricted:
+            let errorDescription = KlippaScannerControllerError.restricted.localizedDescription
+            let dict = ["Status": errorDescription]
+            _resolve?(dict)
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { granted in
+                DispatchQueue.main.async { [weak self] in
+                    if granted {
+                        let dict = ["Status": "Authorized"]
+                        self?._resolve?(dict)
+                    } else {
+                        let dict = ["Status": "Denied"]
+                        self?._resolve?(dict)
+                    }
+                }
+            })
+        default:
+            let errorDescription = KlippaScannerControllerError.authorization.localizedDescription
+            let dict = ["Status": errorDescription]
+            _resolve?(dict)
+        }
 
     }
 
