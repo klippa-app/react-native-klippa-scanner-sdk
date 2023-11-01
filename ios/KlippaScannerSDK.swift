@@ -2,8 +2,8 @@
 //  KlippaScannerSDK.swift
 //  KlippaScannerSDK
 //
-//  Created by Hasan Kucukcayir on 26/10/2023.
-//  Copyright © 2023 Facebook. All rights reserved.
+//  Created by Klippa App BV on 26/10/2023.
+//  Copyright © 2020 Klippa App BV. All rights reserved.
 //
 
 import KlippaScanner
@@ -17,6 +17,10 @@ class KlippaScannerSDK: NSObject {
 
     private var _resolve: RCTPromiseResolveBlock? = nil
     private var _reject: RCTPromiseRejectBlock? = nil
+
+    private var singleDocumentModeInstructionsDismissed = false
+    private var multiDocumentModeInstructionsDismissed = false
+    private var segmentedDocumentModeInstructionsDismissed = false
 
 //    MARK: - getCameraPermission
     @objc(withResolver:withRejecter:)
@@ -279,7 +283,8 @@ class KlippaScannerSDK: NSObject {
         }
 
         setBuilderObjectDetectionModel(config, builder)
-
+        setBuilderCameraModes(config, builder)
+        
         return builder
     }
 
@@ -304,6 +309,86 @@ class KlippaScannerSDK: NSObject {
 
     }
 
+    fileprivate func setBuilderCameraModes(_ config: [String: Any], _ builder: KlippaScannerBuilder) {
+        var modes = [KlippaDocumentMode]()
+
+        if let cameraModeSingle = config["CameraModeSingle"] as? [String: Any] {
+
+            let single = KlippaSingleDocumentMode()
+
+            if let name = cameraModeSingle["name"] as? String {
+                single.name = name
+            }
+
+            let instructions = Instructions(message: "Single Document",
+                                            dismissHandler: {
+                self.singleDocumentModeInstructionsDismissed = true
+            })
+
+            if let message = cameraModeSingle["message"] as? String {
+                instructions.message = message
+            }
+
+            modes.append(single)
+        }
+
+        if let cameraModeMulti = config["CameraModeMulti"] as? [String: Any] {
+
+            let multi = KlippaMultipleDocumentMode()
+
+            if let name = cameraModeMulti["name"] as? String {
+                multi.name = name
+            }
+
+            let instructions = Instructions(message: "Multiple Documents",
+                                            dismissHandler: {
+                self.multiDocumentModeInstructionsDismissed = true
+            })
+
+            if let message = cameraModeMulti["message"] as? String {
+                instructions.message = message
+            }
+
+            multi.instructions = instructions
+
+            modes.append(multi)
+        }
+
+        if let cameraModeSegmented = config["CameraModeSegmented"] as? [String: Any] {
+
+            let segmented = KlippaSegmentedDocumentMode()
+
+            if let name = cameraModeSegmented["name"] as? String {
+                segmented.name = name
+            }
+
+            let instructions = Instructions(message: "Segmented Document",
+                                            dismissHandler: {
+                self.segmentedDocumentModeInstructionsDismissed = true
+            })
+
+            if let message = cameraModeSegmented["message"] as? String {
+                instructions.message = message
+            }
+
+            segmented.instructions = instructions
+
+            modes.append(segmented)
+        }
+
+        var index = 0
+        if let startingIndex = config["StartingIndex"] as? Int {
+            index = startingIndex
+        }
+
+        let cameraModes = KlippaCameraModes(
+            modes: modes,
+            startingIndex: index
+        )
+
+        builder.klippaCameraModes = cameraModes
+    }
+
 }
 
 //    MARK: - KlippaScannerDelegate
@@ -322,8 +407,12 @@ extension KlippaScannerSDK: KlippaScannerDelegate {
         let timerEnabled = result.timerEnabled
 
         let resultDict: [String: Any] = ["Images": images,
-                          "Crop": cropEnabled,
-                          "TimerEnabled": timerEnabled]
+                                         "Crop": cropEnabled,
+                                         "TimerEnabled": timerEnabled,
+                                         "SingleDocumentModeInstructionsDismissed": singleDocumentModeInstructionsDismissed,
+                                         "MultiDocumentModeInstructionsDismissed": multiDocumentModeInstructionsDismissed,
+                                         "SegmentedDocumentModeInstructionsDismissed": segmentedDocumentModeInstructionsDismissed
+        ]
 
         if (_resolve != nil) {
             _resolve?(resultDict)

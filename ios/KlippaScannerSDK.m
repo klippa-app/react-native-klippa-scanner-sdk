@@ -8,9 +8,7 @@ RCT_EXTERN_METHOD(getCameraResult:(NSDictionary *)config
 
 RCT_EXTERN_METHOD(getCameraPermission:
                 withResolver:(RCTPromiseResolveBlock)resolve 
-                withRejecter:(RCTPromiseRejectBlock)reject)         
-
-
+                withRejecter:(RCTPromiseRejectBlock)reject)
 
 + (BOOL)requiresMainQueueSetup
 {

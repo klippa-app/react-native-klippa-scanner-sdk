@@ -35,6 +35,20 @@ export interface ShutterButton {
   hideShutterButton: boolean;
 }
 
+export interface SingleDocumentMode {
+  name?: string;
+  message?: string;
+}
+
+export interface MultipleDocumentMode {
+  name?: string;
+  message?: string;
+}
+
+export interface SegmentedDocumentMode {
+  name?: string;
+  message?: string;
+}
 
 export class CameraConfig {
   // Global options.
@@ -53,6 +67,13 @@ export class CameraConfig {
 
   // The warning message when the camera turned out of portrait mode.
   OrientationWarningMessage?: string;
+
+  // 
+  CameraModeSingle?: SingleDocumentMode;
+  CameraModeMulti?: MultipleDocumentMode;
+  CameraModeSegmented?: SegmentedDocumentMode;
+
+  StartingIndex?: number;
 
   // Define the max resolution of the output file. It’s possible to set only one of these values.
   // We will make sure the picture fits in the given resolution. We will also keep the aspect ratio of the image.
