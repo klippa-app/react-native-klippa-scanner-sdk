@@ -68,9 +68,13 @@ export class CameraConfig {
   // The warning message when the camera turned out of portrait mode.
   OrientationWarningMessage?: string;
 
-  // 
+  // The camera mode for scanning one part documents.
   CameraModeSingle?: SingleDocumentMode;
+
+   // The camera mode for scanning documents that consist of multiple pages.
   CameraModeMulti?: MultipleDocumentMode;
+
+  // The camera mode for scanning long documents in separate parts.
   CameraModeSegmented?: SegmentedDocumentMode;
 
   StartingIndex?: number;

@@ -160,6 +160,15 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         // The warning message when the camera turned out of portrait mode.
         OrientationWarningMessage: "Hold your phone in portrait mode",
 
+        // The camera mode for scanning one part documents.
+        CameraModeSingle?: SingleDocumentMode;
+
+        // The camera mode for scanning documents that consist of multiple pages.
+        CameraModeMulti?: MultipleDocumentMode;
+
+        // The camera mode for scanning long documents in separate parts.
+        CameraModeSegmented?: SegmentedDocumentMode;
+
         // To limit the amount of images that can be taken.
         ImageLimit: 10,
         
