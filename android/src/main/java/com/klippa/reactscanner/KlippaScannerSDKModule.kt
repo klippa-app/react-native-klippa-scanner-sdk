@@ -1,7 +1,6 @@
 package com.klippa.reactscanner
 
 import android.Manifest
-import android.content.Intent
 import android.util.Size
 import androidx.core.content.PermissionChecker
 import com.facebook.react.bridge.Promise
@@ -90,8 +89,8 @@ class KlippaScannerSDKModule(
 
     @ReactMethod
     fun getCameraResult(config: ReadableMap, promise: Promise) {
-        val currentActivity = currentActivity
-        if (currentActivity == null) {
+
+        val currentActivity = currentActivity ?: kotlin.run {
             promise.reject(E_ACTIVITY_DOES_NOT_EXIST, "Activity doesn't exist")
             mCameraPromise = null
             return
@@ -380,19 +379,7 @@ class KlippaScannerSDKModule(
 
             builder.cameraModes = cameraModes
 
-            val klippaScanner = builder.build(reactContext)
-
-            val vc: Intent?
-            when (klippaScanner) {
-                is Success -> {
-                    vc = klippaScanner.value
-                }
-                else -> {
-                    return
-                }
-            }
-
-            currentActivity.startActivity(vc)
+            builder.startScanner(currentActivity)
 
         } catch (e: Exception) {
             promise.reject(E_FAILED_TO_SHOW_CAMERA, e)
