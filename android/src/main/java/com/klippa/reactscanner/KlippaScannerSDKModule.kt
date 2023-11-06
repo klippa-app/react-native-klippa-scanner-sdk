@@ -310,19 +310,21 @@ class KlippaScannerSDKModule(
             if (config.hasKey("CameraModeSingle")) {
                 val cameraModeSingle = config.getMap("CameraModeSingle") ?: return
 
-                var name = "Single Document"
+                val singleCameraMode = KlippaSingleDocumentMode()
+
                 if (cameraModeSingle.hasKey("name")) {
-                    name = cameraModeSingle.getString("name").toString()
+                    singleCameraMode.name = cameraModeSingle.getString("name").toString()
                 }
 
-                var message = "Single Document"
                 if (cameraModeSingle.hasKey("message")) {
-                    message = cameraModeSingle.getString("message").toString()
-                }
+                    val message = cameraModeSingle.getString("message").toString()
 
-                val singleCameraMode = KlippaSingleDocumentMode(name = name, Instructions(message = message, dismissHandler = {
-                    singleDocumentModeInstructionsDismissed = true
-                }))
+                    val instructions = Instructions(message = message, dismissHandler = {
+                        singleDocumentModeInstructionsDismissed = true
+                    })
+
+                    singleCameraMode.instructions = instructions
+                }
 
                 modes.add(singleCameraMode)
             }
@@ -330,19 +332,21 @@ class KlippaScannerSDKModule(
             if (config.hasKey("CameraModeMulti")) {
                 val cameraMode = config.getMap("CameraModeMulti") ?: return
 
-                var name = "Multiple Document Mode"
+                val multipleCameraMode = KlippaMultipleDocumentMode()
+
                 if (cameraMode.hasKey("name")) {
-                    name = cameraMode.getString("name").toString()
+                    multipleCameraMode.name = cameraMode.getString("name").toString()
                 }
 
-                var message = "Multiple Document Mode"
                 if (cameraMode.hasKey("message")) {
-                    message = cameraMode.getString("message").toString()
-                }
+                    val message = cameraMode.getString("message").toString()
 
-                val multipleCameraMode = KlippaMultipleDocumentMode(name = name, Instructions(message = message, dismissHandler = {
-                    multiDocumentModeInstructionsDismissed = true
-                }))
+                    val instructions = Instructions(message = message, dismissHandler = {
+                        multiDocumentModeInstructionsDismissed = true
+                    })
+
+                    multipleCameraMode.instructions = instructions
+                }
 
                 modes.add(multipleCameraMode)
             }
@@ -350,22 +354,26 @@ class KlippaScannerSDKModule(
             if (config.hasKey("CameraModeSegmented")) {
                 val cameraMode = config.getMap("CameraModeSegmented") ?: return
 
-                var name = "Segmented Document"
+                val segmentedCameraMode = KlippaSegmentedDocumentMode()
+
                 if (cameraMode.hasKey("name")) {
-                    name = cameraMode.getString("name").toString()
+                    segmentedCameraMode.name = cameraMode.getString("name").toString()
                 }
 
-                var message = "Segmented Document"
                 if (cameraMode.hasKey("message")) {
-                    message = cameraMode.getString("message").toString()
-                }
+                    val message = cameraMode.getString("message").toString()
 
-                val segmentedCameraMode = KlippaSegmentedDocumentMode(name = name, Instructions(message = message, dismissHandler = {
-                    segmentedDocumentModeInstructionsDismissed = true
-                }))
+                    val instructions = Instructions(message = message, dismissHandler = {
+                        segmentedDocumentModeInstructionsDismissed = true
+                    })
+
+                    segmentedCameraMode.instructions = instructions
+                }
 
                 modes.add(segmentedCameraMode)
             }
+
+            if (modes.isEmpty()) { return }
 
             var index = 0
             if (config.hasKey("StartingIndex")) {

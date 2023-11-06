@@ -35,17 +35,7 @@ export interface ShutterButton {
   hideShutterButton: boolean;
 }
 
-export interface SingleDocumentMode {
-  name?: string;
-  message?: string;
-}
-
-export interface MultipleDocumentMode {
-  name?: string;
-  message?: string;
-}
-
-export interface SegmentedDocumentMode {
+export interface DocumentMode {
   name?: string;
   message?: string;
 }
@@ -69,13 +59,13 @@ export class CameraConfig {
   OrientationWarningMessage?: string;
 
   // The camera mode for scanning one part documents.
-  CameraModeSingle?: SingleDocumentMode;
+  CameraModeSingle?: DocumentMode;
 
    // The camera mode for scanning documents that consist of multiple pages.
-  CameraModeMulti?: MultipleDocumentMode;
+  CameraModeMulti?: DocumentMode;
 
   // The camera mode for scanning long documents in separate parts.
-  CameraModeSegmented?: SegmentedDocumentMode;
+  CameraModeSegmented?: DocumentMode;
 
   StartingIndex?: number;
 

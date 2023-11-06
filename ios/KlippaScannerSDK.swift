@@ -81,7 +81,11 @@ class KlippaScannerSDK: NSObject {
             let rootViewController = UIApplication.shared.keyWindow?.rootViewController
             rootViewController?.show(vc, sender: self)
         case .failure(let error):
-            print(error.localizedDescription)
+            if (_reject != nil) {
+                _reject?(E_CANCELED, error.localizedDescription, nil)
+            }
+            _resolve = nil
+            _reject = nil
         }
 
     }
@@ -284,7 +288,7 @@ class KlippaScannerSDK: NSObject {
 
         setBuilderObjectDetectionModel(config, builder)
         setBuilderCameraModes(config, builder)
-        
+
         return builder
     }
 
@@ -320,13 +324,13 @@ class KlippaScannerSDK: NSObject {
                 single.name = name
             }
 
-            let instructions = Instructions(message: "Single Document",
-                                            dismissHandler: {
-                self.singleDocumentModeInstructionsDismissed = true
-            })
-
             if let message = cameraModeSingle["message"] as? String {
-                instructions.message = message
+                let instructions = Instructions(message: message,
+                                                dismissHandler: {
+                    self.singleDocumentModeInstructionsDismissed = true
+                })
+
+                single.instructions = instructions
             }
 
             modes.append(single)
@@ -340,16 +344,14 @@ class KlippaScannerSDK: NSObject {
                 multi.name = name
             }
 
-            let instructions = Instructions(message: "Multiple Documents",
-                                            dismissHandler: {
-                self.multiDocumentModeInstructionsDismissed = true
-            })
-
             if let message = cameraModeMulti["message"] as? String {
-                instructions.message = message
-            }
+                let instructions = Instructions(message: message,
+                                                dismissHandler: {
+                    self.multiDocumentModeInstructionsDismissed = true
+                })
 
-            multi.instructions = instructions
+                multi.instructions = instructions
+            }
 
             modes.append(multi)
         }
@@ -362,19 +364,18 @@ class KlippaScannerSDK: NSObject {
                 segmented.name = name
             }
 
-            let instructions = Instructions(message: "Segmented Document",
-                                            dismissHandler: {
-                self.segmentedDocumentModeInstructionsDismissed = true
-            })
-
             if let message = cameraModeSegmented["message"] as? String {
-                instructions.message = message
+                let instructions = Instructions(message: message,
+                                                dismissHandler: {
+                    self.segmentedDocumentModeInstructionsDismissed = true
+                })
+                segmented.instructions = instructions
             }
-
-            segmented.instructions = instructions
 
             modes.append(segmented)
         }
+
+        if modes.isEmpty { return }
 
         var index = 0
         if let startingIndex = config["StartingIndex"] as? Int {
@@ -406,12 +407,13 @@ extension KlippaScannerSDK: KlippaScannerDelegate {
         let cropEnabled = result.cropEnabled
         let timerEnabled = result.timerEnabled
 
-        let resultDict: [String: Any] = ["Images": images,
-                                         "Crop": cropEnabled,
-                                         "TimerEnabled": timerEnabled,
-                                         "SingleDocumentModeInstructionsDismissed": singleDocumentModeInstructionsDismissed,
-                                         "MultiDocumentModeInstructionsDismissed": multiDocumentModeInstructionsDismissed,
-                                         "SegmentedDocumentModeInstructionsDismissed": segmentedDocumentModeInstructionsDismissed
+        let resultDict: [String: Any] = [
+            "Images": images,
+            "Crop": cropEnabled,
+            "TimerEnabled": timerEnabled,
+            "SingleDocumentModeInstructionsDismissed": singleDocumentModeInstructionsDismissed,
+            "MultiDocumentModeInstructionsDismissed": multiDocumentModeInstructionsDismissed,
+            "SegmentedDocumentModeInstructionsDismissed": segmentedDocumentModeInstructionsDismissed
         ]
 
         if (_resolve != nil) {
