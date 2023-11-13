@@ -373,19 +373,19 @@ class KlippaScannerSDKModule(
                 modes.add(segmentedCameraMode)
             }
 
-            if (modes.isEmpty()) { return }
+            if (modes.isNotEmpty()) {
+                var index = 0
+                if (config.hasKey("StartingIndex")) {
+                    index = config.getInt("StartingIndex")
+                }
 
-            var index = 0
-            if (config.hasKey("StartingIndex")) {
-                index = config.getInt("StartingIndex")
+                val cameraModes = KlippaCameraModes(
+                        modes = modes,
+                        startingIndex = index
+                )
+
+                builder.cameraModes = cameraModes
             }
-
-            val cameraModes = KlippaCameraModes(
-                    modes = modes,
-                    startingIndex = index
-            )
-
-            builder.cameraModes = cameraModes
 
             builder.startScanner(currentActivity)
 
