@@ -1,3 +1,10 @@
+## 0.4.0
+
+* Bump iOS to 1.2.0
+* Bump Android to 3.1.1
+* Removed `AllowMultipleDocuments` and `DefaultMultipleDocuments`. 
+* Added built-in camera modes: `CameraModeSingle`, `CameraModeMulti`, `CameraModeSegmented`.
+
 ## 0.3.3
 
 * Bump iOS to 1.1.0

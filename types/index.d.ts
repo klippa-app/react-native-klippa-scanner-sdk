@@ -35,18 +35,16 @@ export interface ShutterButton {
   hideShutterButton: boolean;
 }
 
+export interface DocumentMode {
+  name?: string;
+  message?: string;
+}
 
 export class CameraConfig {
   // Global options.
 
   // The license as given by Klippa.
   License: string;
-
-  // Whether to show the icon to enable "multi-document-mode"
-  AllowMultipleDocuments?: boolean;
-
-  // Whether the "multi-document-mode" should be enabled by default.
-  DefaultMultipleDocuments?: boolean;
 
   // Whether the crop mode (auto edge detection) should be enabled by default.
   DefaultCrop?: boolean;
@@ -59,6 +57,17 @@ export class CameraConfig {
 
   // The warning message when the camera turned out of portrait mode.
   OrientationWarningMessage?: string;
+
+  // The camera mode for scanning one part documents.
+  CameraModeSingle?: DocumentMode;
+
+   // The camera mode for scanning documents that consist of multiple pages.
+  CameraModeMulti?: DocumentMode;
+
+  // The camera mode for scanning long documents in separate parts.
+  CameraModeSegmented?: DocumentMode;
+
+  StartingIndex?: number;
 
   // Define the max resolution of the output file. It’s possible to set only one of these values.
   // We will make sure the picture fits in the given resolution. We will also keep the aspect ratio of the image.

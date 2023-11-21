@@ -1,7 +1,7 @@
 [![Npm version][npm-version]][npm-url]
 
 [npm-version]:https://img.shields.io/npm/v/@klippa/react-native-klippa-scanner-sdk.svg
-[npm-url]:https://www.npmjs.com/package/@klippa/react-native-klippa-identity-verification-sdk
+[npm-url]:https://www.npmjs.com/package/@klippa/react-native-klippa-scanner-sdk
 
 # react-native-klippa-scanner-sdk
 
@@ -47,14 +47,38 @@ task copyDownloadableDepsToLibs(type: Copy) {
 
 Edit the file `ios/Podfile`, add the Klippa CocoaPod:
 ```
-// Edit the platform to a minimum of 10.0, our SDK doesn't support earlier iOS versions.
-platform :ios, '10.0'
+// Add this to the top of your file:
+// Edit the platform to a minimum of 13.0, our SDK doesn't support earlier versions.
 
-target 'YourApplicationName' do
-  # Pods for YourApplicationName
-  // ... other pods
+platform :ios, '13.0'
 
-  pod 'Klippa-Scanner', podspec: 'https://custom-ocr.klippa.com/sdk/ios/specrepo/{your-username}/{your-password}/KlippaScanner/latest.podspec'
+if "#{ENV['KLIPPA_SCANNER_SDK_USERNAME']}" == ""
+  ENV['KLIPPA_SCANNER_SDK_USERNAME'] = '{your-username}'
+end
+
+if "#{ENV['KLIPPA_SCANNER_SDK_PASSWORD']}" == ""
+  ENV['KLIPPA_SCANNER_SDK_PASSWORD'] = '{your-password}'
+end
+
+# // Edit the Runner config to add the pod:
+
+target ‘YourApplicationName’ do
+  // ... other instructions
+
+  // Add this below `use_react_native`
+
+  if "#{ENV['KLIPPA_SCANNER_SDK_URL']}" == ""
+    file_path = File.expand_path('../node_modules/@klippa/react-native-klippa-scanner-sdk/ios/.sdk_repo', __dir__)
+    ENV['KLIPPA_SCANNER_SDK_URL'] = File.read(file_path).strip
+  end
+
+  if "#{ENV['KLIPPA_SCANNER_SDK_VERSION']}" == ""
+    file_path = File.expand_path('../node_modules/@klippa/react-native-klippa-scanner-sdk/ios/.sdk_version', __dir__)
+    ENV['KLIPPA_SCANNER_SDK_VERSION'] = File.read(file_path).strip
+  end
+
+  pod 'Klippa-Scanner', podspec: "#{ENV['KLIPPA_SCANNER_SDK_URL']}/#{ENV['KLIPPA_SCANNER_SDK_USERNAME']}/#{ENV['KLIPPA_SCANNER_SDK_PASSWORD']}/KlippaScanner/#{ENV['KLIPPA_SCANNER_SDK_VERSION']}.podspec"
+  
 end
 ```
 
@@ -98,11 +122,6 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         License: "{license-received-by-klippa}",
     
         // Optional.
-        // Whether to show the icon to enable "multi-document-mode"
-        AllowMultipleDocuments: true,
-    
-        // Whether the "multi-document-mode" should be enabled by default.
-        DefaultMultipleDocuments: true,
 
         // Ability to disable/hide the shutter button (only works when a model is supplied as well).
         ShutterButton: {allowShutterButton: true, hideShutterButton: false},
@@ -140,6 +159,15 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
 
         // The warning message when the camera turned out of portrait mode.
         OrientationWarningMessage: "Hold your phone in portrait mode",
+
+        // The camera mode for scanning one part documents.
+        CameraModeSingle?: SingleDocumentMode;
+
+        // The camera mode for scanning documents that consist of multiple pages.
+        CameraModeMulti?: MultipleDocumentMode;
+
+        // The camera mode for scanning long documents in separate parts.
+        CameraModeSegmented?: SegmentedDocumentMode;
 
         // To limit the amount of images that can be taken.
         ImageLimit: 10,

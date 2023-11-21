@@ -14,9 +14,7 @@ import com.facebook.react.bridge.WritableNativeArray
 import com.facebook.react.bridge.WritableNativeMap
 import com.klippa.scanner.KlippaScannerBuilder
 import com.klippa.scanner.KlippaScannerListener
-import com.klippa.scanner.model.KlippaImageColor
-import com.klippa.scanner.model.KlippaObjectDetectionModel
-import com.klippa.scanner.model.KlippaScannerResult
+import com.klippa.scanner.model.*
 
 class KlippaScannerSDKModule(
     private val reactContext: ReactApplicationContext
@@ -24,20 +22,25 @@ class KlippaScannerSDKModule(
 
     private var mCameraPromise: Promise? = null
 
+    private var singleDocumentModeInstructionsDismissed = false
+    private var multiDocumentModeInstructionsDismissed = false
+    private var segmentedDocumentModeInstructionsDismissed = false
+
     private val klippaScannerListener: KlippaScannerListener = object : KlippaScannerListener {
         override fun klippaScannerDidFinishScanningWithResult(result: KlippaScannerResult) {
             val cameraResult: WritableMap = WritableNativeMap()
             val images: WritableArray = WritableNativeArray()
 
             val imageList = result.images
-            val multipleDocuments = result.multipleDocumentsModeEnabled
             val crop = result.cropEnabled
             val timerEnabled = result.timerEnabled
             val color = result.defaultImageColorLegacy
-            cameraResult.putBoolean("MultipleDocuments", multipleDocuments)
             cameraResult.putBoolean("Crop", crop)
             cameraResult.putBoolean("TimerEnabled", timerEnabled)
             cameraResult.putString("Color", color)
+            cameraResult.putBoolean("SingleDocumentModeInstructionsDismissed", singleDocumentModeInstructionsDismissed)
+            cameraResult.putBoolean("MultiDocumentModeInstructionsDismissed", multiDocumentModeInstructionsDismissed)
+            cameraResult.putBoolean("SegmentedDocumentModeInstructionsDismissed", segmentedDocumentModeInstructionsDismissed)
 
             for (image in imageList) {
                 val imageMap: WritableMap = WritableNativeMap()
@@ -86,8 +89,8 @@ class KlippaScannerSDKModule(
 
     @ReactMethod
     fun getCameraResult(config: ReadableMap, promise: Promise) {
-        val currentActivity = currentActivity
-        if (currentActivity == null) {
+
+        val currentActivity = currentActivity ?: kotlin.run {
             promise.reject(E_ACTIVITY_DOES_NOT_EXIST, "Activity doesn't exist")
             mCameraPromise = null
             return
@@ -104,14 +107,6 @@ class KlippaScannerSDKModule(
             }
 
             val builder = KlippaScannerBuilder(klippaScannerListener, license)
-
-            if (config.hasKey("AllowMultipleDocuments")) {
-                builder.menu.allowMultiDocumentsMode = config.getBoolean("AllowMultipleDocuments")
-            }
-
-            if (config.hasKey("DefaultMultipleDocuments")) {
-                builder.menu.isMultiDocumentsModeEnabled = config.getBoolean("DefaultMultipleDocuments")
-            }
 
             if (config.hasKey("DefaultColor")) {
                 when (config.getString("DefaultColor")) {
@@ -310,8 +305,89 @@ class KlippaScannerSDKModule(
                 builder.imageAttributes.storeImagesToGallery = config.getBoolean("StoreImagesToCameraRoll")
             }
 
-            val klippaScanner = builder.build(reactContext)
-            currentActivity.startActivity(klippaScanner)
+            val modes = ArrayList<KlippaDocumentMode>()
+
+            if (config.hasKey("CameraModeSingle")) {
+                val cameraModeSingle = config.getMap("CameraModeSingle") ?: return
+
+                val singleCameraMode = KlippaSingleDocumentMode()
+
+                if (cameraModeSingle.hasKey("name")) {
+                    singleCameraMode.name = cameraModeSingle.getString("name").toString()
+                }
+
+                if (cameraModeSingle.hasKey("message")) {
+                    val message = cameraModeSingle.getString("message").toString()
+
+                    val instructions = Instructions(message = message, dismissHandler = {
+                        singleDocumentModeInstructionsDismissed = true
+                    })
+
+                    singleCameraMode.instructions = instructions
+                }
+
+                modes.add(singleCameraMode)
+            }
+
+            if (config.hasKey("CameraModeMulti")) {
+                val cameraMode = config.getMap("CameraModeMulti") ?: return
+
+                val multipleCameraMode = KlippaMultipleDocumentMode()
+
+                if (cameraMode.hasKey("name")) {
+                    multipleCameraMode.name = cameraMode.getString("name").toString()
+                }
+
+                if (cameraMode.hasKey("message")) {
+                    val message = cameraMode.getString("message").toString()
+
+                    val instructions = Instructions(message = message, dismissHandler = {
+                        multiDocumentModeInstructionsDismissed = true
+                    })
+
+                    multipleCameraMode.instructions = instructions
+                }
+
+                modes.add(multipleCameraMode)
+            }
+
+            if (config.hasKey("CameraModeSegmented")) {
+                val cameraMode = config.getMap("CameraModeSegmented") ?: return
+
+                val segmentedCameraMode = KlippaSegmentedDocumentMode()
+
+                if (cameraMode.hasKey("name")) {
+                    segmentedCameraMode.name = cameraMode.getString("name").toString()
+                }
+
+                if (cameraMode.hasKey("message")) {
+                    val message = cameraMode.getString("message").toString()
+
+                    val instructions = Instructions(message = message, dismissHandler = {
+                        segmentedDocumentModeInstructionsDismissed = true
+                    })
+
+                    segmentedCameraMode.instructions = instructions
+                }
+
+                modes.add(segmentedCameraMode)
+            }
+
+            if (modes.isNotEmpty()) {
+                var index = 0
+                if (config.hasKey("StartingIndex")) {
+                    index = config.getInt("StartingIndex")
+                }
+
+                val cameraModes = KlippaCameraModes(
+                        modes = modes,
+                        startingIndex = index
+                )
+
+                builder.cameraModes = cameraModes
+            }
+
+            builder.startScanner(currentActivity)
 
         } catch (e: Exception) {
             promise.reject(E_FAILED_TO_SHOW_CAMERA, e)
