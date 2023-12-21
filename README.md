@@ -122,11 +122,6 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         License: "{license-received-by-klippa}",
     
         // Optional.
-        // Whether to show the icon to enable "multi-document-mode"
-        AllowMultipleDocuments: true,
-    
-        // Whether the "multi-document-mode" should be enabled by default.
-        DefaultMultipleDocuments: true,
 
         // Ability to disable/hide the shutter button (only works when a model is supplied as well).
         ShutterButton: {allowShutterButton: true, hideShutterButton: false},
@@ -164,6 +159,15 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
 
         // The warning message when the camera turned out of portrait mode.
         OrientationWarningMessage: "Hold your phone in portrait mode",
+
+        // The camera mode for scanning one part documents.
+        CameraModeSingle?: SingleDocumentMode;
+
+        // The camera mode for scanning documents that consist of multiple pages.
+        CameraModeMulti?: MultipleDocumentMode;
+
+        // The camera mode for scanning long documents in separate parts.
+        CameraModeSegmented?: SegmentedDocumentMode;
 
         // To limit the amount of images that can be taken.
         ImageLimit: 10,
