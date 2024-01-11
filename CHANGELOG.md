@@ -1,3 +1,11 @@
+## 0.4.1
+
+* Bump Android to 3.1.2
+* Bump Compile API level to 34 (Adds support for Android 14)
+* Bump Kotlin version to 1.9.20
+* Bump Gradle version to 8.2.0
+* Removed unused files from library.
+
 ## 0.4.0
 
 * Bump iOS to 1.2.0
