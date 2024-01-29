@@ -89,7 +89,7 @@ class KlippaScannerSDK: NSObject {
         }
 
     }
-
+    
     private func setupScannerBuilder(with config: [String: Any]) -> KlippaScannerBuilder {
 
         let license = config["License"] as? String
@@ -126,7 +126,7 @@ class KlippaScannerSDK: NSObject {
             }
         }
 
-        if let overlayColorAlpha = config["OverlayColorAlpha"] as? CGFloat {
+        if let overlayColorAlpha = config["OverlayColorAlpha"] as? Double {
             builder.klippaColors.overlayColorAlpha = overlayColorAlpha
         }
 
@@ -257,23 +257,23 @@ class KlippaScannerSDK: NSObject {
             builder.klippaImageAttributes.imageLimit = imageLimit
         }
 
-        if let imageMaxWidth = config["ImageMaxWidth"] as? CGFloat {
+        if let imageMaxWidth = config["ImageMaxWidth"] as? Double {
             builder.klippaImageAttributes.imageMaxWidth = imageMaxWidth
         }
 
-        if let imageMaxHeight = config["ImageMaxHeight"] as? CGFloat {
+        if let imageMaxHeight = config["ImageMaxHeight"] as? Double {
             builder.klippaImageAttributes.imageMaxHeight = imageMaxHeight
         }
 
-        if let imageMaxQuality = config["ImageMaxQuality"] as? CGFloat {
+        if let imageMaxQuality = config["ImageMaxQuality"] as? Double {
             builder.klippaImageAttributes.imageMaxQuality = imageMaxQuality
         }
 
-        if let imageMovingSensitivity = config["ImageMovingSensitivityiOS"] as? CGFloat {
+        if let imageMovingSensitivity = config["ImageMovingSensitivityiOS"] as? Double {
             builder.klippaImageAttributes.imageMovingSensitivity = imageMovingSensitivity
         }
 
-        if let cropPadding = config["CropPadding"] as? [String: CGFloat] {
+        if let cropPadding = config["CropPadding"] as? [String: Double] {
             if let width = cropPadding["width"], let height = cropPadding["height"] {
                 builder.klippaImageAttributes.cropPadding = CGSize(width: width, height: height)
             }
