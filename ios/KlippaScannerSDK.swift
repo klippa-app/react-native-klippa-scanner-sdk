@@ -96,44 +96,66 @@ class KlippaScannerSDK: NSObject {
 
         let builder = KlippaScannerBuilder(builderDelegate: self, license: license ?? "")
 
-        if let primaryColor = config["PrimaryColor"] as? UIColor {
-            builder.klippaColors.primaryColor = primaryColor
+        if let primaryColor = config["PrimaryColor"] as? String {
+            if let color = hexStringToUIColor(hex: primaryColor) {
+                builder.klippaColors.primaryColor = color
+            }
         }
 
-        if let accentColor = config["AccentColor"] as? UIColor {
-            builder.klippaColors.accentColor = accentColor
+        if let accentColor = config["AccentColor"] as? String {
+            if let color = hexStringToUIColor(hex: accentColor) {
+                builder.klippaColors.accentColor = color
+            }
         }
 
-        if let overlayColor = config["OverlayColor"] as? UIColor {
-            builder.klippaColors.overlayColor = overlayColor
+        if let overlayColor = config["OverlayColor"] as? String {
+            if let color = hexStringToUIColor(hex: overlayColor) {
+                builder.klippaColors.overlayColor = color
+            }
         }
 
-        if let warningBackgroundColor = config["WarningBackgroundColor"] as? UIColor {
-            builder.klippaColors.warningBackgroundColor = warningBackgroundColor
+        if let warningBackgroundColor = config["WarningBackgroundColor"] as? String {
+            if let color = hexStringToUIColor(hex: warningBackgroundColor) {
+                builder.klippaColors.warningBackgroundColor = color
+            }
         }
 
-        if let warningTextColor = config["WarningTextColor"] as? UIColor {
-            builder.klippaColors.warningTextColor = warningTextColor
+        if let warningTextColor = config["WarningTextColor"] as? String {
+            if let color = hexStringToUIColor(hex: warningTextColor) {
+                builder.klippaColors.warningTextColor = color
+            }
         }
 
         if let overlayColorAlpha = config["OverlayColorAlpha"] as? CGFloat {
             builder.klippaColors.overlayColorAlpha = overlayColorAlpha
         }
 
-        if let iconEnabledColor = config["IconEnabledColor"] as? UIColor {
-            builder.klippaColors.iconEnabledColor = iconEnabledColor
+        if let iconEnabledColor = config["IconEnabledColor"] as? String {
+            if let color = hexStringToUIColor(hex: iconEnabledColor) {
+                builder.klippaColors.iconEnabledColor = color
+            }
         }
 
-        if let iconDisabledColor = config["IconDisabledColor"] as? UIColor {
-            builder.klippaColors.iconDisabledColor = iconDisabledColor
+        if let iconDisabledColor = config["IconDisabledColor"] as? String {
+            if let color = hexStringToUIColor(hex: iconDisabledColor) {
+                builder.klippaColors.iconDisabledColor = color
+            }
         }
 
-        if let reviewIconColor = config["ReviewIconColor"] as? UIColor {
-            builder.klippaColors.reviewIconColor = reviewIconColor
+        if let reviewIconColor = config["ReviewIconColor"] as? String {
+            if let color = hexStringToUIColor(hex: reviewIconColor) {
+                builder.klippaColors.reviewIconColor = color
+            }
         }
 
-        if let defaultImageColor = config["DefaultColor"] as? KlippaImageColor {
-            builder.klippaColors.imageColor = defaultImageColor
+        if let imageColor = config["DefaultColor"] as? String {
+            if(imageColor == "grayscale") {
+                builder.klippaColors.imageColor = KlippaImageColor.grayscale
+            } else if(imageColor == "enhanced") {
+                builder.klippaColors.imageColor = KlippaImageColor.enhanced
+            } else {
+                builder.klippaColors.imageColor = KlippaImageColor.original
+            }
         }
 
         if let moveCloserMessage = config["MoveCloserMessage"] as? String {
@@ -388,6 +410,28 @@ class KlippaScannerSDK: NSObject {
         )
 
         builder.klippaCameraModes = cameraModes
+    }
+
+    func hexStringToUIColor(hex:String) -> UIColor? {
+        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+
+        if (cString.hasPrefix("#")) {
+            cString.remove(at: cString.startIndex)
+        }
+
+        if ((cString.count) != 6) {
+            return nil
+        }
+
+        var rgbValue:UInt64 = 0
+        Scanner(string: cString).scanHexInt64(&rgbValue)
+
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
     }
 
 }
