@@ -1,6 +1,7 @@
 ## 0.4.1
 
 * Fixed issue where `getCameraPermission()` was not being handled correctly on iOS.
+* Fixed issue where some colors were not being set on iOS.
 
 ## 0.4.0
 
