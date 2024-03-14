@@ -22,11 +22,10 @@ class KlippaScannerSDK: NSObject {
     private var multiDocumentModeInstructionsDismissed = false
     private var segmentedDocumentModeInstructionsDismissed = false
 
-//    MARK: - getCameraPermission
-    @objc(withResolver:withRejecter:)
-    func getCameraPermission(
+    //  MARK: - getCameraPermission
+    @objc func getCameraPermission(
         _ resolve: @escaping RCTPromiseResolveBlock,
-        _ reject: @escaping RCTPromiseRejectBlock
+        rejecter reject: @escaping RCTPromiseRejectBlock
     ) {
         _resolve = resolve
         _reject = reject
@@ -62,7 +61,7 @@ class KlippaScannerSDK: NSObject {
     }
 
 
-//    MARK: - getCameraResult
+    //  MARK: - getCameraResult
     @objc(getCameraResult:withResolver:withRejecter:)
     func getCameraResult(
         config: [String: Any],
