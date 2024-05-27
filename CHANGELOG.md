@@ -1,3 +1,8 @@
+## 0.4.2
+
+* Bump Android to 3.1.4
+* Bump iOS to 1.2.1
+
 ## 0.4.1
 
 * Fixed issue where `getCameraPermission()` was not being handled correctly on iOS.
