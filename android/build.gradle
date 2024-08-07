@@ -83,7 +83,7 @@ repositories {
 }
 
 dependencies {
-    def fallbackKlippaScannerVersion = "3.1.4"
+    def fallbackKlippaScannerVersion = "3.1.8"
     def klippaScannerVersion = project.hasProperty('klippaScannerVersion') ? project.klippaScannerVersion : fallbackKlippaScannerVersion
 
     //noinspection GradleDynamicVersion
