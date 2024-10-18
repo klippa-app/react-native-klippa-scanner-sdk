@@ -1,3 +1,16 @@
+## 1.0.0
+
+**NOTE:** This version introduces breaking changes, please see our documentation for the new implementation.
+
+* Bump Android to 4.0.1
+* Bump iOS to 2.0.2
+* Replaced `ReviewIconColor` with `ButtonWithIconForeground` and `ButtonWithIconBackground`.
+* Renamed `OverlayColor` to `SecondaryColor`
+* Added `SegmentedModeImageCountMessage`, `CropEditButtonText`, `FilterEditButtonText`, `RotateEditButtonText`, `DeleteEditButtonText` `CancelCropButtonText`, `ExpandCropButtonText` and `SaveCropButtonText` for iOS.
+* All messages, texts and colors must now be set through `XML` on Android.
+* Bumped minimum iOS version to `14.0`.
+* Bumped minimum Android version to `25`.
+
 ## 0.4.3
 
 * Bump Android to 3.1.8
