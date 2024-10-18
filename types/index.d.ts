@@ -38,6 +38,7 @@ export interface ShutterButton {
 export interface DocumentMode {
   name?: string;
   message?: string;
+  image?: string;
 }
 
 export class CameraConfig {
@@ -159,6 +160,9 @@ export class CameraConfig {
 
   // The text inside of the alert to confirm exiting the scanner.
   CancelConfirmationMessage?: string;
+
+  // The text at the top to indicate the picture count on segmented camera mode.
+  SegmentedModeImageCountMessage?: string;
   
   // The warning message when the camera result is too bright.
   ImageTooBrightMessage?: string;
@@ -174,8 +178,8 @@ export class CameraConfig {
   // The accent color of the interface, should be a hex RGB color string.
   AccentColor?: string;
 
-  // The overlay color (when using document detection), should be a hex RGB color string.
-  OverlayColor?: string;
+  // The secondary color, should be a hex RGB color string.
+  SecondaryColor?: string;
 
   // The color of the background of the warning message, should be a hex RGB color string.
   WarningBackgroundColor?: string;
@@ -193,7 +197,31 @@ export class CameraConfig {
   IconDisabledColor?: string;
 
   // The color of the menu icons of the screen where you can review/edit the images, should be a hex RGB color string.
-  ReviewIconColor?: string;
+  ButtonWithIconForegroundColor?: string;
+
+  // The color of the menu icons background of the screen where you can review/edit the images, should be a hex RGB color string.
+  ButtonWithIconBackgroundColor?: string;
+
+  // The text below the crop button in the review screen.
+  CropEditButtonText?: string;
+
+  // The text below the filter button in the review screen.
+  FilterEditButtonText?: string;
+
+  // The text below the rotate button in the review screen.
+  RotateEditButtonText?: string;
+
+  // The text below the delete button in the review screen.
+  DeleteEditButtonText?: string;
+
+  // The text below the cancel button in the crop screen.
+  CancelCropButtonText?: string;
+
+  // The text below the expand button in the crop screen.
+  ExpandCropButtonText?: string;
+
+  // The text below the save button in the crop screen.
+  SaveCropButtonText?: string;
 
   // Whether the camera has a view finder overlay (a helper grid so the user knows where the document should be), should be a Boolean.
   IsViewFinderEnabled?: boolean;

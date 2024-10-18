@@ -18,10 +18,6 @@ class KlippaScannerSDK: NSObject {
     private var _resolve: RCTPromiseResolveBlock? = nil
     private var _reject: RCTPromiseRejectBlock? = nil
 
-    private var singleDocumentModeInstructionsDismissed = false
-    private var multiDocumentModeInstructionsDismissed = false
-    private var segmentedDocumentModeInstructionsDismissed = false
-
     //  MARK: - getCameraPermission
     @objc func getCameraPermission(
         _ resolve: @escaping RCTPromiseResolveBlock,
@@ -77,7 +73,8 @@ class KlippaScannerSDK: NSObject {
 
         switch result {
         case .success(let vc):
-            let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+            vc.modalPresentationStyle = .fullScreen
+            let rootViewController = UIApplication.shared.firstKeyWindow?.rootViewController
             rootViewController?.show(vc, sender: self)
         case .failure(let error):
             if (_reject != nil) {
@@ -107,9 +104,9 @@ class KlippaScannerSDK: NSObject {
             }
         }
 
-        if let overlayColor = config["OverlayColor"] as? String {
-            if let color = hexStringToUIColor(hex: overlayColor) {
-                builder.klippaColors.overlayColor = color
+        if let secondaryColor = config["SecondaryColor"] as? String {
+            if let color = hexStringToUIColor(hex: secondaryColor) {
+                builder.klippaColors.secondaryColor = color
             }
         }
 
@@ -141,9 +138,15 @@ class KlippaScannerSDK: NSObject {
             }
         }
 
-        if let reviewIconColor = config["ReviewIconColor"] as? String {
-            if let color = hexStringToUIColor(hex: reviewIconColor) {
-                builder.klippaColors.reviewIconColor = color
+        if let buttonWithIconForegroundColor = config["ButtonWithIconForegroundColor"] as? String {
+            if let color = hexStringToUIColor(hex: buttonWithIconForegroundColor) {
+                builder.klippaColors.buttonWithIconForegroundColor = color
+            }
+        }
+
+        if let buttonWithIconBackgroundColor = config["ButtonWithIconBackgroundColor"] as? String {
+            if let color = hexStringToUIColor(hex: buttonWithIconBackgroundColor) {
+                builder.klippaColors.buttonWithIconBackgroundColor = color
             }
         }
 
@@ -185,6 +188,10 @@ class KlippaScannerSDK: NSObject {
             builder.klippaMessages.cancelConfirmationMessage = cancelConfirmationMessage
         }
 
+        if let segmentedModeImageCountMessage = config["SegmentedModeImageCountMessage"] as? String {
+            builder.klippaMessages.segmentedModeImageCountMessage = segmentedModeImageCountMessage
+        }
+
         if let deleteButtonText = config["DeleteButtonText"] as? String {
             builder.klippaButtonTexts.deleteButtonText = deleteButtonText
         }
@@ -211,6 +218,34 @@ class KlippaScannerSDK: NSObject {
 
         if let imageColorEnhancedText = config["ImageColorEnhancedText"] as? String {
             builder.klippaButtonTexts.imageColorEnhancedText = imageColorEnhancedText
+        }
+
+        if let cropEditButtonText = config["CropEditButtonText"] as? String {
+            builder.klippaButtonTexts.cropEditButtonText = cropEditButtonText
+        }
+
+        if let filterEditButtonText = config["FilterEditButtonText"] as? String {
+            builder.klippaButtonTexts.filterEditButtonText = filterEditButtonText
+        }
+
+        if let rotateEditButtonText = config["RotateEditButtonText"] as? String {
+            builder.klippaButtonTexts.rotateEditButtonText = rotateEditButtonText
+        }
+
+        if let deleteEditButtonText = config["deleteEditButtonText"] as? String {
+            builder.klippaButtonTexts.deleteEditButtonText = deleteEditButtonText
+        }
+
+        if let cancelCropButtonText = config["CancelCropButtonText"] as? String {
+            builder.klippaButtonTexts.cancelCropButtonText = cancelCropButtonText
+        }
+
+        if let expandCropButtonText = config["ExpandCropButtonText"] as? String {
+            builder.klippaButtonTexts.expandCropButtonText = expandCropButtonText
+        }
+
+        if let saveCropButtonText = config["SaveCropButtonText"] as? String {
+            builder.klippaButtonTexts.saveCropButtonText = saveCropButtonText
         }
 
         if let isCropEnabled = config["DefaultCrop"] as? Bool {
@@ -313,7 +348,7 @@ class KlippaScannerSDK: NSObject {
         return builder
     }
 
-    fileprivate func setBuilderObjectDetectionModel(_ config: [String: Any], _ builder: KlippaScannerBuilder) {
+    private func setBuilderObjectDetectionModel(_ config: [String: Any], _ builder: KlippaScannerBuilder) {
 
         guard let model = config["Model"] as? [String: String] else {
             return
@@ -334,7 +369,7 @@ class KlippaScannerSDK: NSObject {
 
     }
 
-    fileprivate func setBuilderCameraModes(_ config: [String: Any], _ builder: KlippaScannerBuilder) {
+    private func setBuilderCameraModes(_ config: [String: Any], _ builder: KlippaScannerBuilder) {
         var modes = [KlippaDocumentMode]()
 
         if let cameraModeSingle = config["CameraModeSingle"] as? [String: Any] {
@@ -345,13 +380,13 @@ class KlippaScannerSDK: NSObject {
                 single.name = name
             }
 
-            if let message = cameraModeSingle["message"] as? String {
-                let instructions = Instructions(message: message,
-                                                dismissHandler: {
-                    self.singleDocumentModeInstructionsDismissed = true
-                })
-
-                single.instructions = instructions
+            if let message = cameraModeSingle["message"] as? String ?? single.instructions?.message {
+                let image = cameraModeSingle["image"] as? String
+                single.instructions = Instructions(
+                    title: single.name,
+                    message: message,
+                    image: image ?? KlippaSingleDocumentMode.image
+                )
             }
 
             modes.append(single)
@@ -365,13 +400,13 @@ class KlippaScannerSDK: NSObject {
                 multi.name = name
             }
 
-            if let message = cameraModeMulti["message"] as? String {
-                let instructions = Instructions(message: message,
-                                                dismissHandler: {
-                    self.multiDocumentModeInstructionsDismissed = true
-                })
-
-                multi.instructions = instructions
+            if let message = cameraModeMulti["message"] as? String ?? multi.instructions?.message {
+                let image = cameraModeMulti["image"] as? String
+                multi.instructions = Instructions(
+                    title: multi.name,
+                    message: message,
+                    image: image ?? KlippaMultipleDocumentMode.image
+                )
             }
 
             modes.append(multi)
@@ -385,12 +420,13 @@ class KlippaScannerSDK: NSObject {
                 segmented.name = name
             }
 
-            if let message = cameraModeSegmented["message"] as? String {
-                let instructions = Instructions(message: message,
-                                                dismissHandler: {
-                    self.segmentedDocumentModeInstructionsDismissed = true
-                })
-                segmented.instructions = instructions
+            if let message = cameraModeSegmented["message"] as? String ?? segmented.instructions?.message {
+                let image = cameraModeSegmented["image"] as? String
+                segmented.instructions = Instructions(
+                    title: segmented.name,
+                    message: message,
+                    image: image ?? KlippaSegmentedDocumentMode.image
+                )
             }
 
             modes.append(segmented)
@@ -411,7 +447,7 @@ class KlippaScannerSDK: NSObject {
         builder.klippaCameraModes = cameraModes
     }
 
-    func hexStringToUIColor(hex:String) -> UIColor? {
+    private func hexStringToUIColor(hex:String) -> UIColor? {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 
         if (cString.hasPrefix("#")) {
@@ -450,6 +486,10 @@ extension KlippaScannerSDK: KlippaScannerDelegate {
         let cropEnabled = result.cropEnabled
         let timerEnabled = result.timerEnabled
 
+        let singleDocumentModeInstructionsDismissed = result.dismissedInstructions[DocModeType.singleDocument.name] ?? false
+        let multiDocumentModeInstructionsDismissed = result.dismissedInstructions[DocModeType.multipleDocument.name] ?? false
+        let segmentedDocumentModeInstructionsDismissed = result.dismissedInstructions[DocModeType.segmentedDocument.name] ?? false
+
         let resultDict: [String: Any] = [
             "Images": images,
             "Crop": cropEnabled,
@@ -459,27 +499,31 @@ extension KlippaScannerSDK: KlippaScannerDelegate {
             "SegmentedDocumentModeInstructionsDismissed": segmentedDocumentModeInstructionsDismissed
         ]
 
-        if (_resolve != nil) {
-            _resolve?(resultDict)
-        }
+        _resolve?(resultDict)
+
         _resolve = nil
         _reject = nil
     }
 
     func klippaScannerDidCancel() {
-        if (_reject != nil) {
-            _reject?(E_CANCELED, "The user canceled", nil)
-        }
+        _reject?(E_CANCELED, "The user canceled", nil)
         _resolve = nil
         _reject = nil
     }
 
     func klippaScannerDidFailWithError(error: Error) {
-        if (_resolve != nil) {
-            _reject?(E_UNKNOWN, "Unknown error", error)
-        }
+        _reject?(E_UNKNOWN, "Unknown error", error)
         _resolve = nil
         _reject = nil
     }
 }
 
+extension UIApplication {
+    var firstKeyWindow: UIWindow? {
+        return UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .filter { $0.activationState == .foregroundActive }
+            .first?.windows
+            .first(where: \.isKeyWindow)
+    }
+}
