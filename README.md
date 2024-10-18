@@ -136,38 +136,14 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         // Set the output quality (between 0-100) of the jpg encoder. Default is 100.
         ImageMaxQuality: 95,
     
-        // The warning message when someone should move closer to a document, should be a string.
-        MoveCloserMessage: "Move closer to the document",
-
-        // The warning message when the camera preview has to much motion to be able to automatically take a photo.
-        ImageMovingMessage: "Too much movement",
-        
-        // The text inside of the delete button.
-        DeleteButtonText: "Delete Photo",
-
-        // The text inside of the retake button.
-        RetakeButtonText: "Retake Photo",
-
-        // The text inside of the cancel button.
-        CancelButtonText: "Cancel",
-
-        // The text inside of the cancel alert button.
-        CancelAndDeleteImagesButtonText: "Delete photos & exit",
-
-        // The text inside of the alert to confirm exiting the scanner.
-        CancelConfirmationMessage: "Delete photos and exit scanner?",
-
-        // The warning message when the camera turned out of portrait mode.
-        OrientationWarningMessage: "Hold your phone in portrait mode",
-
         // The camera mode for scanning one part documents.
-        CameraModeSingle?: SingleDocumentMode;
+        CameraModeSingle?: {name: "Single Document Mode", message: "Description of Camera Mode"};
 
         // The camera mode for scanning documents that consist of multiple pages.
-        CameraModeMulti?: MultipleDocumentMode;
+        CameraModeMulti?: {name: "Multiple Document Mode", message: "Description of Camera Mode"};
 
         // The camera mode for scanning long documents in separate parts.
-        CameraModeSegmented?: SegmentedDocumentMode;
+        CameraModeSegmented?: {name: "Segmented Document Mode", message: "Description of Camera Mode"};
 
         // To limit the amount of images that can be taken.
         ImageLimit: 10,
@@ -216,31 +192,7 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
   
         // The text inside of the color selection alert dialog button named enhanced.
         ImageColorEnhancedText: "enhanced",
-        
-        // The primary color of the interface, should be a UIColor.
-        PrimaryColor: null,
-       
-        // The accent color of the interface, should be a UIColor.
-        AccentColor: null,
-    
-        // The overlay color (when using document detection), should be a UIColor.
-        OverlayColor: null,
-    
-        // The color of the background of the warning message, should be a UIColor.
-        WarningBackgroundColor: null,
-        
-        // The color of the text of the warning message, should be a UIColor.
-        WarningTextColor: null,
-
-        // The color of the menu icons when they are enabled, should be a UIColor.
-        IconEnabledColor: null,
-
-        // The color of the menu icons when they are disabled, should be a UIColor.
-        IconDisabledColor: null,
-
-        // The color of the menu icons of the screen where you can review/edit the images, should be a UIColor.
-        ReviewIconColor: null,
-        
+                
         // The amount of opacity for the overlay, should be a float.
         OverlayColorAlpha: 0.75,
     
@@ -338,51 +290,85 @@ Add or edit the file `android/app/src/main/res/values/colors.xml`, add the follo
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="klippa_scanner_sdk_color_Primary">#2dc36a</color>
-    <color name="klippa_scanner_sdk_color_PrimaryDark">#308D53</color>
-    <color name="klippa_scanner_sdk_color_Accent">#2dc36a</color>
-    <color name="klippa_scanner_sdk_color_Overlay">#2dc36a</color>
-    <color name="klippa_scanner_sdk_color_Warning">#BFFF0000</color>
-    <color name="klippa_scanner_sdk_color_IconDisabledColor">#80FFFFFF</color>
-    <color name="klippa_scanner_sdk_color_IconEnabledColor">#FFFFFFFF</color>
-    <color name="klippa_scanner_sdk_color_ReviewIconColor">#FFFFFFFF</color>
+    <color name="klippa_scanner_sdk_color_primary">#000000</color>
+    <color name="klippa_scanner_sdk_color_accent">#ffffff</color>
+    <color name="klippa_scanner_sdk_color_secondary">#2dc36a</color>
+    <color name="klippa_scanner_sdk_color_warning_background">#BF000000</color>
+    <color name="klippa_scanner_sdk_color_warning_text">#ffffff</color>
+    <color name="klippa_scanner_sdk_color_icon_disabled">#444</color>
+    <color name="klippa_scanner_sdk_color_icon_enabled">#ffffff</color>
+    <color name="klippa_scanner_sdk_color_button_with_icon_foreground">#ffffff</color>
+    <color name="klippa_scanner_sdk_color_button_with_icon_background">#444444</color>
 </resources>
 ```
 
 ### iOS
 
-Use the following properties in the config when running `getCameraResult`: `PrimaryColor`, `AccentColor`, `OverlayColor`, `WarningBackgroundColor`, `WarningTextColor`, `OverlayColorAlpha`, `IconDisabledColor`, `IconEnabledColor`,  `ReviewIconColor`.
+Use the following properties in the config when running `getCameraResult`: `PrimaryColor`, `AccentColor`, `OverlayColor`, `WarningBackgroundColor`, `WarningTextColor`, `OverlayColorAlpha`, `IconDisabledColor`, `IconEnabledColor`,  `ReviewIconColor`, `ButtonWithIconBackgroundColor`, `ButtonWithIconForegroundColor`. Each value should be a string with a `hex` including a `#`, i.e: `#fff` for white.
 
 ## How to change the texts in the scanner?
 
 ### Android
-
-Use the following properties in the config when running `getCameraResult`: `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`, `OrientationWarningMessage`.
-
-or
 
 Add or edit the file `android/app/src/main/res/values/strings.xml`, add the following:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="klippa_action_crop">Crop</string>
+    <string name="klippa_action_delete">Delete</string>
+    <string name="klippa_image_color_original">Original</string>
+    <string name="klippa_image_color_grayscale">Grayscale</string>
+    <string name="klippa_image_color_enhanced">Enhanced</string>
+
     <string name="klippa_zoom_message">Move closer to the document</string>
     <string name="klippa_image_limit_reached">You have reached the image limit</string>
+    <string name="klippa_images">Images</string>
     <string name="klippa_success_message">Success</string>
     <string name="klippa_image_moving_message">Moving too much</string>
     <string name="klippa_orientation_warning_message">Hold your phone in portrait mode</string>
-    <string name="klippa_delete_button_text">Delete Photo</string>
-    <string name="klippa_retake_button_text">Retake Photo</string>
+
+    <string name="klippa_delete_button_text">Delete</string>
+    <string name="klippa_retake_button_text">Retake</string>
     <string name="klippa_cancel_button_text">Cancel</string>
-    <string name="klippa_cancel_delete_images">Delete photos and exit</string>
-    <string name="klippa_cancel_confirmation">Delete photos and exit scanner?</string>
+    <string name="klippa_cancel_delete_images">Cancel Scanner</string>
+    <string name="klippa_cancel_confirmation">When you close the taken scans will be deleted. Are you sure you want to cancel without saving?</string>
+
+    <string name="klippa_continue_button_text">Continue</string>
+
+    <string name="klippa_auto_capture">Auto-Capture</string>
+    <string name="klippa_manual_capture">Manual</string>
+    <string name="klippa_action_save">Save</string>
+    <string name="klippa_action_expand">Expand</string>
+    <string name="klippa_action_filter">Filter</string>
+    <string name="klippa_action_rotate">Rotate</string>
 </resources>
 ```
 
 ### iOS
 
-Use the following properties in the config when running `getCameraResult`: `ImageTooBrightMessage`, `ImageTooDarkMessage`, `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`, `OrientationWarningMessage`, `ImageColorOriginalText`, `ImageColorGrayscaleText`, `ImageColorEnhancedText`.
+Use the following properties in the config when running `getCameraResult`: `ImageTooBrightMessage`, `ImageTooDarkMessage`, `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`, `OrientationWarningMessage`, `ImageColorOriginalText`, `ImageColorGrayscaleText`, `ImageColorEnhancedText`, `SaveCropButtonText`, `ExpandCropButtonText`, `CancelCropButtonText`, `DeleteEditButtonText`, `RotateEditButtonText`, `FilterEditButtonText`, `CropEditButtonText`, `SegmentedModeImageCountMessage`.
 
+## How to change the image in the instructions?
+
+### Android
+
+Add an XML file in `android/app/src/res/drawable/` with name `klippa_camera_mode_single_document.xml` to change the image in Single Document Mode.
+Add an XML file in `android/app/src/res/drawable/` with name `klippa_camera_mode_multiple_documents.xml` to change the image in Multiple Document Mode.
+Add an XML file in `android/app/src/res/drawable/` with name `klippa_camera_mode_segmented_document.xml` to change the image in Segmented Document Mode.
+
+### iOS
+
+Use the following properties in the config:
+
+```ts
+// Change the default image in the Single Document Mode instructions.
+CameraModeSingle: {name: "Name", message: "Message", image: "{name of image in Assets.xcassets}"}
+// Change the default image in the Multi Document Mode instructions.
+CameraModeMulti: {name: "Name", message: "Message", image: "{name of image in Assets.xcassets}"}
+// Change the default image in the Segmented Document Mode instructions.
+CameraModeSegmented: {name: "Name", message: "Message", image: "{name of image in Assets.xcassets}"}
+```
 
 ## Important iOS notes
 Older iOS versions do not ship the Swift libraries. To make sure the SDK works on older iOS versions, you can configure the build to embed the Swift libraries using the build setting `EMBEDDED_CONTENT_CONTAINS_SWIFT = YES`.
