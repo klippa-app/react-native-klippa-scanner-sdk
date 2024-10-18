@@ -1,8 +1,10 @@
 package com.klippa.reactscanner
 
 import android.Manifest
-import android.util.Size
+import android.app.Activity
+import android.content.Intent
 import androidx.core.content.PermissionChecker
+import com.facebook.react.bridge.BaseActivityEventListener
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
@@ -12,56 +14,85 @@ import com.facebook.react.bridge.WritableArray
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.bridge.WritableNativeArray
 import com.facebook.react.bridge.WritableNativeMap
-import com.klippa.scanner.KlippaScannerBuilder
-import com.klippa.scanner.KlippaScannerListener
-import com.klippa.scanner.model.*
+import com.klippa.scanner.ScannerFinishedReason
+import com.klippa.scanner.ScannerSession
+import com.klippa.scanner.ScannerSession.Companion.KLIPPA_ERROR
+import com.klippa.scanner.ScannerSession.Companion.KLIPPA_RESULT
+import com.klippa.scanner.model.Instructions
+import com.klippa.scanner.model.KlippaCameraModes
+import com.klippa.scanner.model.KlippaDocumentMode
+import com.klippa.scanner.model.KlippaError
+import com.klippa.scanner.model.KlippaImageColor
+import com.klippa.scanner.model.KlippaMultipleDocumentMode
+import com.klippa.scanner.model.KlippaObjectDetectionModel
+import com.klippa.scanner.model.KlippaScannerResult
+import com.klippa.scanner.model.KlippaSegmentedDocumentMode
+import com.klippa.scanner.model.KlippaSingleDocumentMode
+import com.klippa.scanner.model.KlippaSize
 
 class KlippaScannerSDKModule(
     private val reactContext: ReactApplicationContext
 ) : ReactContextBaseJavaModule(reactContext) {
 
+    companion object {
+        private const val E_ACTIVITY_DOES_NOT_EXIST = "E_ACTIVITY_DOES_NOT_EXIST"
+        private const val E_FAILED_TO_SHOW_CAMERA = "E_FAILED_TO_SHOW_CAMERA"
+        private const val E_MISSING_LICENSE = "E_MISSING_LICENSE"
+        private const val E_CANCELED = "E_CANCELED"
+
+        private const val REQUEST_CODE = 99991803
+    }
+
     private var mCameraPromise: Promise? = null
 
-    private var singleDocumentModeInstructionsDismissed = false
-    private var multiDocumentModeInstructionsDismissed = false
-    private var segmentedDocumentModeInstructionsDismissed = false
-
-    private val klippaScannerListener: KlippaScannerListener = object : KlippaScannerListener {
-        override fun klippaScannerDidFinishScanningWithResult(result: KlippaScannerResult) {
-            val cameraResult: WritableMap = WritableNativeMap()
-            val images: WritableArray = WritableNativeArray()
-
-            val imageList = result.images
-            val crop = result.cropEnabled
-            val timerEnabled = result.timerEnabled
-            val color = result.defaultImageColorLegacy
-            cameraResult.putBoolean("Crop", crop)
-            cameraResult.putBoolean("TimerEnabled", timerEnabled)
-            cameraResult.putString("Color", color)
-            cameraResult.putBoolean("SingleDocumentModeInstructionsDismissed", singleDocumentModeInstructionsDismissed)
-            cameraResult.putBoolean("MultiDocumentModeInstructionsDismissed", multiDocumentModeInstructionsDismissed)
-            cameraResult.putBoolean("SegmentedDocumentModeInstructionsDismissed", segmentedDocumentModeInstructionsDismissed)
-
-            for (image in imageList) {
-                val imageMap: WritableMap = WritableNativeMap()
-                imageMap.putString("Filepath", image.location)
-                images.pushMap(imageMap)
-            }
-            cameraResult.putArray("Images", images)
-            mCameraPromise?.resolve(cameraResult)
-        }
-
-        override fun klippaScannerDidFailWithException(exception: Exception) {
-            mCameraPromise?.reject(E_LICENSE_ERROR, exception)
-        }
-
-        override fun klippaScannerDidCancel() {
-            mCameraPromise?.reject(E_CANCELED, "The user canceled")
-        }
-    }
 
     override fun getName(): String {
         return "KlippaScannerSDK"
+    }
+
+    data object UnknownError: KlippaError {
+        private fun readResolve(): Any = UnknownError
+        override fun message(): String = "Unknown Error"
+    }
+
+    private val activityEventListener = object: BaseActivityEventListener() {
+        override fun onActivityResult(
+            activity: Activity?,
+            requestCode: Int,
+            resultCode: Int,
+            data: Intent?
+        ) {
+
+            val reason = ScannerFinishedReason.mapResultCode(resultCode)
+
+            when (reason) {
+                ScannerFinishedReason.FINISHED -> {
+                    val result =
+                        data?.serializable<KlippaScannerResult>(KLIPPA_RESULT) ?: kotlin.run {
+                            klippaScannerDidFailWithError(UnknownError)
+                            return
+                        }
+                    klippaScannerDidFinishScanningWithResult(result)
+                }
+                ScannerFinishedReason.ERROR -> {
+                    val error =
+                        data?.serializable<KlippaError>(KLIPPA_ERROR) ?: kotlin.run {
+                            klippaScannerDidFailWithError(UnknownError)
+                            return
+                        }
+                    klippaScannerDidFailWithError(error)
+                }
+                ScannerFinishedReason.CANCELED -> {
+                    klippaScannerDidCancel()
+                }
+                else -> klippaScannerDidFailWithError(UnknownError)
+            }
+            super.onActivityResult(activity, requestCode, resultCode, data)
+        }
+    }
+
+    init {
+        reactContext.addActivityEventListener(activityEventListener)
     }
 
     @ReactMethod
@@ -106,115 +137,60 @@ class KlippaScannerSDKModule(
                 return
             }
 
-            val builder = KlippaScannerBuilder(klippaScannerListener, license)
+            val scannerSession = ScannerSession(license)
 
             if (config.hasKey("DefaultColor")) {
                 when (config.getString("DefaultColor")) {
-                    "grayscale" -> builder.colors.imageColorMode = KlippaImageColor.GRAYSCALE
-                    "enhanced" -> builder.colors.imageColorMode = KlippaImageColor.ENHANCED
-                    else -> builder.colors.imageColorMode = KlippaImageColor.ORIGINAL
+                    "grayscale" -> scannerSession.imageAttributes.imageColorMode = KlippaImageColor.GRAYSCALE
+                    "enhanced" -> scannerSession.imageAttributes.imageColorMode = KlippaImageColor.ENHANCED
+                    else -> scannerSession.imageAttributes.imageColorMode = KlippaImageColor.ORIGINAL
                 }
             }
 
             if (config.hasKey("DefaultCrop")) {
-                builder.menu.isCropEnabled = config.getBoolean("DefaultCrop")
+                scannerSession.menu.isCropEnabled = config.getBoolean("DefaultCrop")
             }
 
             if (config.hasKey("StoragePath")) {
                 config.getString("StoragePath")?.let {
-                    builder.imageAttributes.outputDirectory = it
+                    scannerSession.imageAttributes.outputDirectory = it
                 }
             }
 
             if (config.hasKey("OutputFilename")) {
                 config.getString("OutputFilename")?.let {
-                    builder.imageAttributes.outputFileName = it
+                    scannerSession.imageAttributes.outputFileName = it
                 }
             }
 
             if (config.hasKey("ImageLimit")) {
-                builder.imageAttributes.imageLimit = config.getInt("ImageLimit")
+                scannerSession.imageAttributes.imageLimit = config.getInt("ImageLimit")
             }
 
             if (config.hasKey("ImageMaxWidth")) {
-                builder.imageAttributes.resolutionMaxWidth = config.getInt("ImageMaxWidth")
+                scannerSession.imageAttributes.resolutionMaxWidth = config.getInt("ImageMaxWidth")
             }
 
             if (config.hasKey("ImageMaxHeight")) {
-                builder.imageAttributes.resolutionMaxHeight = config.getInt("ImageMaxHeight")
+                scannerSession.imageAttributes.resolutionMaxHeight = config.getInt("ImageMaxHeight")
             }
 
             if (config.hasKey("ImageMaxQuality")) {
-                builder.imageAttributes.outputQuality = config.getInt("ImageMaxQuality")
+                scannerSession.imageAttributes.outputQuality = config.getInt("ImageMaxQuality")
             }
-
-            if (config.hasKey("MoveCloserMessage")) {
-                config.getString("MoveCloserMessage")?.let {
-                    builder.messages.moveCloserMessage = it
-                }
-            }
-
-            if (config.hasKey("ImageLimitReachedMessage")) {
-                config.getString("ImageLimitReachedMessage")?.let {
-                    builder.messages.imageLimitReached = it
-                }
-            }
-
-            if (config.hasKey("CancelConfirmationMessage")) {
-                config.getString("CancelConfirmationMessage")?.let {
-                    builder.messages.cancelConfirmationMessage = it
-                }
-            }
-
-            if (config.hasKey("OrientationWarningMessage")) {
-                config.getString("OrientationWarningMessage")?.let {
-                    builder.messages.orientationWarningMessage = it
-                }
-            }
-
-            if (config.hasKey("ImageMovingMessage")) {
-                config.getString("ImageMovingMessage")?.let {
-                    builder.messages.imageMovingMessage = it
-                }
-            }
-
-            if (config.hasKey("DeleteButtonText")) {
-                config.getString("DeleteButtonText")?.let {
-                    builder.buttonTexts.deleteButtonText = it
-                }
-            }
-
-            if (config.hasKey("RetakeButtonText")) {
-                config.getString("RetakeButtonText")?.let {
-                    builder.buttonTexts.retakeButtonText = it
-                }
-            }
-
-            if (config.hasKey("CancelButtonText")) {
-                config.getString("CancelButtonText")?.let {
-                    builder.buttonTexts.cancelButtonText = it
-                }
-            }
-
-            if (config.hasKey("CancelAndDeleteImagesButtonText")) {
-                config.getString("CancelAndDeleteImagesButtonText")?.let {
-                    builder.buttonTexts.cancelAndDeleteImagesButtonText = it
-                }
-            }
-
 
             if (config.hasKey("ShouldGoToReviewScreenWhenImageLimitReached")) {
-                builder.menu.shouldGoToReviewScreenWhenImageLimitReached =
+                scannerSession.menu.shouldGoToReviewScreenWhenImageLimitReached =
                     config.getBoolean("ShouldGoToReviewScreenWhenImageLimitReached")
             }
             if (config.hasKey("UserCanRotateImage")) {
-                builder.menu.userCanRotateImage = config.getBoolean("UserCanRotateImage")
+                scannerSession.menu.userCanRotateImage = config.getBoolean("UserCanRotateImage")
             }
             if (config.hasKey("UserCanCropManually")) {
-                builder.menu.userCanCropManually = config.getBoolean("UserCanCropManually")
+                scannerSession.menu.userCanCropManually = config.getBoolean("UserCanCropManually")
             }
             if (config.hasKey("UserCanChangeColorSetting")) {
-                builder.menu.userCanChangeColorSetting = config.getBoolean("UserCanChangeColorSetting")
+                scannerSession.menu.userCanChangeColorSetting = config.getBoolean("UserCanChangeColorSetting")
             }
 
             if (config.hasKey("Model")) {
@@ -222,7 +198,7 @@ class KlippaScannerSDKModule(
                     val modelName = modelConfig.getString("name")
                     val labelsName = modelConfig.getString("labelsName")
                     if (!modelName.isNullOrEmpty() && !labelsName.isNullOrEmpty()) {
-                        builder.objectDetectionModel =
+                        scannerSession.objectDetectionModel =
                             KlippaObjectDetectionModel(
                                 modelName = modelName,
                                 modelLabels = labelsName
@@ -235,15 +211,15 @@ class KlippaScannerSDKModule(
                 val timerConfig = config.getMap("Timer") ?: return
 
                 if (timerConfig.hasKey("allowed")) {
-                    builder.menu.allowTimer = timerConfig.getBoolean("allowed")
+                    scannerSession.menu.allowTimer = timerConfig.getBoolean("allowed")
                 }
 
                 if (timerConfig.hasKey("enabled")) {
-                    builder.menu.isTimerEnabled = timerConfig.getBoolean("enabled")
+                    scannerSession.menu.isTimerEnabled = timerConfig.getBoolean("enabled")
                 }
 
                 if (timerConfig.hasKey("duration")) {
-                    builder.durations.timerDuration = timerConfig.getDouble("duration")
+                    scannerSession.durations.timerDuration = timerConfig.getDouble("duration")
                 }
             }
 
@@ -252,122 +228,97 @@ class KlippaScannerSDKModule(
                     val width = if (cropPaddingConfig.hasKey("width")) {
                         cropPaddingConfig.getInt("width")
                     } else {
-                        builder.imageAttributes.cropPadding.width
+                        scannerSession.imageAttributes.cropPadding.width
                     }
 
                     val height = if (cropPaddingConfig.hasKey("height")) {
                         cropPaddingConfig.getInt("height")
                     } else {
-                        builder.imageAttributes.cropPadding.height
+                        scannerSession.imageAttributes.cropPadding.height
                     }
 
-                    builder.imageAttributes.cropPadding = Size(width, height)
+                    scannerSession.imageAttributes.cropPadding = KlippaSize(width, height)
                 }
             }
 
             if (config.hasKey("Success")) {
                 val successConfig = config.getMap("Success") ?: return
 
-                if (successConfig.hasKey("message")) {
-                    successConfig.getString("message")?.let {
-                        builder.messages.successMessage = it
-                    }
-                }
-
                 if (successConfig.hasKey("previewDuration")) {
-                    builder.durations.successPreviewDuration =
+                    scannerSession.durations.successPreviewDuration =
                         successConfig.getDouble("previewDuration")
                 }
             }
 
             if (config.hasKey("PreviewDuration")) {
-                builder.durations.previewDuration = config.getDouble("PreviewDuration")
+                scannerSession.durations.previewDuration = config.getDouble("PreviewDuration")
             }
 
             if (config.hasKey("ShutterButton")) {
                 val shutterButtonConfig = config.getMap("ShutterButton") ?: return
 
                 if (shutterButtonConfig.hasKey("allowShutterButton")) {
-                    builder.shutterButton.allowShutterButton = shutterButtonConfig.getBoolean("allowShutterButton")
+                    scannerSession.shutterButton.allowShutterButton = shutterButtonConfig.getBoolean("allowShutterButton")
                 }
 
                 if (shutterButtonConfig.hasKey("hideShutterButton")) {
-                    builder.shutterButton.hideShutterButton = shutterButtonConfig.getBoolean("hideShutterButton")
+                    scannerSession.shutterButton.hideShutterButton = shutterButtonConfig.getBoolean("hideShutterButton")
                 }
             }
 
             if (config.hasKey("ImageMovingSensitivityAndroid")) {
-                builder.imageAttributes.imageMovingSensitivity =
+                scannerSession.imageAttributes.imageMovingSensitivity =
                     config.getInt("ImageMovingSensitivityAndroid")
             }
 
             if (config.hasKey("StoreImagesToCameraRoll")) {
-                builder.imageAttributes.storeImagesToGallery = config.getBoolean("StoreImagesToCameraRoll")
+                scannerSession.imageAttributes.storeImagesToGallery = config.getBoolean("StoreImagesToCameraRoll")
             }
 
             val modes = ArrayList<KlippaDocumentMode>()
 
             if (config.hasKey("CameraModeSingle")) {
                 val cameraModeSingle = config.getMap("CameraModeSingle") ?: return
-
                 val singleCameraMode = KlippaSingleDocumentMode()
 
-                if (cameraModeSingle.hasKey("name")) {
-                    singleCameraMode.name = cameraModeSingle.getString("name").toString()
+                cameraModeSingle.getString("name")?.let {
+                    singleCameraMode.name = it
                 }
 
-                if (cameraModeSingle.hasKey("message")) {
-                    val message = cameraModeSingle.getString("message").toString()
-
-                    val instructions = Instructions(message = message, dismissHandler = {
-                        singleDocumentModeInstructionsDismissed = true
-                    })
-
-                    singleCameraMode.instructions = instructions
+                cameraModeSingle.getString("message")?.let {
+                    singleCameraMode.instructions = Instructions(singleCameraMode.name, it)
                 }
 
                 modes.add(singleCameraMode)
             }
 
             if (config.hasKey("CameraModeMulti")) {
-                val cameraMode = config.getMap("CameraModeMulti") ?: return
+                val cameraModeMulti = config.getMap("CameraModeMulti") ?: return
 
                 val multipleCameraMode = KlippaMultipleDocumentMode()
 
-                if (cameraMode.hasKey("name")) {
-                    multipleCameraMode.name = cameraMode.getString("name").toString()
+                cameraModeMulti.getString("name")?.let {
+                    multipleCameraMode.name = it
                 }
 
-                if (cameraMode.hasKey("message")) {
-                    val message = cameraMode.getString("message").toString()
-
-                    val instructions = Instructions(message = message, dismissHandler = {
-                        multiDocumentModeInstructionsDismissed = true
-                    })
-
-                    multipleCameraMode.instructions = instructions
+                cameraModeMulti.getString("message")?.let {
+                    multipleCameraMode.instructions = Instructions(multipleCameraMode.name, it)
                 }
 
                 modes.add(multipleCameraMode)
             }
 
             if (config.hasKey("CameraModeSegmented")) {
-                val cameraMode = config.getMap("CameraModeSegmented") ?: return
+                val cameraModeSegmented = config.getMap("CameraModeSegmented") ?: return
 
                 val segmentedCameraMode = KlippaSegmentedDocumentMode()
 
-                if (cameraMode.hasKey("name")) {
-                    segmentedCameraMode.name = cameraMode.getString("name").toString()
+                cameraModeSegmented.getString("name")?.let {
+                    segmentedCameraMode.name = it
                 }
 
-                if (cameraMode.hasKey("message")) {
-                    val message = cameraMode.getString("message").toString()
-
-                    val instructions = Instructions(message = message, dismissHandler = {
-                        segmentedDocumentModeInstructionsDismissed = true
-                    })
-
-                    segmentedCameraMode.instructions = instructions
+                cameraModeSegmented.getString("message")?.let {
+                    segmentedCameraMode.instructions = Instructions(segmentedCameraMode.name, it)
                 }
 
                 modes.add(segmentedCameraMode)
@@ -384,10 +335,11 @@ class KlippaScannerSDKModule(
                         startingIndex = index
                 )
 
-                builder.cameraModes = cameraModes
+                scannerSession.cameraModes = cameraModes
             }
 
-            builder.startScanner(currentActivity)
+            val intent = scannerSession.getIntent(currentActivity)
+            currentActivity.startActivityForResult(intent, REQUEST_CODE)
 
         } catch (e: Exception) {
             promise.reject(E_FAILED_TO_SHOW_CAMERA, e)
@@ -395,11 +347,42 @@ class KlippaScannerSDKModule(
         }
     }
 
-    companion object {
-        private const val E_ACTIVITY_DOES_NOT_EXIST = "E_ACTIVITY_DOES_NOT_EXIST"
-        private const val E_FAILED_TO_SHOW_CAMERA = "E_FAILED_TO_SHOW_CAMERA"
-        private const val E_LICENSE_ERROR = "E_LICENSE_ERROR"
-        private const val E_MISSING_LICENSE = "E_MISSING_LICENSE"
-        private const val E_CANCELED = "E_CANCELED"
+    private fun klippaScannerDidFinishScanningWithResult(result: KlippaScannerResult) {
+        val cameraResult: WritableMap = WritableNativeMap()
+        val images: WritableArray = WritableNativeArray()
+
+        val imageList = result.images
+        val crop = result.cropEnabled
+        val timerEnabled = result.timerEnabled
+        val color = result.defaultImageColorLegacy
+
+        val singleDocumentModeInstructionsDismissed = result.dismissedInstructions["SINGLE_DOCUMENT"] ?: false
+        val multiDocumentModeInstructionsDismissed = result.dismissedInstructions["MULTIPLE_DOCUMENT"] ?: false
+        val segmentedDocumentModeInstructionsDismissed = result.dismissedInstructions["SEGMENTED_DOCUMENT"] ?: false
+
+        cameraResult.apply {
+            putBoolean("Crop", crop)
+            putBoolean("TimerEnabled", timerEnabled)
+            putString("Color", color)
+            putBoolean("SingleDocumentModeInstructionsDismissed", singleDocumentModeInstructionsDismissed)
+            putBoolean("MultiDocumentModeInstructionsDismissed", multiDocumentModeInstructionsDismissed)
+            putBoolean("SegmentedDocumentModeInstructionsDismissed", segmentedDocumentModeInstructionsDismissed)
+        }
+
+        for (image in imageList) {
+            val imageMap: WritableMap = WritableNativeMap()
+            imageMap.putString("Filepath", image.location)
+            images.pushMap(imageMap)
+        }
+        cameraResult.putArray("Images", images)
+        mCameraPromise?.resolve(cameraResult)
+    }
+
+    private fun klippaScannerDidFailWithError(error: KlippaError) {
+        mCameraPromise?.reject(E_CANCELED, "Scanner was canceled with error: ${error.message()}")
+    }
+
+    private fun klippaScannerDidCancel() {
+        mCameraPromise?.reject(E_CANCELED, "The user canceled")
     }
 }
