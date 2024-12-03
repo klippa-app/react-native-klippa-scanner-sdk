@@ -176,6 +176,30 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
     
         // The threshold sensitive the motion detection is. (lower value is higher sensitivity, default 50).
         ImageMovingSensitivityAndroid: 50,
+
+        // If you would like to use a custom model for object detection. Model + labels file should be packaged in your bundle.
+        Model: {name: "model", labelsName: "labels"},
+        
+        // If you would like to enable automatic capturing of images.
+        Timer: {enabled: true, duration: 0.4},
+
+        // To add extra horizontal and / or vertical padding to the cropped image.
+        CropPadding: {width: 100, height: 100},
+
+        // After capture, show a check mark preview with this success message, instead of a preview of the image.
+        Success: {message: "Success!", previewDuration: 0.3},
+
+        // Whether the camera automatically saves the images to the camera roll (iOS) / gallery (Android). Default true.
+        StoreImagesToCameraRoll: true,  
+
+        // Whether to allow users to select media from their device (Shows a media button bottom left on the scanner screen).
+        UserCanPickMediaFromStorage: true,
+
+        // Whether the next button in the bottom right of the scanner screen goes to the review screen instead of finishing the session.
+        ShouldGoToReviewScreenOnFinishPressed: true,
+
+        // The amount of seconds the preview should be visible for, should be a float.
+        PreviewDuration: 1.0,
         
         // Optional. Only affects iOS.
         // The warning message when the camera result is too bright.
@@ -195,30 +219,18 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
                 
         // The amount of opacity for the overlay, should be a float.
         OverlayColorAlpha: 0.75,
-    
-        // The amount of seconds the preview should be visible for, should be a float.
-        PreviewDuration: 1.0,
-     
+         
         // Whether the camera has a view finder overlay (a helper grid so the user knows where the document should be), should be a Boolean.
         IsViewFinderEnabled: true,
 
-        // If you would like to use a custom model for object detection. Model + labels file should be packaged in your bundle.
-        Model: {name: "model", labelsName: "labels"},
-        
-        // If you would like to enable automatic capturing of images.
-        Timer: {enabled: true, duration: 0.4},
-
-        // To add extra horizontal and / or vertical padding to the cropped image.
-        CropPadding: {width: 100, height: 100},
-
-        // After capture, show a check mark preview with this success message, instead of a preview of the image.
-        Success: {message: "Success!", previewDuration: 0.3},
-
-        // Whether the camera automatically saves the images to the camera roll (iOS) / gallery (Android). Default true.
-        StoreImagesToCameraRoll: true,
-
         // The threshold sensitive the motion detection is. (lower value is higher sensitivity, default 200).
         ImageMovingSensitivityiOS: 200,
+
+        // The lower threshold before the warning message informs the environment is too dark (default 0).
+        BrightnessLowerThreshold: 0,
+
+        // The upper threshold before the warning message informs the environment is too bright (default 6).
+        BrightnessUpperThreshold: 6,
     });
 });
 ```
