@@ -275,6 +275,14 @@ class KlippaScannerSDKModule(
                 scannerSession.imageAttributes.storeImagesToGallery = config.getBoolean("StoreImagesToCameraRoll")
             }
 
+            if (config.hasKey("UserCanPickMediaFromStorage")) {
+                scannerSession.menu.userCanPickMediaFromStorage = config.getBoolean("UserCanPickMediaFromStorage")
+            }
+
+            if (config.hasKey("ShouldGoToReviewScreenOnFinishPressed")) {
+                scannerSession.menu.shouldGoToReviewScreenOnFinishPressed = config.getBoolean("ShouldGoToReviewScreenOnFinishPressed")
+            }
+
             val modes = ArrayList<KlippaDocumentMode>()
 
             if (config.hasKey("CameraModeSingle")) {
