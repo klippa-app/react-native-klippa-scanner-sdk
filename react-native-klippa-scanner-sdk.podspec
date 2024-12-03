@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/klippa-app/react-native-klippa-scanner-sdk"
   s.license      = "MIT"
   s.authors      = { "Jeroen Bobbeldijk" => "jeroen@klippa.com" }
-  s.platforms    = { :ios => "10.0" }
+  s.platforms    = { :ios => "14.0" }
   s.source       = { :git => "https://github.com/klippa-app/react-native-klippa-scanner-sdk.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,c,m,swift}"

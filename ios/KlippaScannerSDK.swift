@@ -317,6 +317,22 @@ class KlippaScannerSDK: NSObject {
             builder.klippaImageAttributes.storeImagesToCameraRoll = storeImagesToCameraRoll
         }
 
+        if let userCanPickMediaFromStorage = config["UserCanPickMediaFromStorage"] as? Bool {
+            builder.klippaMenu.userCanPickMediaFromStorage = userCanPickMediaFromStorage
+        }
+
+        if let shouldGoToReviewScreenOnFinishPressed = config["ShouldGoToReviewScreenOnFinishPressed"] as? Bool {
+            builder.klippaMenu.shouldGoToReviewScreenOnFinishPressed = shouldGoToReviewScreenOnFinishPressed
+        }
+
+        if let brightnessLowerThreshold = config["BrightnessLowerThreshold"] as? Double {
+            builder.klippaImageAttributes.brightnessLowerThreshold = brightnessLowerThreshold
+        }
+
+        if let brightnessUpperThreshold = config["BrightnessUpperThreshold"] as? Double {
+            builder.klippaImageAttributes.brightnessUpperThreshold = brightnessUpperThreshold
+        }
+
         if let shutterButton = config["ShutterButton"] as? [String: Bool] {
             if let allowShutterButton = shutterButton["allowShutterButton"] {
                 builder.klippaShutterbutton.allowShutterButton = allowShutterButton
