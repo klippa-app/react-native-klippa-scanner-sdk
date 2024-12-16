@@ -183,12 +183,20 @@ class KlippaScannerSDKModule(
                 scannerSession.menu.shouldGoToReviewScreenWhenImageLimitReached =
                     config.getBoolean("ShouldGoToReviewScreenWhenImageLimitReached")
             }
+
+            if (config.hasKey("UserShouldAcceptResultToContinue")) {
+                scannerSession.menu.userShouldAcceptResultToContinue =
+                    config.getBoolean("UserShouldAcceptResultToContinue")
+            }
+
             if (config.hasKey("UserCanRotateImage")) {
                 scannerSession.menu.userCanRotateImage = config.getBoolean("UserCanRotateImage")
             }
+
             if (config.hasKey("UserCanCropManually")) {
                 scannerSession.menu.userCanCropManually = config.getBoolean("UserCanCropManually")
             }
+
             if (config.hasKey("UserCanChangeColorSetting")) {
                 scannerSession.menu.userCanChangeColorSetting = config.getBoolean("UserCanChangeColorSetting")
             }
