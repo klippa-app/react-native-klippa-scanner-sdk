@@ -128,6 +128,9 @@ export class CameraConfig {
   // Whether the next button in the bottom right of the scanner screen goes to the review screen instead of finishing the session.
   ShouldGoToReviewScreenOnFinishPressed: boolean;
 
+  // Whether the user must confirm the taken photo before the SDK continues.
+  UserShouldAcceptResultToContinue: boolean;
+
   // Android options.
 
   // Where to put the image results.

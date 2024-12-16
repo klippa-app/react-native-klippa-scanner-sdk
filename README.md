@@ -154,6 +154,9 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         // Whether to go to the Review Screen once the image limit has been reached. (default false)
         ShouldGoToReviewScreenWhenImageLimitReached: false,
 
+        // Whether the user must confirm the taken photo before the SDK continues.
+        UserShouldAcceptResultToContinue: false,
+
         // Whether to hide or show the rotate button in the Review Screen. (default shown/true)
         UserCanRotateImage: true,
 

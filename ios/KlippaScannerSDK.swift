@@ -283,6 +283,10 @@ class KlippaScannerSDK: NSObject {
             builder.klippaMenu.shouldGoToReviewScreenWhenImageLimitReached = shouldGoToReviewScreenWhenImageLimitReached
         }
 
+        if let userShouldAcceptResultToContinue = config["UserShouldAcceptResultToContinue"] as? Bool {
+            builder.klippaMenu.userShouldAcceptResultToContinue = userShouldAcceptResultToContinue
+        }
+
         if let isViewFinderEnabled = config["IsViewFinderEnabled"] as? Bool {
             builder.klippaMenu.isViewFinderEnabled = isViewFinderEnabled
         }
