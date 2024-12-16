@@ -1,6 +1,6 @@
 ## 1.0.2
 
-* Bumped Android to 4.0.5
+* Bumped Android to 4.0.6
 * Bumped iOS to 2.0.5
 * Added `UserShouldAcceptResultToContinue`.
 
