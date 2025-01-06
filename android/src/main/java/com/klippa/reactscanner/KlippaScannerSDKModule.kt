@@ -25,10 +25,12 @@ import com.klippa.scanner.model.KlippaError
 import com.klippa.scanner.model.KlippaImageColor
 import com.klippa.scanner.model.KlippaMultipleDocumentMode
 import com.klippa.scanner.model.KlippaObjectDetectionModel
+import com.klippa.scanner.model.KlippaOutputFormat
 import com.klippa.scanner.model.KlippaScannerResult
 import com.klippa.scanner.model.KlippaSegmentedDocumentMode
 import com.klippa.scanner.model.KlippaSingleDocumentMode
 import com.klippa.scanner.model.KlippaSize
+import com.klippa.scanner.storage.KlippaStorage
 
 class KlippaScannerSDKModule(
     private val reactContext: ReactApplicationContext
@@ -96,6 +98,12 @@ class KlippaScannerSDKModule(
     }
 
     @ReactMethod
+    fun purge(promise: Promise) {
+        KlippaStorage.purge(reactContext)
+        promise.resolve(null)
+    }
+
+    @ReactMethod
     fun getCameraPermission(promise: Promise) {
         val map: WritableMap = WritableNativeMap()
         val permission = hasRequiredPermissions()
@@ -143,7 +151,21 @@ class KlippaScannerSDKModule(
                 when (config.getString("DefaultColor")) {
                     "grayscale" -> scannerSession.imageAttributes.imageColorMode = KlippaImageColor.GRAYSCALE
                     "enhanced" -> scannerSession.imageAttributes.imageColorMode = KlippaImageColor.ENHANCED
-                    else -> scannerSession.imageAttributes.imageColorMode = KlippaImageColor.ORIGINAL
+                    "original" -> scannerSession.imageAttributes.imageColorMode = KlippaImageColor.ORIGINAL
+                }
+            }
+
+            if (config.hasKey("OutputFormat")) {
+                when (config.getString("OutputFormat")) {
+                    "jpeg" -> {
+                        scannerSession.imageAttributes.outputFormat = KlippaOutputFormat.JPEG
+                    }
+                    "pdfSingle" -> {
+                        scannerSession.imageAttributes.outputFormat = KlippaOutputFormat.PDF_SINGLE
+                    }
+                    "pdfMerged" -> {
+                        scannerSession.imageAttributes.outputFormat = KlippaOutputFormat.PDF_MERGED
+                    }
                 }
             }
 
@@ -163,6 +185,10 @@ class KlippaScannerSDKModule(
                 }
             }
 
+            if (config.hasKey("PerformOnDeviceOCR")) {
+                scannerSession.imageAttributes.performOnDeviceOCR = config.getBoolean("PerformOnDeviceOCR")
+            }
+            
             if (config.hasKey("ImageLimit")) {
                 scannerSession.imageAttributes.imageLimit = config.getInt("ImageLimit")
             }
@@ -347,8 +373,8 @@ class KlippaScannerSDKModule(
                 }
 
                 val cameraModes = KlippaCameraModes(
-                        modes = modes,
-                        startingIndex = index
+                    modes = modes,
+                    startingIndex = index
                 )
 
                 scannerSession.cameraModes = cameraModes
@@ -367,7 +393,7 @@ class KlippaScannerSDKModule(
         val cameraResult: WritableMap = WritableNativeMap()
         val images: WritableArray = WritableNativeArray()
 
-        val imageList = result.images
+        val imageList = result.results
         val crop = result.cropEnabled
         val timerEnabled = result.timerEnabled
         val color = result.defaultImageColorLegacy
