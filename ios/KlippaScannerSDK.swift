@@ -151,12 +151,28 @@ class KlippaScannerSDK: NSObject {
         }
 
         if let imageColor = config["DefaultColor"] as? String {
-            if(imageColor == "grayscale") {
-                builder.klippaColors.imageColor = KlippaImageColor.grayscale
-            } else if(imageColor == "enhanced") {
-                builder.klippaColors.imageColor = KlippaImageColor.enhanced
-            } else {
+            switch imageColor {
+            case "original":
                 builder.klippaColors.imageColor = KlippaImageColor.original
+            case "grayscale":
+                 builder.klippaColors.imageColor = KlippaImageColor.grayscale
+            case "enhanced":
+                builder.klippaColors.imageColor = KlippaImageColor.enhanced
+            default:
+                builder.klippaColors.imageColor = KlippaImageColor.original
+            }
+        }
+
+        if let outputFormat = config["OutputFormat"] as? String {
+            switch outputFormat {
+            case "jpeg":
+                builder.klippaImageAttributes.outputFormat = .jpeg
+            case "pdfSingle":
+                builder.klippaImageAttributes.outputFormat = .pdfSingle
+            case "pdfMerged":
+                builder.klippaImageAttributes.outputFormat = .pdfMerged
+            default:
+                builder.klippaImageAttributes.outputFormat = .jpeg
             }
         }
 
@@ -319,6 +335,10 @@ class KlippaScannerSDK: NSObject {
 
         if let storeImagesToCameraRoll = config["StoreImagesToCameraRoll"] as? Bool {
             builder.klippaImageAttributes.storeImagesToCameraRoll = storeImagesToCameraRoll
+        }
+
+        if let performOnDeviceOCR = config["PerformOnDeviceOCR"] as? Bool {
+            builder.klippaImageAttributes.performOnDeviceOCR = performOnDeviceOCR
         }
 
         if let userCanPickMediaFromStorage = config["UserCanPickMediaFromStorage"] as? Bool {
@@ -496,7 +516,7 @@ extension KlippaScannerSDK: KlippaScannerDelegate {
     func klippaScannerDidFinishScanningWithResult(result: KlippaScanner.KlippaScannerResult) {
 
         var images = [Dictionary<String, String>]()
-        for image in result.images {
+        for image in result.results {
 
             let path = image.path
             let imageDict = ["Filepath": path]

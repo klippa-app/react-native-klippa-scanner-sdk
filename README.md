@@ -168,6 +168,12 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
 
         // What the default color conversion will be (grayscale, original, enhanced).
         DefaultColor: "original",
+
+        // Whether to perform on-device OCR after scanning completes.
+        PerformOnDeviceOCR: false,
+
+        // What the output format will be (jpeg, pdfMerged, pdfSingle). (Default jpeg)
+        OutputFormat: "jpeg",
     
         // Optional. Only affects Android.
     
@@ -383,6 +389,12 @@ CameraModeSingle: {name: "Name", message: "Message", image: "{name of image in A
 CameraModeMulti: {name: "Name", message: "Message", image: "{name of image in Assets.xcassets}"}
 // Change the default image in the Segmented Document Mode instructions.
 CameraModeSegmented: {name: "Name", message: "Message", image: "{name of image in Assets.xcassets}"}
+```
+
+## How to clear the storage.
+
+```javascript
+KlippaScannerSDK.purge()
 ```
 
 ## Important iOS notes

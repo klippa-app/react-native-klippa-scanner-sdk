@@ -131,13 +131,19 @@ export class CameraConfig {
   // Whether the user must confirm the taken photo before the SDK continues.
   UserShouldAcceptResultToContinue: boolean;
 
+  // What the default color conversion will be (original, grayscale, enhanced).
+  DefaultColor?: 'original' | 'grayscale' | 'enhanced';
+
+  // What the output format will be (jpeg, pdfMerged, pdfSingle). (Default jpeg)
+  OutputFormat?: 'jpeg' | 'pdfMerged' | 'pdfSingle';
+
+  // Whether to perform on-device OCR after scanning completes.
+  PerformOnDeviceOCR: boolean;
+
   // Android options.
 
   // Where to put the image results.
   StoragePath?: string;
-
-  // What the default color conversion will be (original, grayscale, enhanced).
-  DefaultColor?: 'original' | 'grayscale' | 'enhanced';
 
   OutputFilename?: string;
 
@@ -270,9 +276,9 @@ export class CameraResultImage {
 }
 
 export class CameraPermissionResult {
-  // Android always return Authorized, the SDK itself asks for permission.
   Status: 'Authorized' | 'Denied' | 'Restricted';
 }
 
 export declare function getCameraPermission(): Promise<CameraPermissionResult>;
 export declare function getCameraResult(config: CameraConfig): Promise<CameraResult>;
+export declare function purge(): Promise<void>;
