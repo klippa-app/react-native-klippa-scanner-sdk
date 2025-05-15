@@ -368,7 +368,7 @@ Add or edit the file `android/app/src/main/res/values/strings.xml`, add the foll
 
 ### iOS
 
-Use the following properties in the config when running `getCameraResult`: `ImageTooBrightMessage`, `ImageTooDarkMessage`, `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`, `OrientationWarningMessage`, `ImageColorOriginalText`, `ImageColorGrayscaleText`, `ImageColorEnhancedText`, `SaveCropButtonText`, `ExpandCropButtonText`, `CancelCropButtonText`, `DeleteEditButtonText`, `RotateEditButtonText`, `FilterEditButtonText`, `CropEditButtonText`, `SegmentedModeImageCountMessage`.
+Use the following properties in the config when running `getCameraResult`: `ImageTooBrightMessage`, `ImageTooDarkMessage`, `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`, `OrientationWarningMessage`, `ImageColorOriginalText`, `ImageColorGrayscaleText`, `ImageColorEnhancedText`, `ContinueButtonText`, `SaveCropButtonText`, `ExpandCropButtonText`, `CancelCropButtonText`, `DeleteEditButtonText`, `RotateEditButtonText`, `FilterEditButtonText`, `CropEditButtonText`, `SegmentedModeImageCountMessage`.
 
 ## How to change the image in the instructions?
 
