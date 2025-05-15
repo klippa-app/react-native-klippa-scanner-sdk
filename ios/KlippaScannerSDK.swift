@@ -260,6 +260,10 @@ class KlippaScannerSDK: NSObject {
             builder.klippaButtonTexts.expandCropButtonText = expandCropButtonText
         }
 
+        if let continueButtonText = config["ContinueButtonText"] as? String {
+            builder.klippaButtonTexts.continueButtonText = continueButtonText
+        }
+
         if let saveCropButtonText = config["SaveCropButtonText"] as? String {
             builder.klippaButtonTexts.saveCropButtonText = saveCropButtonText
         }

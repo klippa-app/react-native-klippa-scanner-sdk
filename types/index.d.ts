@@ -170,6 +170,9 @@ export class CameraConfig {
   // The text inside of the color selection alert dialog button named enhanced.
   ImageColorEnhancedText?: string;
 
+  // The text to finish the scanner on the edit screen.
+  ContinueButtonText?: string;
+
   // The text inside of the cancel alert button.
   CancelAndDeleteImagesButtonText?: string;
 

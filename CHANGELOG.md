@@ -1,3 +1,7 @@
+## 1.0.6
+
+* Added `ContinueButtonText` to change the text on the finish screen for iOS.
+
 ## 1.0.5
 
 * Bumped Android to 4.0.10
