@@ -248,7 +248,7 @@ class KlippaScannerSDK: NSObject {
             builder.klippaButtonTexts.rotateEditButtonText = rotateEditButtonText
         }
 
-        if let deleteEditButtonText = config["deleteEditButtonText"] as? String {
+        if let deleteEditButtonText = config["DeleteEditButtonText"] as? String {
             builder.klippaButtonTexts.deleteEditButtonText = deleteEditButtonText
         }
 
