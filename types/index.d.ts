@@ -140,6 +140,12 @@ export class CameraConfig {
   // Whether to perform on-device OCR after scanning completes.
   PerformOnDeviceOCR: boolean;
 
+  // The lower threshold before the warning message informs the environment is too dark (default 0).
+  BrightnessLowerThreshold: number;
+
+  // The upper threshold before the warning message informs the environment is too bright (default 6).
+  BrightnessUpperThreshold: number;
+
   // Android options.
 
   // Where to put the image results.
@@ -220,6 +226,12 @@ export class CameraConfig {
   // The color of the menu icons background of the screen where you can review/edit the images, should be a hex RGB color string.
   ButtonWithIconBackgroundColor?: string;
 
+  // The color of the primary action foreground, should be a hex RGB color string.
+  PrimaryActionForegroundColor?: string;
+
+  // The color of the primary action background, should be a hex RGB color string.
+  PrimaryActionBackgroundColor?: string;
+
   // The text below the crop button in the review screen.
   CropEditButtonText?: string;
 
@@ -246,12 +258,6 @@ export class CameraConfig {
 
   // The threshold sensitive the motion detection is. (lower value is higher sensitivity, default 200).
   ImageMovingSensitivityiOS?: number;
-
-  // The lower threshold before the warning message informs the environment is too dark (default 0).
-  BrightnessLowerThreshold: number;
-
-  // The upper threshold before the warning message informs the environment is too bright (default 6).
-  BrightnessUpperThreshold: number;
 }
 
 export class CameraResult {

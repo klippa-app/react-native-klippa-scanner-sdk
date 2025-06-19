@@ -56,6 +56,14 @@ class KlippaScannerSDK: NSObject {
 
     }
 
+    // Mark: - Purge
+    @objc func purge(
+        _ resolve: @escaping RCTPromiseResolveBlock,
+        rejecter reject: @escaping RCTPromiseRejectBlock
+    ) {
+        KlippaScannerStorage.purge()
+        resolve(nil)
+    }
 
     //  MARK: - getCameraResult
     @objc(getCameraResult:withResolver:withRejecter:)
@@ -147,6 +155,18 @@ class KlippaScannerSDK: NSObject {
         if let buttonWithIconBackgroundColor = config["ButtonWithIconBackgroundColor"] as? String {
             if let color = hexStringToUIColor(hex: buttonWithIconBackgroundColor) {
                 builder.klippaColors.buttonWithIconBackgroundColor = color
+            }
+        }
+
+        if let primaryActionForegroundColor = config["PrimaryActionForegroundColor"] as? String {
+            if let color = hexStringToUIColor(hex: primaryActionForegroundColor) {
+                builder.klippaColors.primaryActionForegroundColor = color
+            }
+        }
+
+        if let primaryActionBackgroundColor = config["PrimaryActionBackgroundColor"] as? String {
+            if let color = hexStringToUIColor(hex: primaryActionBackgroundColor) {
+                builder.klippaColors.primaryActionBackgroundColor = color
             }
         }
 
@@ -248,7 +268,7 @@ class KlippaScannerSDK: NSObject {
             builder.klippaButtonTexts.rotateEditButtonText = rotateEditButtonText
         }
 
-        if let deleteEditButtonText = config["deleteEditButtonText"] as? String {
+        if let deleteEditButtonText = config["DeleteEditButtonText"] as? String {
             builder.klippaButtonTexts.deleteEditButtonText = deleteEditButtonText
         }
 
