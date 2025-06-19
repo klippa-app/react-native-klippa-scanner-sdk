@@ -1,3 +1,7 @@
+## 1.0.7
+
+* Fixed issue where `purge()` implementation was missing on iOS.
+
 ## 1.0.6
 
 * Added `ContinueButtonText` to change the text on the finish screen for iOS.

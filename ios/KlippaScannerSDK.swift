@@ -56,6 +56,14 @@ class KlippaScannerSDK: NSObject {
 
     }
 
+    // Mark: - Purge
+    @objc func purge(
+        _ resolve: @escaping RCTPromiseResolveBlock,
+        rejecter reject: @escaping RCTPromiseRejectBlock
+    ) {
+        KlippaScannerStorage.purge()
+        resolve(nil)
+    }
 
     //  MARK: - getCameraResult
     @objc(getCameraResult:withResolver:withRejecter:)
