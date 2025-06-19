@@ -1,6 +1,10 @@
 ## 1.0.7
 
+* Bump Android to 4.1.0
+* Bump iOS to 2.1.0
 * Fixed issue where `purge()` implementation was missing on iOS.
+* Added `PrimaryActionForegroundColor` and `PrimaryActionBackgroundColor` for iOS.
+* `BrightnessLowerThreshold` and `BrightnessUpperThreshold` are now also used on Android.
 
 ## 1.0.6
 

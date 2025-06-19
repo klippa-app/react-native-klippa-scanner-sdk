@@ -158,6 +158,18 @@ class KlippaScannerSDK: NSObject {
             }
         }
 
+        if let primaryActionForegroundColor = config["PrimaryActionForegroundColor"] as? String {
+            if let color = hexStringToUIColor(hex: primaryActionForegroundColor) {
+                builder.klippaColors.primaryActionForegroundColor = color
+            }
+        }
+
+        if let primaryActionBackgroundColor = config["PrimaryActionBackgroundColor"] as? String {
+            if let color = hexStringToUIColor(hex: primaryActionBackgroundColor) {
+                builder.klippaColors.primaryActionBackgroundColor = color
+            }
+        }
+
         if let imageColor = config["DefaultColor"] as? String {
             switch imageColor {
             case "original":

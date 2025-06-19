@@ -174,6 +174,12 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
 
         // What the output format will be (jpeg, pdfMerged, pdfSingle). (Default jpeg)
         OutputFormat: "jpeg",
+
+        // The lower threshold before the warning message informs the environment is too dark (default 0).
+        BrightnessLowerThreshold: 0,
+
+        // The upper threshold before the warning message informs the environment is too bright (default 6).
+        BrightnessUpperThreshold: 6,
     
         // Optional. Only affects Android.
     
@@ -234,12 +240,6 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
 
         // The threshold sensitive the motion detection is. (lower value is higher sensitivity, default 200).
         ImageMovingSensitivityiOS: 200,
-
-        // The lower threshold before the warning message informs the environment is too dark (default 0).
-        BrightnessLowerThreshold: 0,
-
-        // The upper threshold before the warning message informs the environment is too bright (default 6).
-        BrightnessUpperThreshold: 6,
     });
 });
 ```
@@ -320,12 +320,14 @@ Add or edit the file `android/app/src/main/res/values/colors.xml`, add the follo
     <color name="klippa_scanner_sdk_color_icon_enabled">#ffffff</color>
     <color name="klippa_scanner_sdk_color_button_with_icon_foreground">#ffffff</color>
     <color name="klippa_scanner_sdk_color_button_with_icon_background">#444444</color>
+    <color name="klippa_scanner_sdk_color_primary_action_foreground">#ffffff</color>
+    <color name="klippa_scanner_sdk_color_primary_action_background">#2dc36a</color>
 </resources>
 ```
 
 ### iOS
 
-Use the following properties in the config when running `getCameraResult`: `PrimaryColor`, `AccentColor`, `OverlayColor`, `WarningBackgroundColor`, `WarningTextColor`, `OverlayColorAlpha`, `IconDisabledColor`, `IconEnabledColor`,  `ReviewIconColor`, `ButtonWithIconBackgroundColor`, `ButtonWithIconForegroundColor`. Each value should be a string with a `hex` including a `#`, i.e: `#fff` for white.
+Use the following properties in the config when running `getCameraResult`: `PrimaryColor`, `AccentColor`, `OverlayColor`, `WarningBackgroundColor`, `WarningTextColor`, `OverlayColorAlpha`, `IconDisabledColor`, `IconEnabledColor`,  `ReviewIconColor`, `ButtonWithIconBackgroundColor`, `ButtonWithIconForegroundColor`, `PrimaryActionForegroundColor`, `PrimaryActionBackgroundColor`. Each value should be a string with a `hex` including a `#`, i.e: `#fff` for white.
 
 ## How to change the texts in the scanner?
 
@@ -363,6 +365,9 @@ Add or edit the file `android/app/src/main/res/values/strings.xml`, add the foll
     <string name="klippa_action_expand">Expand</string>
     <string name="klippa_action_filter">Filter</string>
     <string name="klippa_action_rotate">Rotate</string>
+
+    <string name="klippa_too_bright_warning_message">The image is too bright</string>
+    <string name="klippa_too_dark_warning_message">The image is too dark</string>
 </resources>
 ```
 
