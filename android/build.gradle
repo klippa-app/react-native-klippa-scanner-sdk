@@ -11,10 +11,10 @@
 //   - https://github.com/facebook/react-native/blob/0.58-stable/local-cli/templates/HelloWorld/android/app/build.gradle
 
 
-def DEFAULT_COMPILE_SDK_VERSION = 34
-def DEFAULT_BUILD_TOOLS_VERSION = '34.0.0'
+def DEFAULT_COMPILE_SDK_VERSION = 35
+def DEFAULT_BUILD_TOOLS_VERSION = '35.0.0'
 def DEFAULT_MIN_SDK_VERSION = 25
-def DEFAULT_TARGET_SDK_VERSION = 34
+def DEFAULT_TARGET_SDK_VERSION = 35
 
 def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
@@ -88,7 +88,7 @@ repositories {
 }
 
 dependencies {
-    def fallbackKlippaScannerVersion = "4.1.0"
+    def fallbackKlippaScannerVersion = "4.2.0"
     def klippaScannerVersion = project.hasProperty('klippaScannerVersion') ? project.klippaScannerVersion : fallbackKlippaScannerVersion
 
     //noinspection GradleDynamicVersion
