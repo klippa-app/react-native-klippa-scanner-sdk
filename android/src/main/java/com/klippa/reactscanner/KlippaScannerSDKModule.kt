@@ -59,7 +59,7 @@ class KlippaScannerSDKModule(
 
     private val activityEventListener = object: BaseActivityEventListener() {
         override fun onActivityResult(
-            activity: Activity?,
+            activity: Activity,
             requestCode: Int,
             resultCode: Int,
             data: Intent?

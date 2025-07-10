@@ -1,3 +1,11 @@
+## 1.1.0
+
+* Add support for React Native 19
+* Add support for Compile SDK version 35 (Android)
+* Bump iOS to 2.1.1
+* Bump Android to 4.2.0
+
+
 ## 1.0.7
 
 * Bump Android to 4.1.0
