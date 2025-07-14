@@ -14,7 +14,7 @@ If you would like to use our scanner, please contact us [here](https://www.klipp
 
 Edit the file `android/build.gradle`, add the Klippa Maven repository:
 
-```maven
+```groovy
 allprojects {
     repositories {
         // ... other repositories
@@ -35,7 +35,7 @@ Replace the `{your-username}` and `{your-password}` values with the ones provide
 If you're using gradle 7+ you will need to change `copyDownloadableDepsToLibs` in the `app/build.gradle`.
 It should now look like:
 
-```maven
+```groovy
 task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.implementation
     into 'libs'
@@ -46,7 +46,7 @@ task copyDownloadableDepsToLibs(type: Copy) {
 ### iOS
 
 Edit the file `ios/Podfile`, add the Klippa CocoaPod:
-```
+```ruby
 // Add this to the top of your file:
 // Edit the platform to a minimum of 13.0, our SDK doesn't support earlier versions.
 
@@ -254,7 +254,7 @@ KlippaScannerSDK.getCameraResult(options).then((result) => {
 ```
 
 The content of the result object is:
-```
+```javascript
 {
   // Whether the MultipleDocuments option was turned on, so you can save it as default.
   "MultipleDocuments": true,
@@ -287,7 +287,7 @@ The reject reason object has a code and a message, the used codes are:
 
 Edit the file `android/build.gradle`, add the following:
 
-```maven
+```groovy
 allprojects {
   // ... other definitions
   project.ext {
@@ -387,7 +387,7 @@ Add an XML file in `android/app/src/res/drawable/` with name `klippa_camera_mode
 
 Use the following properties in the config:
 
-```ts
+```javascript
 // Change the default image in the Single Document Mode instructions.
 CameraModeSingle: {name: "Name", message: "Message", image: "{name of image in Assets.xcassets}"}
 // Change the default image in the Multi Document Mode instructions.
@@ -410,7 +410,7 @@ We started using XCFrameworks from version 0.1.0, if you want to use that versio
 ## Important Android notes
 When using a custom trained model for object detection, add the following to your app's build.gradle file to ensure Gradle doesn’t compress the models when building the app:
 
-```
+```groovy
 android {
     aaptOptions {
         noCompress "tflite"
