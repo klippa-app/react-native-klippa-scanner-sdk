@@ -281,7 +281,7 @@ The reject reason object has a code and a message, the used codes are:
  - E_CANCELED
  - E_UNKNOWN_ERROR
 
-## How to use a specific version of the SDK?
+## Specify SDK Version
 
 ### Android
 
@@ -302,7 +302,7 @@ Replace the `{version}` value with the version you want to use.
 
 Edit the file `ios/Podfile`, change the pod line of `Klippa-Scanner` and replace `latest.podspec` with `{version}.podspec`, replace the `{version}` value with the version you want to use.
 
-## How to change the colors of the scanner?
+## Customize the colours
 
 ### Android
 
@@ -329,7 +329,7 @@ Add or edit the file `android/app/src/main/res/values/colors.xml`, add the follo
 
 Use the following properties in the config when running `getCameraResult`: `PrimaryColor`, `AccentColor`, `OverlayColor`, `WarningBackgroundColor`, `WarningTextColor`, `OverlayColorAlpha`, `IconDisabledColor`, `IconEnabledColor`,  `ReviewIconColor`, `ButtonWithIconBackgroundColor`, `ButtonWithIconForegroundColor`, `PrimaryActionForegroundColor`, `PrimaryActionBackgroundColor`. Each value should be a string with a `hex` including a `#`, i.e: `#fff` for white.
 
-## How to change the texts in the scanner?
+## Customize the texts
 
 ### Android
 
@@ -375,7 +375,7 @@ Add or edit the file `android/app/src/main/res/values/strings.xml`, add the foll
 
 Use the following properties in the config when running `getCameraResult`: `ImageTooBrightMessage`, `ImageTooDarkMessage`, `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`, `OrientationWarningMessage`, `ImageColorOriginalText`, `ImageColorGrayscaleText`, `ImageColorEnhancedText`, `ContinueButtonText`, `SaveCropButtonText`, `ExpandCropButtonText`, `CancelCropButtonText`, `DeleteEditButtonText`, `RotateEditButtonText`, `FilterEditButtonText`, `CropEditButtonText`, `SegmentedModeImageCountMessage`.
 
-## How to change the image in the instructions?
+## Customize image in CameraMode instructions
 
 ### Android
 
@@ -396,7 +396,7 @@ CameraModeMulti: {name: "Name", message: "Message", image: "{name of image in As
 CameraModeSegmented: {name: "Name", message: "Message", image: "{name of image in Assets.xcassets}"}
 ```
 
-## How to clear the storage.
+## Clear Storage
 
 ```javascript
 KlippaScannerSDK.purge()
