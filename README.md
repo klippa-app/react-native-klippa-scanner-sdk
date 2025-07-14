@@ -3,14 +3,12 @@
 [npm-version]:https://img.shields.io/npm/v/@klippa/react-native-klippa-scanner-sdk.svg
 [npm-url]:https://www.npmjs.com/package/@klippa/react-native-klippa-scanner-sdk
 
-# react-native-klippa-scanner-sdk
-
-## SDK License
+### SDK License
 Please be aware you need to have a license to use this SDK.
 If you would like to use our scanner, please contact us [here](https://www.klippa.com/en/ocr/ocr-sdk/)
 
-## Getting started
-### Android
+### Getting started
+#### Android
 
 Edit the file `android/build.gradle`, add the Klippa Maven repository:
 
@@ -43,7 +41,7 @@ task copyDownloadableDepsToLibs(type: Copy) {
 
 ```
 
-### iOS
+#### iOS
 
 Edit the file `ios/Podfile`, add the Klippa CocoaPod:
 ```ruby
@@ -85,7 +83,7 @@ end
 Replace the `{your-username}` and `{your-password}` values with the ones provided by Klippa.
 
 Edit the file `ios/{project-name}/Info.plist` and add the `NSCameraUsageDescription` value:
-```
+```xml
 ...
 <key>NSCameraUsageDescription</key>
 <string>Access to your camera is needed to photograph documents.</string>
@@ -94,7 +92,7 @@ Edit the file `ios/{project-name}/Info.plist` and add the `NSCameraUsageDescript
 ...
 ```
 
-### React native
+#### React native
 
 `$ npm install @klippa/react-native-klippa-scanner-sdk --save`
 
@@ -104,7 +102,7 @@ Don't forget to run `pod install` in the ios folder when running the iOS app.
 
 `$ react-native link @klippa/react-native-klippa-scanner-sdk`
 
-## Usage
+### Usage
 ```javascript
 import KlippaScannerSDK from '@klippa/react-native-klippa-scanner-sdk';
 
@@ -281,9 +279,9 @@ The reject reason object has a code and a message, the used codes are:
  - E_CANCELED
  - E_UNKNOWN_ERROR
 
-## Specify SDK Version
+### Specify SDK Version
 
-### Android
+#### Android
 
 Edit the file `android/build.gradle`, add the following:
 
@@ -298,13 +296,13 @@ allprojects {
 
 Replace the `{version}` value with the version you want to use.
 
-### iOS
+#### iOS
 
 Edit the file `ios/Podfile`, change the pod line of `Klippa-Scanner` and replace `latest.podspec` with `{version}.podspec`, replace the `{version}` value with the version you want to use.
 
-## Customize the colours
+### Customize the colours
 
-### Android
+#### Android
 
 Add or edit the file `android/app/src/main/res/values/colors.xml`, add the following:
 
@@ -325,13 +323,13 @@ Add or edit the file `android/app/src/main/res/values/colors.xml`, add the follo
 </resources>
 ```
 
-### iOS
+#### iOS
 
 Use the following properties in the config when running `getCameraResult`: `PrimaryColor`, `AccentColor`, `OverlayColor`, `WarningBackgroundColor`, `WarningTextColor`, `OverlayColorAlpha`, `IconDisabledColor`, `IconEnabledColor`,  `ReviewIconColor`, `ButtonWithIconBackgroundColor`, `ButtonWithIconForegroundColor`, `PrimaryActionForegroundColor`, `PrimaryActionBackgroundColor`. Each value should be a string with a `hex` including a `#`, i.e: `#fff` for white.
 
-## Customize the texts
+### Customize the texts
 
-### Android
+#### Android
 
 Add or edit the file `android/app/src/main/res/values/strings.xml`, add the following:
 
@@ -371,19 +369,19 @@ Add or edit the file `android/app/src/main/res/values/strings.xml`, add the foll
 </resources>
 ```
 
-### iOS
+#### iOS
 
 Use the following properties in the config when running `getCameraResult`: `ImageTooBrightMessage`, `ImageTooDarkMessage`, `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`, `OrientationWarningMessage`, `ImageColorOriginalText`, `ImageColorGrayscaleText`, `ImageColorEnhancedText`, `ContinueButtonText`, `SaveCropButtonText`, `ExpandCropButtonText`, `CancelCropButtonText`, `DeleteEditButtonText`, `RotateEditButtonText`, `FilterEditButtonText`, `CropEditButtonText`, `SegmentedModeImageCountMessage`.
 
-## Customize image in CameraMode instructions
+### Customize image in CameraMode instructions
 
-### Android
+#### Android
 
 Add an XML file in `android/app/src/res/drawable/` with name `klippa_camera_mode_single_document.xml` to change the image in Single Document Mode.
 Add an XML file in `android/app/src/res/drawable/` with name `klippa_camera_mode_multiple_documents.xml` to change the image in Multiple Document Mode.
 Add an XML file in `android/app/src/res/drawable/` with name `klippa_camera_mode_segmented_document.xml` to change the image in Segmented Document Mode.
 
-### iOS
+#### iOS
 
 Use the following properties in the config:
 
@@ -396,13 +394,13 @@ CameraModeMulti: {name: "Name", message: "Message", image: "{name of image in As
 CameraModeSegmented: {name: "Name", message: "Message", image: "{name of image in Assets.xcassets}"}
 ```
 
-## Clear Storage
+### Clear Storage
 
 ```javascript
 KlippaScannerSDK.purge()
 ```
 
-## Important iOS notes
+### Important iOS notes
 Older iOS versions do not ship the Swift libraries. To make sure the SDK works on older iOS versions, you can configure the build to embed the Swift libraries using the build setting `EMBEDDED_CONTENT_CONTAINS_SWIFT = YES`.
 
 We started using XCFrameworks from version 0.1.0, if you want to use that version or up, you need CocoaPod version 1.9.0 or higher.
@@ -418,12 +416,12 @@ android {
 }
 ```
 
-## About Klippa
+### About Klippa
 
 [Klippa](https://www.klippa.com/en) is a scale-up from [Groningen, The Netherlands](https://goo.gl/maps/CcCGaPTBz3u8noSd6) and was founded in 2015 by six Dutch IT specialists with the goal to digitize paper processes with modern technologies.
 
 We help clients enhance the effectiveness of their organization by using machine learning and OCR. Since 2015 more than a 1000 happy clients have been served with a variety of the software solutions that Klippa offers. Our passion is to help our clients to digitize paper processes by using smart apps, accounts payable software and data extraction by using OCR.
 
-## License
+### License
 
 The MIT License (MIT)
