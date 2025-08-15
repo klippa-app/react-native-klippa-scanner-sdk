@@ -1,3 +1,7 @@
+## 1.1.2
+
+* Replace deprecated `currentActivity` for `reactApplicationContext.currentActivity`.
+
 ## 1.1.1
 
 * Bump Android to 4.2.1

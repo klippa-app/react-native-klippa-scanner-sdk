@@ -129,7 +129,7 @@ class KlippaScannerSDKModule(
     @ReactMethod
     fun getCameraResult(config: ReadableMap, promise: Promise) {
 
-        val currentActivity = currentActivity ?: kotlin.run {
+        val currentActivity = reactApplicationContext.currentActivity ?: kotlin.run {
             promise.reject(E_ACTIVITY_DOES_NOT_EXIST, "Activity doesn't exist")
             mCameraPromise = null
             return
