@@ -1,6 +1,9 @@
 ## 1.1.2
 
 * Replace deprecated `currentActivity` for `reactApplicationContext.currentActivity`.
+* Replace `onActivityResult` with non optional activity.
+* Bump Android to 4.2.2
+* Bump iOS to 2.1.3
 
 ## 1.1.1
 
