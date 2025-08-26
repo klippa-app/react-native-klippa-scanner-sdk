@@ -45,7 +45,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-
+    namespace "com.klippa.reactscanner"
     compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
     buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
 
@@ -88,7 +88,7 @@ repositories {
 }
 
 dependencies {
-    def fallbackKlippaScannerVersion = "4.2.1"
+    def fallbackKlippaScannerVersion = "4.2.2"
     def klippaScannerVersion = project.hasProperty('klippaScannerVersion') ? project.klippaScannerVersion : fallbackKlippaScannerVersion
 
     //noinspection GradleDynamicVersion
