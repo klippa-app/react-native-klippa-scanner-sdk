@@ -178,6 +178,8 @@ class KlippaScannerSDK: NSObject {
                  builder.klippaColors.imageColor = KlippaImageColor.grayscale
             case "enhanced":
                 builder.klippaColors.imageColor = KlippaImageColor.enhanced
+            case "blackAndWhite":
+                builder.klippaColors.imageColor = KlippaImageColor.blackAndWhite
             default:
                 builder.klippaColors.imageColor = KlippaImageColor.original
             }
@@ -191,6 +193,8 @@ class KlippaScannerSDK: NSObject {
                 builder.klippaImageAttributes.outputFormat = .pdfSingle
             case "pdfMerged":
                 builder.klippaImageAttributes.outputFormat = .pdfMerged
+            case "png":
+                builder.klippaImageAttributes.outputFormat = .png
             default:
                 builder.klippaImageAttributes.outputFormat = .jpeg
             }
@@ -288,6 +292,10 @@ class KlippaScannerSDK: NSObject {
             builder.klippaButtonTexts.saveCropButtonText = saveCropButtonText
         }
 
+        if let imageColorBlackAndWhiteText = config["ImageColorBlackAndWhiteText"] as? String {
+            builder.klippaButtonTexts.imageColorBlackAndWhiteText = imageColorBlackAndWhiteText
+        }
+
         if let isCropEnabled = config["DefaultCrop"] as? Bool {
             builder.klippaMenu.isCropEnabled = isCropEnabled
         }
@@ -381,13 +389,49 @@ class KlippaScannerSDK: NSObject {
             builder.klippaImageAttributes.brightnessUpperThreshold = brightnessUpperThreshold
         }
 
+        if let pageFormat = config["PageFormat"] as? String {
+            switch pageFormat {
+                case "off":
+                    builder.klippaImageAttributes.pageFormat = .off
+                case "a3":
+                    builder.klippaImageAttributes.pageFormat = .a3
+                case "a4":
+                    builder.klippaImageAttributes.pageFormat = .a4
+                case "a5":
+                    builder.klippaImageAttributes.pageFormat = .a5
+                case "a6":
+                    builder.klippaImageAttributes.pageFormat = .a6
+                case "b4":
+                    builder.klippaImageAttributes.pageFormat = .b4
+                case "b5":
+                    builder.klippaImageAttributes.pageFormat = .b5
+                case "letter":
+                    builder.klippaImageAttributes.pageFormat = .letter
+                default:
+                    builder.klippaImageAttributes.pageFormat = .off
+            }
+        }
+
+        if let dpi = config["DPI"] as? String {
+            switch dpi {
+                case "auto":
+                    builder.klippaImageAttributes.dpi = .auto
+                case "dpi200":
+                    builder.klippaImageAttributes.dpi = .dpi200
+                case "dpi300":
+                    builder.klippaImageAttributes.dpi = .dpi300
+                default:
+                    builder.klippaImageAttributes.dpi = .auto
+            }
+        }
+
         if let shutterButton = config["ShutterButton"] as? [String: Bool] {
             if let allowShutterButton = shutterButton["allowShutterButton"] {
-                builder.klippaShutterbutton.allowShutterButton = allowShutterButton
+                builder.klippaShutterButton.allowShutterButton = allowShutterButton
             }
 
             if let hideShutterButton = shutterButton["hideShutterButton"] {
-                builder.klippaShutterbutton.hideShutterButton = hideShutterButton
+                builder.klippaShutterButton.hideShutterButton = hideShutterButton
             }
         }
 
