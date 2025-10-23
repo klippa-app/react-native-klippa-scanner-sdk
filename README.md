@@ -145,6 +145,16 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         // The camera mode for scanning long documents in separate parts.
         CameraModeSegmented?: {name: "Segmented Document Mode", message: "Description of Camera Mode"};
 
+        // When multiple camera modes are enabled select which should show first by index.
+        StartingIndex: 0,
+
+        // The page format to which the scanned images will be resized. Default is off. (this overrides imageMaxWidth and imageMaxHeight)
+        // Options: off, a3, a4, a5, a6, b4, b5, letter
+        pageFormat = "off";
+        // The DPI setting for the scanned images. Default is auto.
+        // Options: auto, dpi200, dpi300
+        dpi = "auto";
+
         // To limit the amount of images that can be taken.
         ImageLimit: 10,
         
@@ -166,13 +176,13 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         // Whether to hide or show the color changing button in the Review Screen. (default shown/true)
         UserCanChangeColorSetting: true,
 
-        // What the default color conversion will be (grayscale, original, enhanced).
+        // What the default color conversion will be (grayscale, original, enhanced, blackAndWhite).
         DefaultColor: "original",
 
         // Whether to perform on-device OCR after scanning completes.
         PerformOnDeviceOCR: false,
 
-        // What the output format will be (jpeg, pdfMerged, pdfSingle). (Default jpeg)
+        // What the output format will be (jpeg, pdfMerged, pdfSingle, png). (Default jpeg)
         OutputFormat: "jpeg",
 
         // The lower threshold before the warning message informs the environment is too dark (default 0).
@@ -231,6 +241,9 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
   
         // The text inside of the color selection alert dialog button named enhanced.
         ImageColorEnhancedText: "enhanced",
+
+        // The text inside of the color selection alert dialog button named black and white.
+        ImageColorBlackAndWhiteText = "Black & White",
                 
         // The amount of opacity for the overlay, should be a float.
         OverlayColorAlpha: 0.75,
@@ -368,6 +381,7 @@ Add or edit the file `android/app/src/main/res/values/strings.xml`, add the foll
 
     <string name="klippa_too_bright_warning_message">The image is too bright</string>
     <string name="klippa_too_dark_warning_message">The image is too dark</string>
+    <string name="klippa_image_color_black_and_white">Black and White</string>
 </resources>
 ```
 

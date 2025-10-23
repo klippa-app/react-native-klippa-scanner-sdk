@@ -20,12 +20,14 @@ import com.klippa.scanner.ScannerSession.Companion.KLIPPA_ERROR
 import com.klippa.scanner.ScannerSession.Companion.KLIPPA_RESULT
 import com.klippa.scanner.model.Instructions
 import com.klippa.scanner.model.KlippaCameraModes
+import com.klippa.scanner.model.KlippaDPI
 import com.klippa.scanner.model.KlippaDocumentMode
 import com.klippa.scanner.model.KlippaError
 import com.klippa.scanner.model.KlippaImageColor
 import com.klippa.scanner.model.KlippaMultipleDocumentMode
 import com.klippa.scanner.model.KlippaObjectDetectionModel
 import com.klippa.scanner.model.KlippaOutputFormat
+import com.klippa.scanner.model.KlippaPageFormat
 import com.klippa.scanner.model.KlippaScannerResult
 import com.klippa.scanner.model.KlippaSegmentedDocumentMode
 import com.klippa.scanner.model.KlippaSingleDocumentMode
@@ -152,6 +154,7 @@ class KlippaScannerSDKModule(
                     "grayscale" -> scannerSession.imageAttributes.imageColorMode = KlippaImageColor.GRAYSCALE
                     "enhanced" -> scannerSession.imageAttributes.imageColorMode = KlippaImageColor.ENHANCED
                     "original" -> scannerSession.imageAttributes.imageColorMode = KlippaImageColor.ORIGINAL
+                    "blackAndWhite" -> scannerSession.imageAttributes.imageColorMode = KlippaImageColor.BLACK_AND_WHITE 
                 }
             }
 
@@ -165,6 +168,52 @@ class KlippaScannerSDKModule(
                     }
                     "pdfMerged" -> {
                         scannerSession.imageAttributes.outputFormat = KlippaOutputFormat.PDF_MERGED
+                    }
+                    "png" -> {
+                        scannerSession.imageAttributes.outputFormat = KlippaOutputFormat.PNG
+                    }
+                }
+            }
+
+            if (config.hasKey("PageFormat")) {
+                when (config.getString("PageFormat")) {
+                    "off" -> {
+                        scannerSession.imageAttributes.pageFormat = KlippaPageFormat.OFF
+                    }
+                    "a3" -> {
+                        scannerSession.imageAttributes.pageFormat = KlippaPageFormat.A3
+                    }
+                    "a4" -> {
+                        scannerSession.imageAttributes.pageFormat = KlippaPageFormat.A4
+                    }
+                    "a5" -> {
+                        scannerSession.imageAttributes.pageFormat = KlippaPageFormat.A5
+                    }
+                    "a6" -> {
+                        scannerSession.imageAttributes.pageFormat = KlippaPageFormat.A6
+                    }
+                    "b4" -> {
+                        scannerSession.imageAttributes.pageFormat = KlippaPageFormat.B4
+                    }
+                    "b5" -> {
+                        scannerSession.imageAttributes.pageFormat = KlippaPageFormat.B5
+                    }
+                    "letter" -> {
+                        scannerSession.imageAttributes.pageFormat = KlippaPageFormat.LETTER
+                    }  
+                }
+            }
+
+            if (config.hasKey("DPI")) {
+                when (config.getString("DPI")) {
+                    "auto" -> {
+                        scannerSession.imageAttributes.dpi = KlippaDPI.AUTO
+                    }
+                    "dpi200" -> {
+                        scannerSession.imageAttributes.dpi = KlippaDPI.DPI_200
+                    }
+                    "dpi300" -> {
+                        scannerSession.imageAttributes.dpi = KlippaDPI.DPI_300
                     }
                 }
             }

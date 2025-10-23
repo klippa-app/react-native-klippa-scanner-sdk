@@ -1,3 +1,11 @@
+## 1.2.0
+
+* Bump Android to 4.3.0
+* Bump iOS to 2.2.0
+* Added `PageFormat` and `DPI` support.
+* Added `ImageColorBlackAndWhiteText` (iOS only) support.
+* Added `PNG` support to `OutputFormat`.
+
 ## 1.1.2
 
 * Replace deprecated `currentActivity` for `reactApplicationContext.currentActivity`.

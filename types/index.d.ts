@@ -68,6 +68,7 @@ export class CameraConfig {
   // The camera mode for scanning long documents in separate parts.
   CameraModeSegmented?: DocumentMode;
 
+  // When multiple camera modes are enabled select which should show first by index.
   StartingIndex?: number;
 
   // Define the max resolution of the output file. It’s possible to set only one of these values.
@@ -131,11 +132,19 @@ export class CameraConfig {
   // Whether the user must confirm the taken photo before the SDK continues.
   UserShouldAcceptResultToContinue: boolean;
 
-  // What the default color conversion will be (original, grayscale, enhanced).
-  DefaultColor?: 'original' | 'grayscale' | 'enhanced';
+  // What the default color conversion will be (original, grayscale, enhanced, black and white).
+  DefaultColor?: 'original' | 'grayscale' | 'enhanced' | 'blackAndWhite';
 
-  // What the output format will be (jpeg, pdfMerged, pdfSingle). (Default jpeg)
-  OutputFormat?: 'jpeg' | 'pdfMerged' | 'pdfSingle';
+  // What the output format will be (jpeg, pdfMerged, pdfSingle, png). (Default jpeg)
+  OutputFormat?: 'jpeg' | 'pdfMerged' | 'pdfSingle' | 'png';
+
+  // Set the output resolution, uses the DPI to calculate the resolution. (Default OFF)
+  // The resulting image will be stretched/compressed to match the set PageFormat.
+  // Setting this to anything other than OFF will override `ImageMaxWidth` & `ImageMaxHeight`
+  PageFormat?: 'off' | 'a3' | 'a4' | 'a5' | 'a6' | 'b4' | 'b5' | 'letter';
+
+  // The DPI which is used to calculate the PageFormat resolution.
+  DPI?: 'auto' | 'dpi200' | 'dpi300';
 
   // Whether to perform on-device OCR after scanning completes.
   PerformOnDeviceOCR: boolean;
@@ -276,7 +285,7 @@ export class CameraResult {
   // Android only.
 
   // What color option was used, so you can save it as default.
-  Color?:  'original' | 'grayscale' | 'enhanced';
+  Color?:  'original' | 'grayscale' | 'enhanced' | 'black_and_white';
 }
 
 export class CameraResultImage {
