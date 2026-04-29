@@ -99,6 +99,12 @@ export class CameraConfig {
   // Whether to hide or show the color changing button in the Review Screen. (default shown/true)
   UserCanChangeColorSetting?: boolean;
 
+  // Whether to show the DPI button in the edit menu. (default false)
+  UserCanChangeDPI?: boolean;
+
+  // Whether to show the Page Size button in the edit menu. (default false)
+  UserCanChangePageSize?: boolean;
+
   // If you would like to use a custom model for object detection. Model + labels file should be packaged in your bundle.
   Model?: ModelOptions;
 
@@ -267,6 +273,34 @@ export class CameraConfig {
 
   // The threshold sensitive the motion detection is. (lower value is higher sensitivity, default 200).
   ImageMovingSensitivityiOS?: number;
+
+  // The text on the edit button in the review screen (replaces the old filter button).
+  EditMenuButtonText?: string;
+
+  // The text on the DPI button inside the edit menu.
+  DpiEditButtonText?: string;
+
+  // The text on the Page Size button inside the edit menu.
+  PageSizeEditButtonText?: string;
+
+  // The text on the done button inside the edit menu.
+  DoneButtonText?: string;
+
+  // The text on the undo button in the crop screen.
+  UndoCropButtonText?: string;
+}
+
+export interface DetectedTextBoundingBox {
+  // Normalized coordinates (0.0–1.0). Origin is top-left, x increases right, y increases downward.
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+export interface DetectedText {
+  Text: string;
+  BoundingBox: DetectedTextBoundingBox;
 }
 
 export class CameraResult {
@@ -291,6 +325,8 @@ export class CameraResult {
 export class CameraResultImage {
   // The path to the image on the filesystem.
   Filepath: string;
+  // Detected text strings with bounding box positions. Populated when PerformOnDeviceOCR is true.
+  DetectedTexts: DetectedText[];
 }
 
 export class CameraPermissionResult {

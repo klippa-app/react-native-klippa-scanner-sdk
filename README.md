@@ -176,6 +176,12 @@ KlippaScannerSDK.getCameraPermission().then((authStatus) => {
         // Whether to hide or show the color changing button in the Review Screen. (default shown/true)
         UserCanChangeColorSetting: true,
 
+        // Whether to show the DPI button in the edit menu. (default false)
+        UserCanChangeDPI: false,
+
+        // Whether to show the Page Size button in the edit menu. (default false)
+        UserCanChangePageSize: false,
+
         // What the default color conversion will be (grayscale, original, enhanced, blackAndWhite).
         DefaultColor: "original",
 
@@ -378,6 +384,11 @@ Add or edit the file `android/app/src/main/res/values/strings.xml`, add the foll
     <string name="klippa_action_expand">Expand</string>
     <string name="klippa_action_filter">Filter</string>
     <string name="klippa_action_rotate">Rotate</string>
+    <string name="klippa_action_edit">Edit</string>
+    <string name="klippa_action_dpi">DPI</string>
+    <string name="klippa_action_page_size">Page Size</string>
+    <string name="klippa_action_done">Done</string>
+    <string name="klippa_action_undo">Undo</string>
 
     <string name="klippa_too_bright_warning_message">The image is too bright</string>
     <string name="klippa_too_dark_warning_message">The image is too dark</string>
@@ -387,7 +398,7 @@ Add or edit the file `android/app/src/main/res/values/strings.xml`, add the foll
 
 ### iOS
 
-Use the following properties in the config when running `getCameraResult`: `ImageTooBrightMessage`, `ImageTooDarkMessage`, `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`, `OrientationWarningMessage`, `ImageColorOriginalText`, `ImageColorGrayscaleText`, `ImageColorEnhancedText`, `ContinueButtonText`, `SaveCropButtonText`, `ExpandCropButtonText`, `CancelCropButtonText`, `DeleteEditButtonText`, `RotateEditButtonText`, `FilterEditButtonText`, `CropEditButtonText`, `SegmentedModeImageCountMessage`.
+Use the following properties in the config when running `getCameraResult`: `ImageTooBrightMessage`, `ImageTooDarkMessage`, `DeleteButtonText`, `RetakeButtonText`, `CancelButtonText`, `CancelAndDeleteImagesButtonText`, `CancelConfirmationMessage`, `MoveCloserMessage`, `ImageMovingMessage`, `ImageLimitReachedMessage`, `OrientationWarningMessage`, `ImageColorOriginalText`, `ImageColorGrayscaleText`, `ImageColorEnhancedText`, `ContinueButtonText`, `SaveCropButtonText`, `ExpandCropButtonText`, `CancelCropButtonText`, `DeleteEditButtonText`, `RotateEditButtonText`, `FilterEditButtonText`, `CropEditButtonText`, `SegmentedModeImageCountMessage`, `EditMenuButtonText`, `DpiEditButtonText`, `PageSizeEditButtonText`, `DoneButtonText`, `UndoCropButtonText`.
 
 ## How to change the image in the instructions?
 
