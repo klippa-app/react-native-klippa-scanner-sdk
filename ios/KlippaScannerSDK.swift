@@ -292,6 +292,26 @@ class KlippaScannerSDK: NSObject {
             builder.klippaButtonTexts.saveCropButtonText = saveCropButtonText
         }
 
+        if let editMenuButtonText = config["EditMenuButtonText"] as? String {
+            builder.klippaButtonTexts.editMenuButtonText = editMenuButtonText
+        }
+
+        if let dpiEditButtonText = config["DpiEditButtonText"] as? String {
+            builder.klippaButtonTexts.dpiEditButtonText = dpiEditButtonText
+        }
+
+        if let pageSizeEditButtonText = config["PageSizeEditButtonText"] as? String {
+            builder.klippaButtonTexts.pageSizeEditButtonText = pageSizeEditButtonText
+        }
+
+        if let doneButtonText = config["DoneButtonText"] as? String {
+            builder.klippaButtonTexts.doneButtonText = doneButtonText
+        }
+
+        if let undoCropButtonText = config["UndoCropButtonText"] as? String {
+            builder.klippaButtonTexts.undoCropButtonText = undoCropButtonText
+        }
+
         if let imageColorBlackAndWhiteText = config["ImageColorBlackAndWhiteText"] as? String {
             builder.klippaButtonTexts.imageColorBlackAndWhiteText = imageColorBlackAndWhiteText
         }
@@ -323,8 +343,16 @@ class KlippaScannerSDK: NSObject {
             builder.klippaMenu.userCanCropManually = userCanCropManually
         }
 
-        if let userCanChangeColorSetting = config["UserCanChangeColorSetting "] as? Bool {
+        if let userCanChangeColorSetting = config["UserCanChangeColorSetting"] as? Bool {
             builder.klippaMenu.userCanChangeColorSetting = userCanChangeColorSetting
+        }
+
+        if let userCanChangeDPI = config["UserCanChangeDPI"] as? Bool {
+            builder.klippaMenu.userCanChangeDPI = userCanChangeDPI
+        }
+
+        if let userCanChangePageSize = config["UserCanChangePageSize"] as? Bool {
+            builder.klippaMenu.userCanChangePageSize = userCanChangePageSize
         }
 
         if let shouldGoToReviewScreenWhenImageLimitReached = config["ShouldGoToReviewScreenWhenImageLimitReached"] as? Bool {
@@ -583,11 +611,19 @@ class KlippaScannerSDK: NSObject {
 extension KlippaScannerSDK: KlippaScannerDelegate {
     func klippaScannerDidFinishScanningWithResult(result: KlippaScanner.KlippaScannerResult) {
 
-        var images = [Dictionary<String, String>]()
+        var images = [[String: Any]]()
         for image in result.results {
-
-            let path = image.path
-            let imageDict = ["Filepath": path]
+            var detectedTexts = [[String: Any]]()
+            for detectedText in image.detectedTexts {
+                let boundingBox: [String: Any] = [
+                    "x": detectedText.boundingBox.origin.x,
+                    "y": detectedText.boundingBox.origin.y,
+                    "width": detectedText.boundingBox.size.width,
+                    "height": detectedText.boundingBox.size.height
+                ]
+                detectedTexts.append(["Text": detectedText.text, "BoundingBox": boundingBox])
+            }
+            let imageDict: [String: Any] = ["Filepath": image.path, "DetectedTexts": detectedTexts]
             images.append(imageDict)
         }
 

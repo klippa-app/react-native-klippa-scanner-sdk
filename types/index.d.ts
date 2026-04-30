@@ -99,6 +99,12 @@ export class CameraConfig {
   // Whether to hide or show the color changing button in the Review Screen. (default shown/true)
   UserCanChangeColorSetting?: boolean;
 
+  // Whether to show the DPI button in the edit menu. (default false)
+  UserCanChangeDPI?: boolean;
+
+  // Whether to show the Page Size button in the edit menu. (default false)
+  UserCanChangePageSize?: boolean;
+
   // If you would like to use a custom model for object detection. Model + labels file should be packaged in your bundle.
   Model?: ModelOptions;
 
@@ -124,13 +130,13 @@ export class CameraConfig {
   StoreImagesToCameraRoll?: boolean;
 
   // Whether to allow users to select media from their device (Shows a media button bottom left on the scanner screen).
-  UserCanPickMediaFromStorage: boolean;
+  UserCanPickMediaFromStorage?: boolean;
 
   // Whether the next button in the bottom right of the scanner screen goes to the review screen instead of finishing the session.
-  ShouldGoToReviewScreenOnFinishPressed: boolean;
+  ShouldGoToReviewScreenOnFinishPressed?: boolean;
 
   // Whether the user must confirm the taken photo before the SDK continues.
-  UserShouldAcceptResultToContinue: boolean;
+  UserShouldAcceptResultToContinue?: boolean;
 
   // What the default color conversion will be (original, grayscale, enhanced, black and white).
   DefaultColor?: 'original' | 'grayscale' | 'enhanced' | 'blackAndWhite';
@@ -147,13 +153,13 @@ export class CameraConfig {
   DPI?: 'auto' | 'dpi200' | 'dpi300';
 
   // Whether to perform on-device OCR after scanning completes.
-  PerformOnDeviceOCR: boolean;
+  PerformOnDeviceOCR?: boolean;
 
   // The lower threshold before the warning message informs the environment is too dark (default 0).
-  BrightnessLowerThreshold: number;
+  BrightnessLowerThreshold?: number;
 
   // The upper threshold before the warning message informs the environment is too bright (default 6).
-  BrightnessUpperThreshold: number;
+  BrightnessUpperThreshold?: number;
 
   // Android options.
 
@@ -267,6 +273,34 @@ export class CameraConfig {
 
   // The threshold sensitive the motion detection is. (lower value is higher sensitivity, default 200).
   ImageMovingSensitivityiOS?: number;
+
+  // The text on the edit button in the review screen (replaces the old filter button).
+  EditMenuButtonText?: string;
+
+  // The text on the DPI button inside the edit menu.
+  DpiEditButtonText?: string;
+
+  // The text on the Page Size button inside the edit menu.
+  PageSizeEditButtonText?: string;
+
+  // The text on the done button inside the edit menu.
+  DoneButtonText?: string;
+
+  // The text on the undo button in the crop screen.
+  UndoCropButtonText?: string;
+}
+
+export interface DetectedTextBoundingBox {
+  // Normalized coordinates (0.0–1.0). Origin is top-left, x increases right, y increases downward.
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+export interface DetectedText {
+  Text: string;
+  BoundingBox: DetectedTextBoundingBox;
 }
 
 export class CameraResult {
@@ -291,6 +325,8 @@ export class CameraResult {
 export class CameraResultImage {
   // The path to the image on the filesystem.
   Filepath: string;
+  // Detected text strings with bounding box positions. Populated when PerformOnDeviceOCR is true.
+  DetectedTexts: DetectedText[];
 }
 
 export class CameraPermissionResult {

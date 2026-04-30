@@ -1,0 +1,61 @@
+name: Build CI
+on: [push]
+
+jobs:
+  build:
+    name: Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 22
+      - run: yarn install
+        working-directory: ./example
+      - run: ./gradlew assembleRelease --no-daemon
+        working-directory: ./example/android
+        env:
+          KLIPPA_SCANNER_SDK_URL: ${{ secrets.KLIPPA_SCANNER_SDK_URL_ANDROID }}
+          KLIPPA_SCANNER_SDK_USERNAME: ${{ secrets.KLIPPA_SCANNER_SDK_USERNAME }}
+          KLIPPA_SCANNER_SDK_PASSWORD: ${{ secrets.KLIPPA_SCANNER_SDK_PASSWORD }}
+  build-macos:
+    name: Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 22
+      - run: sudo xcode-select -s /Applications/Xcode_16.4.app
+      - run: yarn install
+        working-directory: ./example
+      - run: ./gradlew assembleRelease --no-daemon
+        working-directory: ./example/android
+        env:
+          KLIPPA_SCANNER_SDK_URL: ${{ secrets.KLIPPA_SCANNER_SDK_URL_ANDROID }}
+          KLIPPA_SCANNER_SDK_USERNAME: ${{ secrets.KLIPPA_SCANNER_SDK_USERNAME }}
+          KLIPPA_SCANNER_SDK_PASSWORD: ${{ secrets.KLIPPA_SCANNER_SDK_PASSWORD }}
+      - run: |
+          pod install
+          xcodebuild -workspace KlippaScannerSdkExample.xcworkspace -scheme KlippaScannerSdkExample CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator ARCHS="x86_64" SKIP_INSTALL=NO ONLY_ACTIVE_ARCH=NO build
+        working-directory: ./example/ios
+        env:
+          KLIPPA_SCANNER_SDK_URL: ${{ secrets.KLIPPA_SCANNER_SDK_URL_IOS }}
+          KLIPPA_SCANNER_SDK_USERNAME: ${{ secrets.KLIPPA_SCANNER_SDK_USERNAME }}
+          KLIPPA_SCANNER_SDK_PASSWORD: ${{ secrets.KLIPPA_SCANNER_SDK_PASSWORD }}

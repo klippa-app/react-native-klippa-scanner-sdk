@@ -276,6 +276,14 @@ class KlippaScannerSDKModule(
                 scannerSession.menu.userCanChangeColorSetting = config.getBoolean("UserCanChangeColorSetting")
             }
 
+            if (config.hasKey("UserCanChangeDPI")) {
+                scannerSession.menu.userCanChangeDPI = config.getBoolean("UserCanChangeDPI")
+            }
+
+            if (config.hasKey("UserCanChangePageSize")) {
+                scannerSession.menu.userCanChangePageSize = config.getBoolean("UserCanChangePageSize")
+            }
+
             if (config.hasKey("Model")) {
                 config.getMap("Model")?.let { modelConfig ->
                     val modelName = modelConfig.getString("name")
@@ -463,6 +471,19 @@ class KlippaScannerSDKModule(
         for (image in imageList) {
             val imageMap: WritableMap = WritableNativeMap()
             imageMap.putString("Filepath", image.location)
+            val detectedTexts: WritableArray = WritableNativeArray()
+            for (detectedText in image.detectedTexts) {
+                val detectedTextMap: WritableMap = WritableNativeMap()
+                detectedTextMap.putString("Text", detectedText.text)
+                val boundingBoxMap: WritableMap = WritableNativeMap()
+                boundingBoxMap.putDouble("x", detectedText.boundingBox.x.toDouble())
+                boundingBoxMap.putDouble("y", detectedText.boundingBox.y.toDouble())
+                boundingBoxMap.putDouble("width", detectedText.boundingBox.width.toDouble())
+                boundingBoxMap.putDouble("height", detectedText.boundingBox.height.toDouble())
+                detectedTextMap.putMap("BoundingBox", boundingBoxMap)
+                detectedTexts.pushMap(detectedTextMap)
+            }
+            imageMap.putArray("DetectedTexts", detectedTexts)
             images.pushMap(imageMap)
         }
         cameraResult.putArray("Images", images)
