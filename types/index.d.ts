@@ -130,13 +130,13 @@ export class CameraConfig {
   StoreImagesToCameraRoll?: boolean;
 
   // Whether to allow users to select media from their device (Shows a media button bottom left on the scanner screen).
-  UserCanPickMediaFromStorage: boolean;
+  UserCanPickMediaFromStorage?: boolean;
 
   // Whether the next button in the bottom right of the scanner screen goes to the review screen instead of finishing the session.
-  ShouldGoToReviewScreenOnFinishPressed: boolean;
+  ShouldGoToReviewScreenOnFinishPressed?: boolean;
 
   // Whether the user must confirm the taken photo before the SDK continues.
-  UserShouldAcceptResultToContinue: boolean;
+  UserShouldAcceptResultToContinue?: boolean;
 
   // What the default color conversion will be (original, grayscale, enhanced, black and white).
   DefaultColor?: 'original' | 'grayscale' | 'enhanced' | 'blackAndWhite';
@@ -153,13 +153,13 @@ export class CameraConfig {
   DPI?: 'auto' | 'dpi200' | 'dpi300';
 
   // Whether to perform on-device OCR after scanning completes.
-  PerformOnDeviceOCR: boolean;
+  PerformOnDeviceOCR?: boolean;
 
   // The lower threshold before the warning message informs the environment is too dark (default 0).
-  BrightnessLowerThreshold: number;
+  BrightnessLowerThreshold?: number;
 
   // The upper threshold before the warning message informs the environment is too bright (default 6).
-  BrightnessUpperThreshold: number;
+  BrightnessUpperThreshold?: number;
 
   // Android options.
 
