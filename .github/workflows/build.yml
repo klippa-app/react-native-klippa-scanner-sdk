@@ -11,7 +11,7 @@ jobs:
         os: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -32,17 +32,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-15]
+        os: [macos-latest]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
       - uses: actions/setup-node@v2
         with:
           node-version: 22
-      - run: sudo xcode-select -s /Applications/Xcode_16.4.app
       - run: yarn install
         working-directory: ./example
       - run: ./gradlew assembleRelease --no-daemon
