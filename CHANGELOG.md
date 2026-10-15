@@ -1,3 +1,8 @@
+## 1.3.1
+
+* Fixed Android builds failing with a `401 Unauthorized`.
+* The Klippa Maven credentials can now also be set with `key.properties` or environment variables (optional).
+
 ## 1.3.0
 
 * Bump Android to 4.4.0

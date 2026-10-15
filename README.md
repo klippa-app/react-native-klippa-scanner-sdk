@@ -32,6 +32,15 @@ allprojects {
 
 Replace the `{your-username}` and `{your-password}` values with the ones provided by Klippa.
 
+Instead of putting the credentials in `android/build.gradle`, you can also set them in an `android/key.properties` file (don't commit this file):
+
+```properties
+klippa.scanner.sdk.username={your-username}
+klippa.scanner.sdk.password={your-password}
+```
+
+or with the environment variables `KLIPPA_SCANNER_SDK_USERNAME` and `KLIPPA_SCANNER_SDK_PASSWORD`. Use only one of these methods.
+
 If you're using gradle 7+ you will need to change `copyDownloadableDepsToLibs` in the `app/build.gradle`.
 It should now look like:
 
