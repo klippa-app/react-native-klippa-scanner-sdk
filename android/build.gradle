@@ -26,14 +26,21 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
-rootProject.allprojects {
-    repositories {
-        maven {
-            credentials {
-                username System.getenv()['KLIPPA_SCANNER_SDK_USERNAME'] ?: (keystoreProperties['klippa.scanner.sdk.username'] ?: '')
-                password System.getenv()['KLIPPA_SCANNER_SDK_PASSWORD'] ?: (keystoreProperties['klippa.scanner.sdk.password'] ?: '')
+def klippaUsername = System.getenv()['KLIPPA_SCANNER_SDK_USERNAME'] ?: keystoreProperties['klippa.scanner.sdk.username']
+def klippaPassword = System.getenv()['KLIPPA_SCANNER_SDK_PASSWORD'] ?: keystoreProperties['klippa.scanner.sdk.password']
+
+// Only add the repository when credentials are configured here. Otherwise an unauthenticated
+// repository with the same URL as the one in the app's own build.gradle causes a 401.
+if (klippaUsername && klippaPassword) {
+    rootProject.allprojects {
+        repositories {
+            maven {
+                credentials {
+                    username klippaUsername
+                    password klippaPassword
+                }
+                url System.getenv()['KLIPPA_SCANNER_SDK_URL'] ?: (keystoreProperties['klippa.scanner.sdk.url'] ?: 'https://custom-ocr.klippa.com/sdk/android/maven')
             }
-            url System.getenv()['KLIPPA_SCANNER_SDK_URL'] ?: (keystoreProperties['klippa.scanner.sdk.url'] ?: 'https://custom-ocr.klippa.com/sdk/android/maven')
         }
     }
 }
